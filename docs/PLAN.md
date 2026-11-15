@@ -278,7 +278,10 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 
 **D-22 Museum** — ✅ **Decided 15 Nov**: six rooms as card galleries. Exhibits reuse existing art (boss poses, achievement badges, character portraits, maze thumbnails rendered from seeds). Public showcase = up to 6 chosen exhibit cards plus profile name and character, nothing else (MUS-04).
 
-**D-22a Profile viewer** (UI-02 Profiles/Statistics, PROFILE-03) — ⏳: the player's own credits balance, credit history (ledger with reason per entry), match history, statistics, progress and inventory are shown in the **Profile** and **Statistics** screens. On the host PC every saved profile can be opened there; a remote device sees only the profile it is using in the current room. Optional per-profile **4-digit PIN** (Rec) that protects opening a profile on the host PC and selecting it from a remote device.
+**D-22a Profile viewer and PIN** (UI-02 Profiles/Statistics, PROFILE-03) — ✅ **Decided 15 Nov**: the player's own credits balance, credit history (ledger with reason per entry), match history, statistics, progress and inventory are shown in the **Profile** and **Statistics** screens. On the host PC every saved profile can be opened there; a remote device sees only the profile it is using in the current room. - **Profile PIN (Guo, 15 Nov):** each profile can set a **4-digit PIN** (optional per profile; set, change or remove it in the profile's settings). With a PIN, it is asked when the profile is opened on the host PC, selected for a match on any device, exported or deleted.
+- The PIN is stored only as a salted hash (scrypt) in the host database, never in plain text and never sent to other clients.
+- After 5 wrong attempts that profile is locked for 1 minute (doubling on repeats, max 15 min).
+- Forgotten PIN: the host PC's Host Control page can reset (remove) a profile's PIN; the profile's data is untouched.
 
 ### 2.6 Network, persistence, operations (NET-01 to 10, DB-01 to 04, OPS-01 to 04)
 
