@@ -184,17 +184,27 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 7. Escapes: a player who was **not KO'd this tick**, holds their own token and stands on the opponent's original entrance (not blocked) has escaped.
 8. Timer: only if steps 5 and 7 produced no outcome.
 
-| Same-tick situation | Result |
-|---|---|
-| Both players KO'd (boss, traps or both) | Draw |
-| One player KO'd | The other player wins |
-| A escapes, B KO'd | A wins |
-| A reaches the exit but is KO'd this tick | Escape void; B wins by KO |
-| Both players escape | Draw |
-| Last boss hit and a KO | KO decides; the phase does not flip |
-| Escape or KO on the tick the timer reaches 0 | Escape / KO stands (timer is checked last) |
-| Timer 0, no outcome | Draw (G-010) |
-| Explicit Leave / grace expiry | Handled by NET-07 before step 1 of the next tick |
+**Complete outcome matrix.** Inside one tick each player ends in exactly one of three states: **K** (knocked out this tick), **E** (escaped this tick, which requires not K) or **–** (nothing). That gives every in-tick combination:
+
+| P1 \ P2 | – | E | K |
+|---|---|---|---|
+| **–** | Match continues; if the timer reaches 0 this tick: **draw** | **P2 wins** (escape) | **P1 wins** (knock-out) |
+| **E** | **P1 wins** (escape) | **Draw** (both escape) | **P1 wins** |
+| **K** | **P2 wins** (knock-out) | **P2 wins** | **Draw** (both knocked out) |
+
+Notes: a player who reaches the exit on the tick they are knocked out counts as K, not E. A KO on the tick of the last boss hit means the phase does not flip. A result on the tick the timer reaches 0 stands (timer is checked last).
+
+**Outcomes outside the tick** (handled before step 1 of the next tick, NET-06 to NET-08, TIME-02):
+
+| Situation | Result | Rewards / stats |
+|---|---|---|
+| One player chooses **Leave** | The other wins by forfeit | Forfeit (PROFILE-06) |
+| **Both** choose Leave on the same tick (WiFi) | Neutral draw | Like dual-disconnect: no victory bonus |
+| One player's 30 s reconnect grace expires | The other wins by forfeit | Disconnect forfeit |
+| Both graces expire in the same host pass | Neutral dual-disconnect draw | No competitive win/loss |
+| Host crashes or is stopped mid-match | Interrupted, no winner | Interrupted; nothing granted |
+| Countdown cancelled before GO | No match | Nothing recorded |
+| **Unlimited Time** and nobody can finish (for example both blockading) | ⏳ Proposal: either player can offer a **draw** from the pause menu; if the other accepts, regular draw | Regular draw |
 
 **D-13 Tokens (G-008, G-009, INV-03)**
 - Spawn on the boss-defeat tick at symmetric positions, each in the half *farther* from its owner's opponent entrance, so the route is token → boss arena → opponent entrance (forces crossing paths). Only the owner can pick a token up; the other player walks over it.
