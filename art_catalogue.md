@@ -24,6 +24,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | E-DES | `E-DES_Desert Ruins Escape.mp3` | **Approved** | Escape Phase, Desert Ruins |
 | B-CRY | `B-CRY_Crystal Caverns Boss.mp3` | **Approved** | Boss Phase, Crystal Caverns |
 | E-CRY | `E-CRY_Crystal Caverns Escape.mp3` | **Approved, fix in edit** (peak over 0 dBFS) | Escape Phase, Crystal Caverns |
+| B-NEO | `B-NEO_Neon Circuit Boss.mp3` | **Approved** | Boss Phase, Neon Circuit |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -91,6 +92,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | E-DES | 2:55 | 144 (133 to match) | F♯/E♭ minor area (C to match) | −14.9 LUFS | 3.5 LU | −0.1 dBFS |
 | B-CRY | 2:04 | 121 (120) | F♯ centre, B major scale, brighter than minor (F♯ minor) | −14.4 LUFS | 8.7 LU | −0.3 dBFS |
 | E-CRY | 2:42 | 125 (120) | F♯ minor (F♯ minor) | −14.4 LUFS | 7.2 LU | **+0.3 dBFS** |
+| B-NEO | 2:27 | 136 (136) | no clear key, chromatic around G/F♯ (A minor) | −14.4 LUFS | 8.5 LU | −0.7 dBFS |
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
@@ -207,6 +209,12 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - 2:42, **125 BPM in clear F♯ minor**: the first cue to land exactly on its requested key. A bit faster than the 120 asked, which suits the sprint.
 - Starts at full drive from 0:00 (no quiet intro), good straight after the defeat stinger. Small dip at 0:48–0:53, then builds slightly to 2:34; quick ending at 2:36.
 - **Fix in edit:** loop 0:00–2:34; true peak **+0.3 dBFS** (over full scale, can clip) → −1 dBTP.
+
+### B-NEO · Neon Circuit Boss · Approved
+
+- 2:27, **exactly 136 BPM** as asked. No clear key (weak key match, chromatic movement around G/F♯ in the bass) instead of A minor; reads as edgy electronic, which suits the neon theme.
+- Structure: quiet intro 0:00–0:13, full drive 0:14–0:41, **breakdown 0:42–0:55** (about 9 dB quieter), full drive 0:56–2:19 with a short dip at 1:26, fade-out 2:20–2:26.
+- The breakdown goes against "no stop inside the loop", but it's short. **Loop:** 0:14–2:19 including it, or 0:56–2:19 (1:23) if it feels like a stall in play. True peak −0.7 dBFS → −1 dBTP.
 
 ### Theme cues (other B-/E- cues) · Pending
 
