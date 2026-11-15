@@ -22,6 +22,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved** | Escape Phase, Enchanted Garden |
 | B-DES | `B-DES_Desert Ruins Boss.mp3` | **Approved** | Boss Phase, Desert Ruins |
 | E-DES | `E-DES_Desert Ruins Escape.mp3` | **Approved** | Escape Phase, Desert Ruins |
+| B-CRY | `B-CRY_Crystal Caverns Boss.mp3` | **Approved** | Boss Phase, Crystal Caverns |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -87,6 +88,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | E-GAR | 3:00 | 124 (124) | D, major/minor mix (D minor) | −14.5 LUFS | 9.2 LU | −0.2 dBFS |
 | B-DES | 3:02 | 133 (128) | C, Arabic-style mixed scale (E minor) | −15.6 LUFS | 8.1 LU | −0.2 dBFS |
 | E-DES | 2:55 | 144 (133 to match) | F♯/E♭ minor area (C to match) | −14.9 LUFS | 3.5 LU | −0.1 dBFS |
+| B-CRY | 2:04 | 121 (120) | F♯ centre, B major scale, brighter than minor (F♯ minor) | −14.4 LUFS | 8.7 LU | −0.3 dBFS |
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
@@ -189,6 +191,14 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - Flow ignored "133 BPM, C minor". Against B-DES: 8% faster and a tritone away from C, the most distant key possible. A plain crossfade would clash; the tempo gap is too large to stretch cleanly and the key gap too large to pitch-shift.
 - **Options:** (A) regenerate E-DES until it lands near 133 BPM / C; (B) keep it and change the Boss → Escape transition for all themes to a "stinger bridge": boss music fades out under a ~1 s boss-defeat stinger, Escape starts on its own downbeat. Then no theme pair needs matching tempo or key.
 - **Decided 15 Nov by Guo: (B) stinger bridge.** E-DES approved as is.
+
+### B-CRY · Crystal Caverns Boss · Approved
+
+- 2:04, **121 BPM** (target 120), centred on F♯ with a B-major scale, so brighter than the F♯ minor asked for; fits "shimmering and wondrous". −14.4 LUFS.
+- Structure: sparse intro 0:00–0:13 (quiet bell-like dips at 0:02–0:05), steady drive 0:14–1:59 building gently, quick ending at 2:00.
+- Shortest boss cue: the loop body 0:14–1:59 is 1:45. Fine for a loop, but repeats more often than the others.
+- **Fix in edit:** loop 0:14–1:59; true peak −0.3 dBFS → −1 dBTP.
+- Prompt used: the B-CRY prompt from `art_prompt.md`, unchanged.
 
 ### Theme cues (other B-/E- cues) · Pending
 
