@@ -82,19 +82,19 @@ Achievement art mapping (GPD2 base set):
 |---|---|
 | First Duel: finish a match | `firstDuel` |
 | First Victory | `firstVictory` |
-| First Strike: hit the rival with a bomb | `firstStrike` |
+| First Strike: hit the boss with a bomb | `firstStrike` |
 | First Crack: destroy a breakable wall | `firstCrack` |
 | Wall Breaker: destroy 100 walls | `wallBreaker` |
 | Demolition Day: Super Bomb breaks a Super Shield | `demolitionDay` |
-| Chain Reaction: one bomb sets off another | `chainReaction` |
+| Chain Reaction: one Super Bomb breaks 3 walls | `chainReaction` |
 | Blockade: a Super Shield holds for the full 15 s | `superShield` |
-| Iron Wall: shields block 25 hits | `ironWall` |
+| Iron Wall: shields block 25 boss attacks | `ironWall` |
 | Deep Strike: land the final boss hit 10 times | `deepStrike` |
 | Master Slayer: defeat the Ultimate boss | `masterSlayer` |
 | Hard Won: win on Extreme | `hardWon` |
 | Breakthrough: escape within 30 s of the boss falling | `breakthrough` |
 | Invader: win by escape 25 times | `invader` |
-| Overrun: win by knock-out 10 times | `overrun` |
+| Overrun: win 10 matches without using a Shield | `overrun` |
 | Last Line: win with 1 Life left | `lastLine` |
 | Survivor: win without losing a Life | `survivor` |
 | Unstoppable: 5 wins in a row | `unstoppable` |

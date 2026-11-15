@@ -77,30 +77,35 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 
 ### 2.2 Combat (C-004 to C-007, BAL-04)
 
-**D-05 Bomb delivery**
-- **A (Rec). Placed bomb** on the player's current tile, fuse **1.5 s**, the bomb tile blocks movement for others (owner can step off). Classic, readable, works perfectly on a tile grid and with telegraphs.
-- B. Thrown bomb travels N tiles in facing direction. More skill-shot, harder on touch, more network-sensitive.
-- C. Instant blast in front of the player. Simple but no counterplay window for Shield.
+> ✅ **D-05 to D-09 decided 15 Nov (Guo's design clarification).** Core idea: the game has three phases: (1) explore the maze to the boss, (2) defeat the boss to get the tokens, (3) race the rival to the exit. **Bombs are for attacking the boss and the maze; shields are temporary walls.** Bombs never harm players.
 
-**D-06 Blast shape and damage**
-- Normal Bomb: **cross (+) radius 2**, stops at solid walls; destroys **breakable** walls; 1 damage to players; **1 damage to the boss** if any blast tile touches the boss arena core.
-- Super Bomb: **cross radius 4 plus a 3×3 core**; destroys breakable **and reinforced** walls; breaks an enemy Super Shield barrier; 1 damage to players, **3 damage to the boss**.
-- Blast lasts 0.3 s (one hit per player per blast).
-- **Self-damage: Rec yes** (your own bomb hurts you). It is the core risk of the bomb and keeps "same rules for both players". Option: off on Easy/Campaign chapter 1 only.
-- Friendly fire between duelists in Boss Phase: **yes**. The duel is competitive from GO; harming the rival while fighting the boss is a deliberate strategy, and the boss telegraphs keep it readable.
+**D-05 Bomb delivery** — ✅ **thrown in the facing direction**
+- Facing = the last direction the player moved (keyboard) or swiped (touch); shown by an arrow on the character token.
+- The bomb flies straight at **10 tiles/s for up to 8 tiles** and explodes on the **first** thing it meets: wall (any type), shield, Super Shield, the boss, a boss attack ball, or at the end of its range.
+- It **flies through players** (both the rival and the thrower) with no effect.
+- Throwing does not stop movement. One bomb per throw; no limit on bombs in flight other than energy.
 
-**D-07 Life and hit recovery**
-- 3 Life (locked). After a hit: **1.5 s invulnerability** with blinking (also used as reduced-motion-safe outline flash). No respawn, no knock-back (Rec: knock-back adds forced movement complexity for little value).
+**D-06 Blast and damage** — ✅
+- Normal Bomb: blast on the impact tile plus the 4 neighbours (+ radius 1); breaks **cracked (breakable)** walls in the blast; **1 damage to the boss**; destroys boss attack balls in the blast. A normal bomb that hits a shield explodes harmlessly on it.
+- Super Bomb (3 Attack, 2 s charge, D-03): **+ radius 2**; also breaks **reinforced** walls, **Shields and Super Shields**; **3 damage to the boss**.
+- Bombs never damage players, so there is no self-damage and no friendly fire.
 
-**D-08 Normal Shield**
-- 3 s bubble around the player: blocks all damage (bombs, boss), player keeps moving, cannot place bombs while shielded (Rec, gives the shield a cost beyond energy). Option: allow bombs while shielded.
+**D-07 Life and hit recovery** — ✅
+- 3 Life (locked). **Only boss attacks take Life**, so Life matters only in the Boss Phase. After a hit: 1.5 s invulnerability with blinking/outline flash. No respawn, no knock-back.
+- A player knocked out by the boss loses the match (G-005). If the boss knocks out both on the same tick, it is a draw.
+- In the Escape Phase nobody can lose Life; the race or the timer decides.
 
-**D-09 Super Shield (Escape Phase only, C-006)**
-- The GDD says it "may block the opponent's exit for up to 15 seconds". The opponent's exit is the *caster's own* original entrance.
-- A. A personal 15 s shield bubble that also blocks the entrance if the caster stands on it.
-- **B (Rec). A barrier tile**: after the 2 s charge it is placed on the caster's current tile (caster steps off freely); it is impassable for the opponent, passable for the caster, lasts **15 s**, one active per player, a valid Super Bomb destroys it. It can be placed anywhere, which naturally means "blockade my entrance" or "block a corridor to your token".
-- C. Only usable within 3 tiles of the caster's own entrance. More literal but awkward on large mazes.
-- A mutual blockade (both barriers active) simply runs until expiry or a Super Bomb; the timer resolves it if nobody acts.
+**D-08 Normal Shield** — ✅ **a temporary wall in front of the player**
+- Costs 1 Defense; placed on the tile **in front** of the player (facing direction); lasts **3 s** of active simulation time.
+- Blocks **everyone** (both players, including the caster) and **all attacks** (boss attacks from that side, bombs).
+- Cannot be placed on a wall, a player, a token, an entrance gate during Boss Phase, or an existing shield: then nothing happens and **no energy is spent**.
+- Usable in both phases; in the Escape Phase it can briefly block the rival's corridor or exit.
+
+**D-09 Super Shield** — ✅ **the same wall, 15 s, Escape Phase only (C-006)**
+- Costs 3 Defense, 2 s charge (D-03); placed in front like the normal Shield; lasts **15 s**; blocks everyone and everything.
+- Only a **Super Bomb** breaks it. One active Super Shield per player.
+- Defense does not regenerate while the player's own Shield or Super Shield is up (D-04), so blockades cannot be chained.
+- A mutual blockade (both exits blocked) runs until expiry or a Super Bomb; the timer resolves it if nobody acts.
 
 **D-10 Wall types and destructibility (M-003)**
 - Border wall: indestructible. Solid wall: indestructible. Breakable wall: Normal or Super Bomb. Reinforced wall: Super Bomb only.
@@ -116,27 +121,28 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 
 **D-12 Terminal-event precedence (BAL-07, AC-02)** — resolved inside one host tick in this fixed order, independent of message arrival order:
 
-1. Apply inputs (movement, ability commits) in slot order P1, P2 (order cannot change outcomes because steps 2 to 4 are simultaneous).
-2. Resolve all damage of this tick simultaneously (bombs, boss).
-3. Knock-outs: a player at 0 Life is KO'd.
-4. Escapes: a player who is **not KO'd this tick**, holds their own token and stands on the opponent's original entrance (not barrier-blocked) has escaped.
+1. Apply inputs (movement, throws, shield placements) in slot order P1, P2 (order cannot change outcomes because steps 2 to 4 are simultaneous; two shields aimed at the same tile on the same tick: neither is placed, no cost).
+2. Resolve all hits of this tick simultaneously (bombs, boss attacks).
+3. Knock-outs (Boss Phase only): a player at 0 Life is KO'd.
+4. Escapes (Escape Phase only): a player holding their own token who stands on the opponent's original entrance has escaped.
 5. Timer: only if no outcome from steps 3 to 4.
+
+Because Life can only be lost in the Boss Phase and escapes only happen in the Escape Phase, a KO and an escape can never meet in one tick.
 
 | Same-tick situation | Result |
 |---|---|
-| Both KO | Draw |
-| Both escape | Draw |
-| A escapes, B KO'd | A wins |
-| A escapes but is also KO'd this tick | A's escape is void; B wins by KO (if B alive) |
-| A KO'd by own bomb | B wins |
-| Boss attack KOs both | Draw |
-| Valid escape or KO on the tick the timer hits 0 | Escape / KO stands (timer is checked last) |
+| Boss knocks out both players | Draw |
+| Boss knocks out one player | The other player wins |
+| Last boss hit and a KO on the same tick | KO resolves first (step 3), so the KO decides; the phase does not flip |
+| Both players escape | Draw |
+| Escape on the tick the timer reaches 0 | Escape wins (timer is checked last) |
+| KO on the tick the timer reaches 0 | KO decides |
 | Timer 0, no outcome | Draw (G-005) |
 | Explicit Leave / grace expiry | Handled by N-009, before step 1 of the next tick |
 
 **D-13 Tokens (G-004, I-02)**
 - Spawn on the boss-defeat tick at symmetric positions, each in the half *farther* from its owner's opponent entrance, so the route is token → boss arena → opponent entrance (forces crossing paths). Only the owner can pick a token up; the other player walks over it.
-- **Rec: tokens are not dropped on hit** (simpler, readable). Option: drop on hit for a "contested" Challenge category.
+- Tokens cannot be lost: nothing can hit a player in the Escape Phase.
 - Visuals: reuse the GPD2 blue and red crystals (P1 blue, P2 red, plus "1"/"2" label for colour independence).
 
 **D-14 Boss behaviour (B-001, BAL-03)**
