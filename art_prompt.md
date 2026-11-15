@@ -8,7 +8,7 @@ Goal: **as few new assets as possible.**
 |---|---|---|
 | Codex images | **37** (1 title key art, 4 character portraits, 32 boss tier poses) | 5 theme tile sheets |
 | Flow video | **1** (title loop, 8 s) | — |
-| Flow Music cues | **3** (Title/Menu, Boss Phase, Escape Phase) | 2 (Results, Calm bed) |
+| Flow Music cues | **14** (Title/Menu, Lobby, Store & Museum, Results, and a Boss + Escape cue for each of the 5 themes) | — |
 
 Until a file arrives the game uses a placeholder (code-drawn shape or a reused GPD2 track), so nothing here blocks implementation. It only blocks the final look-and-feel tests.
 
@@ -250,39 +250,48 @@ Fallback if two tries fail: I build the loop in code from the still (slow orb gl
 
 ---
 
-## 5. Google Flow Music cues
+## 5. Google Flow Music cues (D-36 A: 14 cues)
+
+GDD v2.0 AV-01 (LOCKED): music varies by the five themes and by Boss/Escape phase, with separate menu, lobby, store/museum and result music. That means **10 in-match cues** (one Boss + one Escape per theme) and **4 other cues**.
 
 ### How to make a cue
 
 1. Open Google Flow Music, paste the cue's prompt, then append the **shared exclusions** below.
 2. Generate several candidates; keep the best one or two.
 3. Save into `GuosPuzzleDuelIV/music/` with the **Save as** name (`_v2` for a second candidate).
-4. Tell me the file names. I cut loops, align the Boss/Escape pair for the crossfade and make OGG/M4A.
+4. Tell me the file names. I cut the loops, align each theme's Boss/Escape pair for the 0.5–1.0 s crossfade when the boss falls, and make OGG/M4A.
+
+Until a cue arrives, the game plays a Duel II track in its place (menu, lobby, duel layers, victory, defeat).
 
 ### Shared musical language
 
-- Bright **modern arcade electro-pop** with an orchestral lift: punchy drums, plucky synth bass, marimba and glockenspiel sparkle, short brass stabs, a little chiptune lead colour.
-- One **four-note "crown" motif** (rising, playful) shared by all cues so the soundtrack feels like one family.
-- **Boss Phase and Escape Phase share key and tempo** so the game can crossfade between them in under a second when the boss falls: both around **132 BPM, A minor**.
-- Leave space for announcer calls, warning sounds, bomb blasts and voices; no wall-of-sound mastering.
+- One family: bright, colourful **modern arcade** music with an orchestral lift, never dark or horror.
+- One **four-note "crown" motif** (rising, playful) appears in every cue, so all 14 sound like one soundtrack.
+- **Each theme's Boss and Escape cue share the same tempo and key** (table below), so the switch when the boss falls is seamless.
+- Leave space for announcer calls, warning sounds and impacts; no wall-of-sound mastering.
 
 ### Shared exclusions (append to every request)
 
 > Instrumental only, no lyrics, no vocals, no choir words, no recognizable copyrighted melody, no imitation of a named artist, composer, film, anime or game soundtrack, no harsh mastering, no clipped transients, no abrupt ending, no explosions, alarms or sound effects embedded in the music, no long exposed solo that prevents looping. Leave frequency space for announcer voice, warning cues and impact sounds.
 
-> **Pending D-36 (PLAN.md):** GDD v2.0 (AV-01) locks music that varies by the five themes and by Boss/Escape phase, plus separate menu, lobby, store/museum and result music. If D-36 option A is chosen, M02/M03 become five theme pairs (10 cues) and a Lobby cue is added; I will rewrite this section then.
-
 ### Overview
 
-| # | Cue | Use | Required | Save as |
+| # | Cue | Use | Tempo / key | Save as |
 |---|---|---|---|---|
-| M01 | Crown of the Maze | Title loop, main dashboard menus | ✔ | `M01_Crown of the Maze.mp3` |
-| M02 | Guo's Arena | Boss Phase (all themes) | ✔ | `M02_Guos Arena.mp3` |
-| M03 | Race to the Gate | Escape Phase (all themes) | ✔ | `M03_Race to the Gate.mp3` |
-| M04 | Results Fanfare | Victory / draw / defeat results (I cut three endings) | optional | `M04_Results Fanfare.mp3` |
-| M05 | Quiet Gallery | Museum, Store, Profiles, Statistics | optional | `M05_Quiet Gallery.mp3` |
-
-Five themes share M02/M03; each theme adds a quiet ambience layer synthesised in code (birds and leaves, desert wind, cave drips, neon hum, lava rumble), which covers AV-001 without ten separate tracks. If you later want per-theme music, the M02/M03 prompts can be re-run with a theme line added.
+| M01 | Crown of the Maze | Title loop, dashboard menus | 118 BPM, major | `M01_Crown of the Maze.mp3` |
+| M02 | Waiting for the Duel | Lobby, ready-up, countdown | 104 BPM, major | `M02_Waiting for the Duel.mp3` |
+| M03 | Quiet Gallery | Store, Museum, Profiles, Statistics | 90 BPM, major | `M03_Quiet Gallery.mp3` |
+| M04 | Results Fanfare | Results (win, draw and loss endings cut from one cue) | 118 BPM, major | `M04_Results Fanfare.mp3` |
+| B-GAR | Enchanted Garden: Boss | Boss Phase in Enchanted Garden | 124 BPM, D minor | `B-GAR_Enchanted Garden Boss.mp3` |
+| E-GAR | Enchanted Garden: Escape | Escape Phase in Enchanted Garden | 124 BPM, D minor | `E-GAR_Enchanted Garden Escape.mp3` |
+| B-DES | Desert Ruins: Boss | Boss Phase in Desert Ruins | 128 BPM, E minor | `B-DES_Desert Ruins Boss.mp3` |
+| E-DES | Desert Ruins: Escape | Escape Phase in Desert Ruins | 128 BPM, E minor | `E-DES_Desert Ruins Escape.mp3` |
+| B-CRY | Crystal Caverns: Boss | Boss Phase in Crystal Caverns | 120 BPM, F sharp minor | `B-CRY_Crystal Caverns Boss.mp3` |
+| E-CRY | Crystal Caverns: Escape | Escape Phase in Crystal Caverns | 120 BPM, F sharp minor | `E-CRY_Crystal Caverns Escape.mp3` |
+| B-NEO | Neon Circuit: Boss | Boss Phase in Neon Circuit | 136 BPM, A minor | `B-NEO_Neon Circuit Boss.mp3` |
+| E-NEO | Neon Circuit: Escape | Escape Phase in Neon Circuit | 136 BPM, A minor | `E-NEO_Neon Circuit Escape.mp3` |
+| B-VOL | Volcanic Citadel: Boss | Boss Phase in Volcanic Citadel | 140 BPM, C minor | `B-VOL_Volcanic Citadel Boss.mp3` |
+| E-VOL | Volcanic Citadel: Escape | Escape Phase in Volcanic Citadel | 140 BPM, C minor | `E-VOL_Volcanic Citadel Escape.mp3` |
 
 ### M01 · Crown of the Maze
 
@@ -290,29 +299,77 @@ Five themes share M02/M03; each theme adds a quiet ambience layer synthesised in
 
 > Create an instrumental title theme for a colourful competitive arcade maze game where two players challenge a playful boss. Bright modern arcade electro-pop with an orchestral lift: punchy but not loud drums, plucky synth bass, sparkling marimba and glockenspiel, short brass stabs and a light chiptune lead. Introduce a catchy rising four-note "crown" motif early, develop it with a confident, cheeky and friendly mood, never dark. Include a calmer middle section that can loop under menus, and end on a chord that loops cleanly back to the beginning. Around 118 BPM, major key, 2–3 minutes of editable material.
 
-### M02 · Guo's Arena (Boss Phase)
+### M02 · Waiting for the Duel
 
-**Use:** Boss Phase, under telegraph warnings and bombs. **Save as:** `M02_Guos Arena.mp3`
+**Use:** pre-game lobby (players joining, choosing characters, Ready). **Save as:** `M02_Waiting for the Duel.mp3`
 
-> Create an instrumental boss battle loop for a colourful top-down arcade maze game: two players race through a maze while a theatrical, mischievous boss throws telegraphed attacks from the centre. Driving electro-pop drums, a pulsing synth bass ostinato, tense staccato strings, marimba runs, bold brass hits on the downbeats and a playful version of a rising four-note "crown" motif in the lead. Tension and fun together, exciting but not aggressive or scary. Keep a steady energy suitable for a long seamless loop, with no big build-up or stop. 132 BPM, A minor, 2 minutes or more of loopable material.
+> Create an instrumental lobby loop for a colourful arcade maze duel game, playing while two players join, pick characters and get ready. Light, bouncy groove with soft punchy drums, a friendly synth bass, plucked guitar or marimba chords, gentle glockenspiel sparkles and a relaxed, teasing version of a rising four-note "crown" motif. Anticipation without stress, friendly and social. Steady energy for a long seamless loop, no big build-ups or endings inside the loop. Around 104 BPM, major key, 2 minutes or more of loopable material.
 
-### M03 · Race to the Gate (Escape Phase)
+### M03 · Quiet Gallery
 
-**Use:** Escape Phase, after the boss falls; crossfaded from M02. **Save as:** `M03_Race to the Gate.mp3`
-
-> Create an instrumental chase loop for the final race of a colourful arcade maze duel: the boss is defeated and both players sprint to grab their gem and escape through the rival's gate. Same instrumentation family as an electro-pop boss battle theme: faster-feeling double-time hi-hats and snare rolls, bouncy synth bass, urgent rising string ostinato, bright brass stabs and a triumphant, speedier variation of a rising four-note "crown" motif. Urgent, thrilling and bright, never dark. Steady energy for a seamless loop, no slowdown or ending inside the loop. 132 BPM, A minor, 2 minutes or more of loopable material.
-
-### M04 · Results Fanfare (optional)
-
-**Save as:** `M04_Results Fanfare.mp3`. Until it exists I use GPD2's `music-victory` and `music-defeat`.
-
-> Create a short instrumental results cue for a colourful arcade maze game. Start with a bright 6-second victory fanfare built on a rising four-note "crown" motif with brass, marimba and punchy drums, then settle into a relaxed, warm groove with soft synth pads and light percussion that can loop under a results screen, ending on a gentle resolved chord. Also include, after a short pause, a separate 5-second playful "close match" sting in a lighter mood. Around 118 BPM, major key, 60–90 seconds.
-
-### M05 · Quiet Gallery (optional)
-
-**Save as:** `M05_Quiet Gallery.mp3`. Until it exists I use GPD2's `music-lobby`.
+**Use:** Store, Museum, Profiles, Statistics. **Save as:** `M03_Quiet Gallery.mp3`
 
 > Create a calm instrumental background loop for a game museum and shop screen: soft electric piano, warm pads, gentle marimba, light brushed percussion and a slow, relaxed version of a rising four-note "crown" motif. Cosy, curious and friendly, quiet dynamics, suitable for a long loop without fatigue. Around 90 BPM, major key, 2 minutes or more of loopable material.
+
+### M04 · Results Fanfare
+
+**Use:** results screen; I cut a win, a draw and a loss ending from this cue. **Save as:** `M04_Results Fanfare.mp3`
+
+> Create an instrumental results cue for a colourful arcade maze game, in three clearly separated parts with a short pause between them. Part one: a bright 6-second victory fanfare built on a rising four-note "crown" motif with brass, marimba and punchy drums, then a relaxed, warm groove with soft synth pads and light percussion that can loop under a results screen. Part two: a 5-second playful "close match" sting, light and good-humoured. Part three: a 5-second gentle "better luck next time" sting, soft and encouraging, never sad. Around 118 BPM, major key, 60–90 seconds in total.
+
+### Theme cues: Boss and Escape (10 cues)
+
+Each theme has one **Boss** cue (Boss Phase: tension and fun while the boss attacks from the centre) and one **Escape** cue (Escape Phase: an urgent sprint to the exit). Make both cues of a theme on the same day, with the same tempo and key, so they crossfade cleanly.
+
+#### Enchanted Garden
+
+**B-GAR · Enchanted Garden: Boss** · Save as `B-GAR_Enchanted Garden Boss.mp3`
+
+> Create an instrumental boss battle loop for a colourful top-down arcade maze game set in a magical overgrown hedge maze full of flowers, glowing mushrooms and fireflies. Two players move through the maze while a theatrical, mischievous boss throws telegraphed attacks from the centre. Instruments: airy wooden flutes, pizzicato strings, harp glissandos, warm marimba, light hand percussion and bright synth plucks. Mood: playful and mischievous, like a garden full of tricks; tension and fun together, exciting but not aggressive or scary. Feature a playful version of a rising four-note "crown" motif in the lead, with birdsong-like flute trills and rustling-leaf shakers. Keep a steady driving energy for a long seamless loop, with no big build-up, stop or ending inside the loop. 124 BPM, D minor, 2 minutes or more of loopable material.
+
+**E-GAR · Enchanted Garden: Escape** · Save as `E-GAR_Enchanted Garden Escape.mp3`
+
+> Create an instrumental chase loop for the final race of a colourful arcade maze duel set in a magical overgrown hedge maze full of flowers, glowing mushrooms and fireflies: the boss has just been defeated and both players sprint to grab their token and escape through the exit. Same instruments as the boss battle of this place: airy wooden flutes, pizzicato strings, harp glissandos, warm marimba, light hand percussion and bright synth plucks, now with double-time hi-hats or fast hand percussion, snare rolls and an urgent rising string ostinato. Mood: playful and mischievous, like a garden full of tricks, now urgent, thrilling and triumphant. Feature a faster, triumphant variation of a rising four-note "crown" motif, with birdsong-like flute trills and rustling-leaf shakers. Steady energy for a seamless loop, no slowdown or ending inside the loop. 124 BPM, D minor, 2 minutes or more of loopable material.
+
+#### Desert Ruins
+
+**B-DES · Desert Ruins: Boss** · Save as `B-DES_Desert Ruins Boss.mp3`
+
+> Create an instrumental boss battle loop for a colourful top-down arcade maze game set in sun-baked sandstone ruins with hidden passages and ancient carvings. Two players move through the maze while a theatrical, mischievous boss throws telegraphed attacks from the centre. Instruments: darbuka and frame drums, hand claps, a plucked lute, a breathy reed melody, low strings and a warm synth bass. Mood: adventurous and sun-drenched, with a hint of ancient mystery; tension and fun together, exciting but not aggressive or scary. Feature a playful version of a rising four-note "crown" motif in the lead, with sliding reed bends and dry shaker sand textures. Keep a steady driving energy for a long seamless loop, with no big build-up, stop or ending inside the loop. 128 BPM, E minor, 2 minutes or more of loopable material.
+
+**E-DES · Desert Ruins: Escape** · Save as `E-DES_Desert Ruins Escape.mp3`
+
+> Create an instrumental chase loop for the final race of a colourful arcade maze duel set in sun-baked sandstone ruins with hidden passages and ancient carvings: the boss has just been defeated and both players sprint to grab their token and escape through the exit. Same instruments as the boss battle of this place: darbuka and frame drums, hand claps, a plucked lute, a breathy reed melody, low strings and a warm synth bass, now with double-time hi-hats or fast hand percussion, snare rolls and an urgent rising string ostinato. Mood: adventurous and sun-drenched, with a hint of ancient mystery, now urgent, thrilling and triumphant. Feature a faster, triumphant variation of a rising four-note "crown" motif, with sliding reed bends and dry shaker sand textures. Steady energy for a seamless loop, no slowdown or ending inside the loop. 128 BPM, E minor, 2 minutes or more of loopable material.
+
+#### Crystal Caverns
+
+**B-CRY · Crystal Caverns: Boss** · Save as `B-CRY_Crystal Caverns Boss.mp3`
+
+> Create an instrumental boss battle loop for a colourful top-down arcade maze game set in deep glittering caves of glowing violet and cyan crystals. Two players move through the maze while a theatrical, mischievous boss throws telegraphed attacks from the centre. Instruments: glass bells, celesta, sparkling glassy synth arpeggios, a deep round sub bass, echoing toms and soft bowed strings. Mood: shimmering and wondrous, with a cool echoing depth; tension and fun together, exciting but not aggressive or scary. Feature a playful version of a rising four-note "crown" motif in the lead, with bell echoes and glassy sparkle runs. Keep a steady driving energy for a long seamless loop, with no big build-up, stop or ending inside the loop. 120 BPM, F sharp minor, 2 minutes or more of loopable material.
+
+**E-CRY · Crystal Caverns: Escape** · Save as `E-CRY_Crystal Caverns Escape.mp3`
+
+> Create an instrumental chase loop for the final race of a colourful arcade maze duel set in deep glittering caves of glowing violet and cyan crystals: the boss has just been defeated and both players sprint to grab their token and escape through the exit. Same instruments as the boss battle of this place: glass bells, celesta, sparkling glassy synth arpeggios, a deep round sub bass, echoing toms and soft bowed strings, now with double-time hi-hats or fast hand percussion, snare rolls and an urgent rising string ostinato. Mood: shimmering and wondrous, with a cool echoing depth, now urgent, thrilling and triumphant. Feature a faster, triumphant variation of a rising four-note "crown" motif, with bell echoes and glassy sparkle runs. Steady energy for a seamless loop, no slowdown or ending inside the loop. 120 BPM, F sharp minor, 2 minutes or more of loopable material.
+
+#### Neon Circuit
+
+**B-NEO · Neon Circuit: Boss** · Save as `B-NEO_Neon Circuit Boss.mp3`
+
+> Create an instrumental boss battle loop for a colourful top-down arcade maze game set in a glowing futuristic circuit-board city at night. Two players move through the maze while a theatrical, mischievous boss throws telegraphed attacks from the centre. Instruments: pulsing synth arpeggiators, gated synth chords, punchy electronic drums, a bouncy synth bass and a bright chiptune lead. Mood: energetic and electric, retro-futuristic arcade; tension and fun together, exciting but not aggressive or scary. Feature a playful version of a rising four-note "crown" motif in the lead, with bit-crushed chiptune fills and laser-like synth sweeps. Keep a steady driving energy for a long seamless loop, with no big build-up, stop or ending inside the loop. 136 BPM, A minor, 2 minutes or more of loopable material.
+
+**E-NEO · Neon Circuit: Escape** · Save as `E-NEO_Neon Circuit Escape.mp3`
+
+> Create an instrumental chase loop for the final race of a colourful arcade maze duel set in a glowing futuristic circuit-board city at night: the boss has just been defeated and both players sprint to grab their token and escape through the exit. Same instruments as the boss battle of this place: pulsing synth arpeggiators, gated synth chords, punchy electronic drums, a bouncy synth bass and a bright chiptune lead, now with double-time hi-hats or fast hand percussion, snare rolls and an urgent rising string ostinato. Mood: energetic and electric, retro-futuristic arcade, now urgent, thrilling and triumphant. Feature a faster, triumphant variation of a rising four-note "crown" motif, with bit-crushed chiptune fills and laser-like synth sweeps. Steady energy for a seamless loop, no slowdown or ending inside the loop. 136 BPM, A minor, 2 minutes or more of loopable material.
+
+#### Volcanic Citadel
+
+**B-VOL · Volcanic Citadel: Boss** · Save as `B-VOL_Volcanic Citadel Boss.mp3`
+
+> Create an instrumental boss battle loop for a colourful top-down arcade maze game set in a fortress of black basalt over glowing rivers of lava. Two players move through the maze while a theatrical, mischievous boss throws telegraphed attacks from the centre. Instruments: big taiko-style drums, low brass, a gritty but clean synth bass, staccato low strings and wordless low pads. Mood: powerful and fiery but still fun, never horror or metal; tension and fun together, exciting but not aggressive or scary. Feature a playful version of a rising four-note "crown" motif in the lead, with rumbling drum rolls and bold brass swells. Keep a steady driving energy for a long seamless loop, with no big build-up, stop or ending inside the loop. 140 BPM, C minor, 2 minutes or more of loopable material.
+
+**E-VOL · Volcanic Citadel: Escape** · Save as `E-VOL_Volcanic Citadel Escape.mp3`
+
+> Create an instrumental chase loop for the final race of a colourful arcade maze duel set in a fortress of black basalt over glowing rivers of lava: the boss has just been defeated and both players sprint to grab their token and escape through the exit. Same instruments as the boss battle of this place: big taiko-style drums, low brass, a gritty but clean synth bass, staccato low strings and wordless low pads, now with double-time hi-hats or fast hand percussion, snare rolls and an urgent rising string ostinato. Mood: powerful and fiery but still fun, never horror or metal, now urgent, thrilling and triumphant. Feature a faster, triumphant variation of a rising four-note "crown" motif, with rumbling drum rolls and bold brass swells. Steady energy for a seamless loop, no slowdown or ending inside the loop. 140 BPM, C minor, 2 minutes or more of loopable material.
 
 ---
 
@@ -322,6 +379,6 @@ Five themes share M02/M03; each theme adds a quiet ambience layer synthesised in
 2. **IV-03, IV-04, IV-05** with IV-02 attached.
 3. **IV-01 Title** with IV-02/IV-03 attached.
 4. **FLOW-IV-TITLE-LOOP** from IV-01.
-5. **M02 + M03** (needed for the in-match feel test), then **M01**.
+5. **B-GAR + E-GAR** (Garden is Campaign chapter 1 and the first in-match feel test), then **M01**, then the other four theme pairs, then M02, M03, M04.
 6. Boss tier sets IV-11 … IV-42, Easy and Ultimate first.
-7. Optional: M04, M05, then the tile sheets IV-06 … IV-10.
+7. Optional: the tile sheets IV-06 … IV-10.

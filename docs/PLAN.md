@@ -297,7 +297,7 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 
 ### 2.6b Music (AV-01, LOCKED in v2.0)
 
-**D-36 How much music** — ⏳ v2.0 locks music that **varies by the five themes and by Boss/Escape phase**, plus **separate menu/lobby/store/museum and result music**.
+**D-36 How much music** — ✅ **Decided 15 Nov: A (14 cues; prompts in art_prompt.md §5)** v2.0 locks music that **varies by the five themes and by Boss/Escape phase**, plus **separate menu/lobby/store/museum and result music**.
 - **A (Rec). 10 in-match cues + 4 others = 14 Flow Music cues**: per theme one Boss and one Escape cue, written from one prompt template (same tempo/key per theme pair so the 0.5–1.0 s crossfade works), plus Title/Menu, Lobby, Store & Museum (one shared calm cue), Results. Placeholders from GPD2 until they arrive.
 - B. One shared Boss/Escape pair with a per-theme ambience layer (my earlier plan): 5–6 cues, but it does not meet AV-01 as written; needs a GDD revision.
 
