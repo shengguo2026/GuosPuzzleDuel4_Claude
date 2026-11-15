@@ -94,7 +94,7 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 - Bombs fly over floor traps, terrain, pickups and teleporters without effect (traps are destroyed by Shields, AB-03).
 - Bombs never damage players, so there is no self-damage and no friendly fire.
 
-**D-07 Life and hit recovery** — 🔁 reopened by v2.0 (traps take Life)
+**D-07 Life and hit recovery** — ✅ **Re-confirmed 15 Nov for v2.0 (traps take Life)**
 - 3 Life (G-003). Life is lost to **boss attacks, Spike traps and Shock traps** (ENV-TR-01/02), in both phases. Bombs still never hurt players. **Healing Heart** pickups restore 1 Life up to 3 (ENV-PU-03).
 - After a hit: 1.5 s invulnerability with blinking/outline flash: no Life loss and no trap stun during it (the trap is not consumed). No respawn, no knock-back.
 - A player at 0 Life loses (G-010); simultaneous knock-out is a draw. Because traps work in the Escape Phase too, a knock-out can now happen during the race (see D-12).
