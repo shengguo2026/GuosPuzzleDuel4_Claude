@@ -130,7 +130,7 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - **Boss-spawned traps**: 1 s warning before active (ENV-TR-05), lifetime **10 s**; removed when triggered, destroyed, expired or when the boss is defeated (ENV-TR-04, BOSS-03).
 - Immobilized time never counts as standing still for Defense (ENV-TE-04).
 
-**D-29 Teleporters** (ENV-TP-01 to 05, BAL-04)
+**D-29 Teleporters** (ENV-TP-01 to 05, BAL-04) — ✅ **Decided 15 Nov**
 - Pairs A ↔ B, both directions, no energy cost, transport happens on the tick the player enters the pad.
 - **Destination occupied or blocked** (player, shield, snare, closed gate): the player simply stays on the pad and is transported on the first tick the destination is free (no queue, no alternate tile).
 - **Both players enter the two pads of one pair on the same tick**: they swap (each destination is freed by the other leaving). **Both would land on the same tile** (impossible with pairs, kept as a guard): nobody moves that tick.
