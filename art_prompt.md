@@ -109,6 +109,10 @@ Achievement art mapping (GPD2 base set):
 | Super Star: 120 Campaign stars | `superStar` |
 | Curator: 30 Museum exhibits | `curator` |
 | Color Specialist: own every colour trim | `colorSpecialist` |
+| Trap Buster: destroy 25 traps with Shields | `combat/sapper` (GPD2 pack art) |
+| Portal Hopper: 50 teleports | `chaosArena/splitDecision` (GPD2 pack art) |
+| Ice Dancer: win a match that has ice | `chaosArena/singingInTheRain` (GPD2 pack art) |
+| Heart Collector: pick up 10 Hearts | `combat/perfectPairing` (GPD2 pack art) |
 
 ---
 

@@ -274,7 +274,7 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
   - The price is fixed at commit: if the week changes while a WiFi purchase waits for host approval, the request is re-shown with the new price instead of charging a different amount.
   - A refund within 10 minutes (ECON-05) returns exactly what was paid.
 
-**D-21 Achievements**: a catalog of ~30, Bronze/Silver/Gold/Platinum, each using an existing GPD2 or Tower Defense badge picture with a tier frame drawn in code. Mapping in `art_prompt.md` §2.
+**D-21 Achievements** — ✅ **Decided 15 Nov** (33 achievements: the 29 listed in `art_prompt.md` §2 plus Trap Buster, Portal Hopper, Ice Dancer, Heart Collector): a catalog of ~30, Bronze/Silver/Gold/Platinum, each using an existing GPD2 or Tower Defense badge picture with a tier frame drawn in code. Mapping in `art_prompt.md` §2.
 
 **D-22 Museum**: six rooms as card galleries. Exhibits reuse existing art (boss poses, achievement badges, character portraits, maze thumbnails rendered from seeds). Public showcase = up to 6 chosen exhibit cards plus profile name and character, nothing else (MUS-04).
 
