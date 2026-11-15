@@ -167,10 +167,10 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 
 ### 2.3 Match flow, boss and victory (G-001 to G-011, BOSS-01 to BOSS-05)
 
-**D-11 Maze fairness and layout (M-001/M-002)**
+**D-11 Maze fairness and layout (M-001 to M-004)** — ✅ **Decided 15 Nov: A**, with B kept for authored levels
 - **A (Rec). Point-symmetric (180° rotational) generation**: generate one half, rotate it. P1 (North) and P2 (South) get mirror-identical routes to the boss, tokens and exits. Boss arena at the centre. Fairness is exact, so the "acceptable asymmetry thresholds" become logging only.
 - B. Fully random mazes with measured asymmetry thresholds and re-roll. More variety, but needs fairness tuning (GDD marks the thresholds PROVISIONAL).
-- Authored Campaign/Challenge maps can use either; the validator still runs on both.
+- **Required (Guo, 15 Nov):** Campaign and Challenge levels may use **either** A (mirrored) or B (non-symmetric); each level's manifest declares which. The route checker (M-003, INV-07) runs on **every** level of both kinds, and for B levels the fairness report (M-004) is also produced and reviewed. Random challenges and VS matches always use A.
 - Arena: 3×3 boss core inside a 5×5 open ring on Small/Medium, 5×5 core in 7×7 ring on Large. Entrances are sealed gates during Boss Phase and open at the phase flip.
 
 **D-12 Tick order and same-tick precedence (G-011, BAL-11)** — ⏳ 🔁 rewritten for v2.0. Every host tick runs these steps in this fixed order; nothing depends on message arrival order or on P1/P2 slot order (two identical requests on one tick are treated symmetrically):
