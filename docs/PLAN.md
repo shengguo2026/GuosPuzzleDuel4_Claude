@@ -155,7 +155,7 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - If a player is on the gate tile when it should close, it stays open until the tile is clear, then closes (never crushes).
 - Boss patterns never close gates (keeps exits from being sealed).
 
-**D-33 Fog and darkness** (ENV-VI-01 to 04, BAL-06)
+**D-33 Fog and darkness** (ENV-VI-01 to 04, BAL-06) — ✅ **Decided 15 Nov**
 - **Fog** regions (authored or seeded): inside fog a player sees only tiles within **2 tiles**; outside fog normal view.
 - **Darkness** (a boss pattern, D-14): **4 s**, visible radius **3 tiles** around each player.
 - Warnings, traps within the visible radius, players' own markers, tokens, HUD and objective arrows stay visible (ENV-VI-03).
