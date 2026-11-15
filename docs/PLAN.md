@@ -206,10 +206,13 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 | Countdown cancelled before GO | No match | Nothing recorded |
 | **Unlimited Time** and nobody can finish (for example both blockading) | Either player can offer a **draw** from the pause menu; if the other accepts, regular draw | Regular draw |
 
-**D-13 Tokens (G-008, G-009, INV-03)**
-- Spawn on the boss-defeat tick at symmetric positions, each in the half *farther* from its owner's opponent entrance, so the route is token → boss arena → opponent entrance (forces crossing paths). Only the owner can pick a token up; the other player walks over it.
-- Tokens are never dropped, even when hit by a trap (simple and readable); they only vanish if their owner loses.
-- Visuals: reuse the GPD2 blue and red crystals (P1 blue, P2 red, plus "1"/"2" label for colour independence).
+**D-13 Tokens and exits (G-008, G-009, INV-03)** — ✅ **Decided 15 Nov (Guo's design)**
+- On the boss-defeat tick the boss plays its defeated pose and the arena core becomes walkable floor. **Both tokens appear where the boss stood**, side by side at mirrored positions (equal distance for both players).
+- Each player can pick up **only their own** token (INV-03); the rival walks over it with no effect.
+- On the same tick **each player's exit blinks in their colour** with their number and an arrow: P1's exit (the South original entrance) blinks blue "1", P2's exit (North) blinks red "2". The HUD shows a direction arrow to the own exit (UI-01 colour independence, UI-04).
+- Tokens are never dropped, even when hit by a trap; they only vanish if their owner loses.
+- **One match timer for the whole match** (TIME-01): it keeps running from GO through Boss and Escape Phase; there is no separate Escape timer. Expected sprint length after the boss falls (estimate, not a timer): Small 5–10 s, Medium 10–15 s, Large 15–25 s.
+- Visuals: reuse the GPD2 blue and red crystals with "1"/"2" labels.
 
 **D-14 Boss: eight attack patterns** (BOSS-01 to 04, BAL-01, BAL-07) — ⏳ **needs your signature** (v2.0 forbids implementers to invent these)
 - The boss (Guo) stays in the arena core and never walks. Every pattern runs warning → attack → recovery, with the warning never shorter than 0.6 s. It targets the nearest player; ties alternate so it never favours P1. Boss attacks deal 1 Life.
