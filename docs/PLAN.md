@@ -1,6 +1,6 @@
 # Guo's Puzzle Duel IV: gap analysis, tech stack and implementation plan
 
-Status: **decisions in progress** (v0.2, 15 Nov 2026). Source: `docs/Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf` (**GDD v2.0, read in full**; it replaces v1.0). Requirement IDs below refer to v2.0 (for example G-010, ENV-TR-01, AB-03).
+Status: **all decisions closed** (v1.0, 15 Nov 2026). Source: `docs/Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf` (**GDD v2.0, read in full**; it replaces v1.0). Requirement IDs below refer to v2.0 (for example G-010, ENV-TR-01, AB-03).
 
 This document does three things:
 
@@ -301,14 +301,14 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 - **A (Rec). 10 in-match cues + 4 others = 14 Flow Music cues**: per theme one Boss and one Escape cue, written from one prompt template (same tempo/key per theme pair so the 0.5–1.0 s crossfade works), plus Title/Menu, Lobby, Store & Museum (one shared calm cue), Results. Placeholders from GPD2 until they arrive.
 - B. One shared Boss/Escape pair with a per-theme ambience layer (my earlier plan): 5–6 cues, but it does not meet AV-01 as written; needs a GDD revision.
 
-### 2.7 Inconsistencies and small gaps found in the GDD
+### 2.7 Inconsistencies and small gaps found in the GDD — ✅ all proposals approved 15 Nov
 
 | Ref | Observation | Proposal |
 |---|---|---|
-| TIME-01 vs Campaign | Unlimited Time only in Local/WiFi VS; Campaign/Challenge timers not specified | Campaign and Challenges use the size timer unless a level overrides it |
+| TIME-01 vs Campaign | Unlimited Time only in Local/WiFi VS; Campaign/Challenge timers not specified | Campaign and Challenges use the size timer (6/10/15 min) unless a level overrides it |
 | G-004 / UI-03 | "Personal loadout" is never defined (abilities are fixed) | Loadout = character + cosmetics only |
 | UI-07 / AV-03 | "Host voice language" for shared PC vs client language | Shared PC: host's language; each remote client plays its own announcer locally from events |
-| TIME-02 | WiFi pause needs consent; what if the second player never answers? | Request expires after 10 s; the requester can still use Leave |
+| TIME-02 | WiFi pause needs consent; what if the second player never answers? | Request expires after 10 s without an answer; the requester can still use Leave |
 | ECON-05/06 | "Access purchases" are not listed anywhere | v1: Challenge categories 4 and 5 and Large Random mazes can be bought early or unlocked by play |
 | MUS-04 | Who are "authorized LAN participants"? | Approved devices in the current room only |
 | M-005 | Five visual themes imply 5 tile sets | Procedural tiles first; Codex tile sheets are optional polish |

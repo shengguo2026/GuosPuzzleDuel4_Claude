@@ -15,13 +15,13 @@ Until a file arrives the game uses a placeholder (code-drawn shape or a reused G
 ## 0. Workflow
 
 1. Generate in the order of section 3 (characters first, because the title art uses them as references).
-2. Save the files into the **Pictures** repo under `GuosPuzzleDuelIV/` with the **Save as** name (a second candidate gets `_v2`).
+2. Save the files into the **Pictures** repo under `GuosPuzzleDuel4/` with the **Save as** name (a second candidate gets `_v2`).
 3. Tell me the file names. I pull them into this repo through the asset pipeline (webp/ogg/m4a, hashed names), crop, cut tokens and wire them up.
 
 Folder layout in the Pictures repo:
 
 ```
-GuosPuzzleDuelIV/
+GuosPuzzleDuel4/
   title/       IV-01 title key art
   characters/  IV-02 … IV-05
   tiles/       IV-06 … IV-10 (optional)
@@ -130,28 +130,28 @@ One image per character, same framing so they line up in the character select an
 - **References to attach:** the style reference (§1), and for IV-03 to IV-05 also the approved IV-02, so all four match.
 - **What I check:** same scale and line weight in all four, clean transparent edges, no text, head readable at 48 px.
 
-**IV-02 · Explorer** · Save as `GuosPuzzleDuelIV/characters/char-explorer.png`
+**IV-02 · Explorer** · Save as `GuosPuzzleDuel4/characters/char-explorer.png`
 
 ```text
 A cheerful young adventurer mascot character for a colourful arcade maze game: khaki explorer jacket with many pockets, olive-green scarf, sturdy brown boots, a leather satchel across the body, a rolled paper map in the right hand, a small brass compass on a cord, short tousled brown hair under a wide-brim sand-coloured explorer hat. Full body, standing, three-quarter view facing the viewer, centred, big readable head about one third of body height, friendly confident closed-mouth smile, looking at the viewer. Transparent background, no ground shadow.
 [paste the shared style block]
 ```
 
-**IV-03 · Robot** · Save as `GuosPuzzleDuelIV/characters/char-robot.png`
+**IV-03 · Robot** · Save as `GuosPuzzleDuel4/characters/char-robot.png`
 
 ```text
 A friendly small robot mascot character for a colourful arcade maze game: rounded pearl-white and silver body with soft panel lines, a large rounded screen face showing two glowing mint-green eyes and a small curved smile line, one short antenna with a glowing yellow tip, stubby arms with three-fingered hands, the right hand giving a small wave, two short legs with rubber-grey feet, small mint-green light strips on the chest. Full body, standing, three-quarter view facing the viewer, centred, big readable head about one third of body height, same scale and framing as the attached Explorer. Transparent background, no ground shadow.
 [paste the shared style block]
 ```
 
-**IV-04 · Fox Adventurer** · Save as `GuosPuzzleDuelIV/characters/char-fox.png`
+**IV-04 · Fox Adventurer** · Save as `GuosPuzzleDuel4/characters/char-fox.png`
 
 ```text
 A clever anthropomorphic fox adventurer mascot character for a colourful arcade maze game: warm amber-orange fur with cream chest and muzzle, big pointed ears, a fluffy tail with a white tip curling beside the legs, a teal travel vest with brass buttons, a brown leather belt with small pouches, short brown boots, aviator goggles pushed up on the forehead, the left hand on the hip, the right hand holding a small glowing lantern. Full body, standing, three-quarter view facing the viewer, centred, big readable head about one third of body height, playful confident closed-mouth smile, same scale and framing as the attached Explorer. Transparent background, no ground shadow.
 [paste the shared style block]
 ```
 
-**IV-05 · Mystic Slime** · Save as `GuosPuzzleDuelIV/characters/char-slime.png`
+**IV-05 · Mystic Slime** · Save as `GuosPuzzleDuel4/characters/char-slime.png`
 
 ```text
 A cute magical slime mascot character for a colourful arcade maze game: a round, glossy, semi-translucent mint-green and lime jelly body shaped like a soft droplet, with tiny floating sparkles and a few small bubbles inside, two large shiny dark eyes with white highlights, rosy cheeks, a small happy closed-mouth smile, a tiny violet wizard hat with a golden star tilted on top, two little stubby jelly arms, the right one raised in a cheerful wave. Standing on its own base, three-quarter view facing the viewer, centred, the whole body about the same height as the attached Explorer's head-to-knee, same framing and scale. Transparent background, no ground shadow.
@@ -163,7 +163,7 @@ A cute magical slime mascot character for a colourful arcade maze game: a round,
 Used as the title screen background, the Flow title loop **start and end frame**, the Windows package image and the Museum entrance.
 
 - **Size:** 1536×1024; I crop to 16:9 (1536×864), so keep everything important in the middle 85% of the height.
-- **Save as:** `GuosPuzzleDuelIV/title/guos-puzzle-duel-iv-title.png`
+- **Save as:** `GuosPuzzleDuel4/title/guos-puzzle-duel-iv-title.png`
 - **References to attach:** style reference (§1), `guo-boss-01-idle.png` (Guo's face, crown and outfit), `char-explorer.png` (IV-02), `char-robot.png` (IV-03).
 - **Leave free:** the upper fifth (title text goes there in code) and the lower sixth (menu hint), both calm sky/floor with no small detail.
 - **What I check:** Guo's face matches the boss art, both heroes match their portraits, no text anywhere, the maze reads as a maze.
@@ -180,7 +180,7 @@ One costume per difficulty tier. **Hard reuses the Puzzle Duel III set unchanged
 - **Size:** 1024×1024, transparent background (same as the source).
 - **Attach:** the source pose from `Pictures/GuosPuzzleDuelIII/boss/` (the image to edit) and, from the second pose of a tier on, the approved idle of that tier as the costume reference.
 - **Poses per tier (8):** `01-idle`, `02-charging`, `03-attack`, `04-freeze-cast`, `05-hit`, `06-recovering`, `07-defeated`, `08-victory` (same numbers and names as the source files).
-- **Save as:** `GuosPuzzleDuelIV/boss/<tier>/guo-boss-<tier>-<NN>-<pose>.png`, for example `boss/easy/guo-boss-easy-01-idle.png`.
+- **Save as:** `GuosPuzzleDuel4/boss/<tier>/guo-boss-<tier>-<NN>-<pose>.png`, for example `boss/easy/guo-boss-easy-01-idle.png`.
 - **What I check:** face, glasses and hair identical to the source, pose identical, no blue or red aura (those mean P1/P2), clean transparent edges, no text.
 
 Edit prompt (one per pose; change only `<COSTUME>`):
@@ -208,7 +208,7 @@ The game ships procedural tiles that already look clean; these sheets only add t
 
 top-left **floor**, top-right **solid wall** (top face), bottom-left **breakable wall** (visible cracks), bottom-right **reinforced wall** (metal bands or crystal plates).
 
-Save as `GuosPuzzleDuelIV/tiles/tiles-<theme>.png`. I make the floors seamless in the pipeline.
+Save as `GuosPuzzleDuel4/tiles/tiles-<theme>.png`. I make the floors seamless in the pipeline.
 
 ```text
 A 2×2 sheet of four square top-down game tiles for a colourful arcade maze game, seen exactly from above, flat orthographic view, no perspective, no shadows falling outside the tiles, even lighting. Top-left: floor tile. Top-right: solid wall tile seen from above. Bottom-left: the same wall with clear cracks so it reads as breakable. Bottom-right: the same wall reinforced with <REINFORCEMENT>. Theme: <THEME>. Each tile fills its quarter exactly, separated by a thin neutral gap.
@@ -231,10 +231,10 @@ Rules from `Pictures/FightForPeace/FLOW_LESSONS.md` applied: locked camera, smal
 
 **FLOW-IV-TITLE-LOOP**
 
-- **Start frame:** `GuosPuzzleDuelIV/title/guos-puzzle-duel-iv-title.png` (IV-01, cropped 16:9).
+- **Start frame:** `GuosPuzzleDuel4/title/guos-puzzle-duel-iv-title.png` (IV-01, cropped 16:9).
 - **End frame (if Flow offers it):** the same picture, so the loop has no jump.
 - **Length:** 8 s.
-- **Save as:** `GuosPuzzleDuelIV/video/FLOW-IV-TITLE-LOOP.mp4`
+- **Save as:** `GuosPuzzleDuel4/video/FLOW-IV-TITLE-LOOP.mp4`
 - **What I check:** Guo's face stays identical, the orb stays beside his shoulder, the two heroes stay in their gates, the maze walls never change shape, no text appears. A usable 0–5 s range is enough; I make the seamless loop in the edit.
 
 ```text
@@ -258,7 +258,7 @@ GDD v2.0 AV-01 (LOCKED): music varies by the five themes and by Boss/Escape phas
 
 1. Open Google Flow Music, paste the cue's prompt, then append the **shared exclusions** below.
 2. Generate several candidates; keep the best one or two.
-3. Save into `GuosPuzzleDuelIV/music/` with the **Save as** name (`_v2` for a second candidate).
+3. Save into `GuosPuzzleDuel4/music/` with the **Save as** name (`_v2` for a second candidate).
 4. Tell me the file names. I cut the loops, align each theme's Boss/Escape pair for the 0.5–1.0 s crossfade when the boss falls, and make OGG/M4A.
 
 Until a cue arrives, the game plays a Duel II track in its place (menu, lobby, duel layers, victory, defeat).
