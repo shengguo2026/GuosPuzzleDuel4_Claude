@@ -88,8 +88,8 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 - It **flies through players** (both the rival and the thrower) with no effect.
 - Throwing does not stop movement. One bomb per throw; no limit on bombs in flight other than energy.
 
-**D-06 Blast and damage** — ✅ except wall interaction 🔁 (see D-10)
-- Normal Bomb: blast on the impact tile plus the 4 neighbours (+ radius 1); ~~breaks cracked walls~~ (reopened: v2.0 ENV-WA-02 says only Super Bombs remove destructible walls); **1 damage to the boss**; destroys boss attack balls in the blast. A normal bomb that hits a shield explodes harmlessly on it.
+**D-06 Blast and damage** — ✅ (wall interaction settled by D-10 A)
+- Normal Bomb: blast on the impact tile plus the 4 neighbours (+ radius 1); does **not** break walls (only Super Bombs remove destructible walls, ENV-WA-02); **1 damage to the boss**; destroys boss attack balls in the blast. A normal bomb that hits a shield explodes harmlessly on it.
 - Super Bomb (3 Attack, 2 s charge, D-03): **+ radius 2**; breaks **destructible walls, boss-created walls, Shields and Super Shields**; never timed gates or solid walls (ENV-WA-01/04); **3 damage to the boss**.
 - Bombs fly over floor traps, terrain, pickups and teleporters without effect (traps are destroyed by Shields, AB-03).
 - Bombs never damage players, so there is no self-damage and no friendly fire.
@@ -112,7 +112,7 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 - Defense does not regenerate while the player's own Shield or Super Shield is up (D-04), so blockades cannot be chained.
 - A mutual blockade (both exits blocked) runs until expiry or a Super Bomb; the timer resolves it if nobody acts.
 
-**D-10 Wall classes** — ⏳ 🔁 reopened by v2.0 (ENV-WA-01 to 06)
+**D-10 Wall classes** — ✅ **Decided 15 Nov: A (follow v2.0)**
 - v2.0 defines: **solid walls** (never destroyed), **destructible walls** (removed only by a **Super Bomb**), **boss-created temporary walls** (expire, or Super Bomb), **timed gates** (indestructible, open/close on a cycle), and **sealed shortcuts** that open on the boss-defeat tick.
 - **A (Rec). Follow v2.0 exactly**: no wall class for normal bombs. Normal bombs are the boss weapon (damage, intercepting boss balls); Super Bombs are the maze weapon (destructible walls, boss walls, Super Shields). Shortcuts are rarer and more meaningful.
 - B. Keep our earlier extra class "cracked wall" that a normal bomb breaks. More destruction and faster exploration, but a deviation from v2.0 that needs a GDD revision.
