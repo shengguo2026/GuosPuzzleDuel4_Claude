@@ -255,7 +255,11 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 5. **Iron Will**: 1 Life, stronger boss, more traps.
 Bronze/Silver/Gold thresholds per challenge are set in the level manifest (approved before M5).
 
-**D-19 Random challenges**: seed + size + tier; records kept per `(generatorVersion, seed, size, tier)`; shareable 8-character seed code.
+**D-19 Random challenges** (PROG-03) — ✅ **Decided 15 Nov**
+- The player picks size and difficulty; the game rolls a seed → mirrored maze, random theme, environment mix suited to the difficulty.
+- Every Random challenge has an 8-character code (for example `K7Q2-M9XD`) that encodes generator version, seed, size and difficulty; entering it reproduces exactly the same maze.
+- Records are kept per code, separate from Campaign and Challenges; a Random result never counts as authored completion.
+- **Saved mazes (Guo, 15 Nov):** a player can **save** a Random challenge to their profile for later replay and give it a **name** (up to 32 characters, renameable, deletable). The "My Mazes" list shows name, code, size, difficulty, theme and the player's best result, and starts a replay with one tap. Saved mazes live in the host database with the profile and travel with profile export/import. Guests cannot save (PROFILE-02) but can still see and write down the code.
 
 ### 2.5 Economy, achievements, Museum (ECON-01 to 07, MUS-01 to 05, BAL-10, CONTENT-01)
 
