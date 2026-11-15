@@ -259,7 +259,7 @@ GDD v2.0 AV-01 (LOCKED): music varies by the five themes and by Boss/Escape phas
 1. Open Google Flow Music, paste the cue's prompt, then append the **shared exclusions** below.
 2. Generate several candidates; keep the best one or two.
 3. Save into `GuosPuzzleDuel4/music/` with the **Save as** name (`_v2` for a second candidate).
-4. Tell me the file names. I cut the loops, align each theme's Boss/Escape pair for the 0.5–1.0 s crossfade when the boss falls, and make OGG/M4A.
+4. Tell me the file names. I cut the loops, set up the Boss → Escape stinger bridge (decided 15 Nov; pairs need not match), and make OGG/M4A.
 
 Until a cue arrives, the game plays a Duel II track in its place (menu, lobby, duel layers, victory, defeat).
 
@@ -319,7 +319,7 @@ Until a cue arrives, the game plays a Duel II track in its place (menu, lobby, d
 
 ### Theme cues: Boss and Escape (10 cues)
 
-Each theme has one **Boss** cue (Boss Phase: tension and fun while the boss attacks from the centre) and one **Escape** cue (Escape Phase: an urgent sprint to the exit). Make both cues of a theme on the same day, with the same tempo and key, so they crossfade cleanly.
+Each theme has one **Boss** cue (Boss Phase: tension and fun while the boss attacks from the centre) and one **Escape** cue (Escape Phase: an urgent sprint to the exit). Since 15 Nov the switch uses a stinger bridge, so the two cues of a theme no longer need the same tempo and key; the tempo/key in each prompt is a style guide only.
 
 #### Enchanted Garden
 

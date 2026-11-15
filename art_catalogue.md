@@ -18,10 +18,10 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M04 | `M04_Results Fanfare.mp3` | Approved for **win** only | Results (win) |
 | M04b | `M04b_Draw Sting.mp3`, `M04b_Loss Sting.mp3` | **Approved, fix in edit** (confirm mood by ear) | Results (draw, loss) |
 | M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
-| B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | **Approved, fix in edit** (stretch to 124 BPM) | Boss Phase, Enchanted Garden |
-| E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved, fix in edit** | Escape Phase, Enchanted Garden |
+| B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | **Approved** | Boss Phase, Enchanted Garden |
+| E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved** | Escape Phase, Enchanted Garden |
 | B-DES | `B-DES_Desert Ruins Boss.mp3` | **Approved** | Boss Phase, Desert Ruins |
-| E-DES | `E-DES_Desert Ruins Escape.mp3` | Good track, **does not pair** with B-DES; decision pending | Escape Phase, Desert Ruins |
+| E-DES | `E-DES_Desert Ruins Escape.mp3` | **Approved** | Escape Phase, Desert Ruins |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -171,7 +171,7 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - Structure: quiet intro 0:00–0:13, drive 0:14–1:16, dip 1:18–1:30, drive to 2:54, short ending, 2.3 s silence. Louder than B-GAR by about 1.7 LU, which suits the sprint.
 - **Loop:** 0:14–2:54 (or skip the 1:18–1:30 dip if it drags). True peak −0.2 dBFS → −1 dBTP.
 
-**Pairing fix in edit (instead of regenerating):**
+**Pairing:** superseded by the stinger-bridge decision (see E-DES); no stretching needed. Original plan, kept for reference:
 - Time-stretch B-GAR from 120 to 124 BPM (+3.3%, pitch kept), so beats line up at the crossfade.
 - Keys: G major → D centre is a move to the closely related dominant key, which sounds like a lift, fitting "the boss is down, now race". The 0.5–1.0 s crossfade sits under the boss-defeat sound, which masks the harmonic change.
 - If it still sounds off in game, regenerate B-GAR at 124 BPM, D minor (original prompt) rather than E-GAR.
@@ -183,19 +183,24 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - **Loop:** 0:18–2:58 (consider skipping the 0:48–0:53 dip). True peak −0.2 dBFS → −1 dBTP.
 - **E-DES:** generate with the original E-DES prompt but ending in "133 BPM, C minor with an Arabic-style scale, 2 minutes or more of loopable material." Then I measure and pair.
 
-### E-DES · Desert Ruins Escape · Decision pending
+### E-DES · Desert Ruins Escape · Approved
 
 - 2:55, **144 BPM**, key centre around **F♯ / E♭ minor**, very even level (LRA 3.5 LU: ideal for a sprint loop). Short intro 0:00–0:13, then constant drive to 2:52. True peak −0.1 dBFS → −1 dBTP.
 - Flow ignored "133 BPM, C minor". Against B-DES: 8% faster and a tritone away from C, the most distant key possible. A plain crossfade would clash; the tempo gap is too large to stretch cleanly and the key gap too large to pitch-shift.
-- **Options:** (A) regenerate E-DES until it lands near 133 BPM / C; (B) keep it and change the Boss → Escape transition for all themes to a "stinger bridge": boss music fades out under a ~1 s boss-defeat stinger, Escape starts on its own downbeat. Then no theme pair needs matching tempo or key. Asked Guo.
+- **Options:** (A) regenerate E-DES until it lands near 133 BPM / C; (B) keep it and change the Boss → Escape transition for all themes to a "stinger bridge": boss music fades out under a ~1 s boss-defeat stinger, Escape starts on its own downbeat. Then no theme pair needs matching tempo or key.
+- **Decided 15 Nov by Guo: (B) stinger bridge.** E-DES approved as is.
 
 ### Theme cues (other B-/E- cues) · Pending
 
-Lesson from the Garden pair: Flow Music doesn't reliably hit the requested key. Generate the Boss cue first, measure it, then put its actual tempo and key into the Escape prompt.
+Flow Music doesn't reliably hit the requested tempo or key, but since the stinger-bridge decision (15 Nov) Boss and Escape cues no longer need to match. Use the prompts in `art_prompt.md` as written.
 
 Each Boss/Escape pair must share tempo and key (see `art_prompt.md` §5) for the crossfade when the boss falls.
 
 ---
+
+## Decisions
+
+- **15 Nov · Boss → Escape music: stinger bridge.** When the boss falls, the boss cue fades out (about 0.3–0.5 s) under a ~1 s boss-defeat stinger, and the Escape cue starts on its own downbeat. Replaces the 0.5–1.0 s crossfade; theme pairs need not share tempo or key. Plan docs updated.
 
 ## Proposed: boss attack balls drawn as sports balls
 

@@ -162,7 +162,7 @@ Goal: a complete, deterministic match without the environment layer.
 | 6.1 | Asset pipeline (port of GPD2 `build-art.py` / asset registry): webp/ogg/m4a with hashed names; import from Pictures `GuosPuzzleDuel4/` | — | Registry check in CI |
 | 6.2 | Art integration: title, portraits and head tokens, 5 boss tier sets, achievement badges with tier frames | UI-01 | Visual checks |
 | 6.3 | Title loop video with still fallback | AV-04 | — |
-| 6.4 | Music engine: 14 cues, Boss → Escape crossfade 0.5–1.0 s, priority mixer, ducking (port of GPD2 audio engine) | AV-01, AV-02 | Music never delays the phase event |
+| 6.4 | Music engine: 14 cues, Boss → Escape stinger bridge (boss cue fades under a ~1 s defeat stinger, Escape starts on its downbeat), priority mixer, ducking (port of GPD2 audio engine) | AV-01, AV-02 | Music never delays the phase event |
 | 6.5 | Announcer EN/ZH/DE via offline TTS (port of GPD2 voice tool), subtitles, cooldowns; synthesized SFX | AV-03 | No repeated callout after reconnect |
 | 6.6 | VFX for bombs, shields, charge, blockade timer, boss telegraphs; graphics Auto/High/Standard/Reduced | AV-04, AV-05, AV-06 | Quality modes keep hitboxes and tick timing |
 | 6.7 | Full EN/ZH/DE text, CJK font subset; accessibility: high contrast, text scale, reduced motion, colour-independent markers, remapping, large touch targets | UI-01, UI-06, UI-07 | String coverage test; a11y checklist |

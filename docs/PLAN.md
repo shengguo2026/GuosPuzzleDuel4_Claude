@@ -298,7 +298,7 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 ### 2.6b Music (AV-01, LOCKED in v2.0)
 
 **D-36 How much music** — ✅ **Decided 15 Nov: A (14 cues; prompts in art_prompt.md §5)** v2.0 locks music that **varies by the five themes and by Boss/Escape phase**, plus **separate menu/lobby/store/museum and result music**.
-- **A (Rec). 10 in-match cues + 4 others = 14 Flow Music cues**: per theme one Boss and one Escape cue, written from one prompt template (same tempo/key per theme pair so the 0.5–1.0 s crossfade works), plus Title/Menu, Lobby, Store & Museum (one shared calm cue), Results. Placeholders from GPD2 until they arrive.
+- **A (Rec). 10 in-match cues + 4 others = 14 Flow Music cues**: per theme one Boss and one Escape cue, written from one prompt template (Boss → Escape uses a stinger bridge, decided 15 Nov: boss music fades out under a ~1 s boss-defeat stinger and the Escape cue starts on its own downbeat, so a pair need not share tempo or key), plus Title/Menu, Lobby, Store & Museum (one shared calm cue), Results. Placeholders from GPD2 until they arrive.
 - B. One shared Boss/Escape pair with a per-theme ambience layer (my earlier plan): 5–6 cues, but it does not meet AV-01 as written; needs a GDD revision.
 
 ### 2.7 Inconsistencies and small gaps found in the GDD — ✅ all proposals approved 15 Nov
@@ -334,7 +334,7 @@ The GDD recommends Node host + SQLite + browser clients. I keep that core and ch
 | Host server | `apps/host`: Node `http` + **`ws`**, static file serving, room/session/approval, authoritative loop, port fallback | GPD2 lan-server uses `ws` |
 | Persistence | **SQLite via `node:sqlite`** (no native build); WAL mode; migrations with pre-migration backup; fallback `better-sqlite3` if a gap appears | Meets PR/DB requirements, easy to package |
 | Client | `apps/client`: **Vite + React 19** for menus/lobby/results; **PixiJS 8** (WebGL, Canvas fallback) for the match view | Static build, works offline over LAN; Pixi keeps 31×31 + particles at 60 FPS on phones and gives the Auto/High/Standard/Reduced quality switch |
-| Audio | Web Audio: music layers with 0.5–1.0 s crossfade, priority mixer and ducking, synthesized SFX | Port GPD2 `audio/engine.ts`, `synth.ts`, `voices.ts` |
+| Audio | Web Audio: music layers, Boss → Escape stinger bridge (fade under a ~1 s defeat stinger), priority mixer and ducking, synthesized SFX | Port GPD2 `audio/engine.ts`, `synth.ts`, `voices.ts` |
 | Announcer | Offline TTS (espeak-ng + MBROLA) EN/ZH/DE, post-processed like GPD2's referee | Port GPD2 `tools/voice/build-voice.py`; no voice actor needed |
 | i18n | JSON per locale, CJK font subset for offline | GPD2 i18n + `subset-cjk-font.py` |
 | QR invites | `qrcode-generator` | Used in GPD2 |
