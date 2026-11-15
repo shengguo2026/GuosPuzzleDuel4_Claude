@@ -173,7 +173,7 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - **Required (Guo, 15 Nov):** Campaign and Challenge levels may use **either** A (mirrored) or B (non-symmetric); each level's manifest declares which. The route checker (M-003, INV-07) runs on **every** level of both kinds, and for B levels the fairness report (M-004) is also produced and reviewed. Random challenges and VS matches always use A.
 - Arena: 3×3 boss core inside a 5×5 open ring on Small/Medium, 5×5 core in 7×7 ring on Large. Entrances are sealed gates during Boss Phase and open at the phase flip.
 
-**D-12 Tick order and same-tick precedence (G-011, BAL-11)** — ⏳ 🔁 rewritten for v2.0. Every host tick runs these steps in this fixed order; nothing depends on message arrival order or on P1/P2 slot order (two identical requests on one tick are treated symmetrically):
+**D-12 Tick order and same-tick precedence (G-011, BAL-11)** — ✅ **Decided 15 Nov** (incl. both-Leave neutral draw and Unlimited-Time draw offer). Every host tick runs these steps in this fixed order; nothing depends on message arrival order or on P1/P2 slot order (two identical requests on one tick are treated symmetrically):
 
 1. Inputs: movement steps, bomb throws, shield placements (two shields aimed at the same tile: neither placed, no cost).
 2. Forced movement: teleports, ice slides, conveyor pushes (D-30 priority).
@@ -204,7 +204,7 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 | Both graces expire in the same host pass | Neutral dual-disconnect draw | No competitive win/loss |
 | Host crashes or is stopped mid-match | Interrupted, no winner | Interrupted; nothing granted |
 | Countdown cancelled before GO | No match | Nothing recorded |
-| **Unlimited Time** and nobody can finish (for example both blockading) | ⏳ Proposal: either player can offer a **draw** from the pause menu; if the other accepts, regular draw | Regular draw |
+| **Unlimited Time** and nobody can finish (for example both blockading) | Either player can offer a **draw** from the pause menu; if the other accepts, regular draw | Regular draw |
 
 **D-13 Tokens (G-008, G-009, INV-03)**
 - Spawn on the boss-defeat tick at symmetric positions, each in the half *farther* from its owner's opponent entrance, so the route is token → boss arena → opponent entrance (forces crossing paths). Only the owner can pick a token up; the other player walks over it.
