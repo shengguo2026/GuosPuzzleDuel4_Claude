@@ -234,7 +234,7 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 - Boss damage is credited per player for the economy and stats.
 - **No extra art**: patterns use the existing 8 poses per tier (02 charging = warning, 03 attack = throws/rings/walls, 04 freeze-cast = Freeze Field, Trap Seeding, Darkness); balls, rings, ice, traps, walls, darkness and impact zones are drawn in code.
 
-**D-15 Solo vs AI, Campaign and difficulty**
+**D-15 Solo vs AI, Campaign and difficulty** — ✅ **Decided 15 Nov**
 - The AI opponent uses only legal inputs through the same command queue as humans (BOSS-05). Five AI tiers by reaction delay, path planning depth, bomb-risk tolerance and Super use.
 - Campaign = Solo vs AI. Standard difficulty links AI, boss and maze tier; Custom sets them separately (PROG-05).
 
