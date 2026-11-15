@@ -137,7 +137,7 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - **Return cooldown 1.0 s** per player before they can be teleported again (ENV-TP-03).
 - Landing on a trap triggers it normally (it is visible from the pad). Teleport distance never counts for Attack (ENV-TP-04).
 
-**D-30 Special terrain** (ENV-TE-01 to 05, BAL-05)
+**D-30 Special terrain** (ENV-TE-01 to 05, BAL-05) — ✅ **Decided 15 Nov**
 - **Speed Boost** tile: +30% speed for 3 s; touching another boost **refreshes** the 3 s (no stacking).
 - **Ice**: on entering an ice tile the player keeps sliding in the same direction, one tile per normal step, until a non-ice tile or a blocker; no turning or stopping on ice; slid tiles are forced movement (no Attack).
 - **Conveyor**: pushes the player one tile in its arrow direction every 6 ticks (5 tiles/s) while they stand on it. Moving with the arrow is faster (only the player's own steps count for Attack); moving against it = standing still (but it does not count as stationary for Defense); stepping sideways off is always possible.
