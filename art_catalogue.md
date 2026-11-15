@@ -18,6 +18,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M04 | `M04_Results Fanfare.mp3` | Approved for **win** only | Results (win) |
 | M04b | `M04b_Draw Sting.mp3`, `M04b_Loss Sting.mp3` | **Approved, fix in edit** (confirm mood by ear) | Results (draw, loss) |
 | M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
+| B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | Approved if the mood fits; E-GAR must match 120 BPM, G major | Boss Phase, Enchanted Garden |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -71,14 +72,17 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 
 | Cue | Length | Tempo (target) | Key (target) | Loudness | LRA | True peak |
 |---|---|---|---|---|---|---|
-| M01 | 2:42 | 117.5 (118) | G minor / E♭ major (major) | −17.0 LUFS | 11.1 LU | −0.6 dBFS |
-| M02 | 2:57 | 103.4 (104) | C major (major) | −15.9 LUFS | 8.8 LU | −0.8 dBFS |
-| M03 | 2:40 | 89 (90) | D major (major) | −17.2 LUFS | 10.4 LU | −0.5 dBFS |
-| M04 | 1:42 | 117.5 (118) | A♭ major (major) | −15.5 LUFS | 5.2 LU | −0.5 dBFS |
-| M04b | 1:02 | 112 (118) | D major (A♭ major) | −15.2 LUFS | 9.5 LU | **+0.6 dBFS** |
-| M04b v2 | 1:01 | 117.5 (118) | G♯ minor (A♭ major) | −14.5 LUFS | 8.0 LU | −0.8 dBFS |
-| M04b Draw | 1:05 | 117.5 (118) | F major (major) | −16.0 LUFS | 2.4 LU | −0.8 dBFS |
-| M04b Loss | 1:02 | ~81 / 161 (118) | A♭ major (major) | −14.2 LUFS | 2.3 LU | −0.2 dBFS |
+| M01 | 2:42 | 120 (118) | G minor / E♭ major (major) | −17.0 LUFS | 11.1 LU | −0.6 dBFS |
+| M02 | 2:57 | 104 (104) | C major (major) | −15.9 LUFS | 8.8 LU | −0.8 dBFS |
+| M03 | 2:40 | 90 (90) | D major (major) | −17.2 LUFS | 10.4 LU | −0.5 dBFS |
+| M04 | 1:42 | 120 (118) | A♭ major (major) | −15.5 LUFS | 5.2 LU | −0.5 dBFS |
+| M04b | 1:02 | 114 (118) | D major (A♭ major) | −15.2 LUFS | 9.5 LU | **+0.6 dBFS** |
+| M04b v2 | 1:01 | 120 (118) | G♯ minor (A♭ major) | −14.5 LUFS | 8.0 LU | −0.8 dBFS |
+| M04b Draw | 1:05 | 120 (118) | F major (major) | −16.0 LUFS | 2.4 LU | −0.8 dBFS |
+| M04b Loss | 1:02 | 82 (118) | A♭ major (major) | −14.2 LUFS | 2.3 LU | −0.2 dBFS |
+| B-GAR | 2:57 | 120 (124) | G major (D minor) | −16.2 LUFS | 7.8 LU | −0.6 dBFS |
+
+Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
 ### M01 · Crown of the Maze · Approved, fix in edit (confirm mood)
 
@@ -117,14 +121,14 @@ If Flow won't separate them, generate each sting on its own.
 
 ### M04b · Results Stings · Candidates cut, confirm by ear
 
-- Again Flow ignored the layout: a 62 s continuous piece, not two 5 s stings with silence between. D major at 112 BPM instead of A♭ at 118 (acceptable: stings play on their own, not mixed with M04).
+- Again Flow ignored the layout: a 62 s continuous piece, not two 5 s stings with silence between. D major at 114 BPM instead of A♭ at 118 (acceptable: stings play on their own, not mixed with M04).
 - Structure: bright opening 0:00–0:05.5, soft passage 0:05.5–0:13, groove 0:13–0:55, soft 0:55.5–0:58, final hit 0:58–0:59.4, silence.
 - **Draw candidate:** 0:00–0:05.5 (bright, playful opening), with a 0.3 s fade out.
 - **Loss candidate:** 0:05.5–0:13 (soft, about 10 dB quieter), with fades in and out. Alternative: 0:55.5–0:59.4 (soft lead-in plus final hit).
 - **Issue:** true peak +0.6 dBFS (inter-sample overs); normalise to −1 dBTP in the edit.
 - If the moods don't fit by ear, generate each sting on its own with a very short prompt.
 
-**v2 (`M04b_Results Stings_v2.mp3`): not better for stings.** Again one continuous 61 s piece with no gaps. Tempo is right (117.5) and the peak is fine (−0.8 dBFS), but it reads as G♯ minor, which risks sounding sad (brief: "never sad"). Structure: lighter opening 0:00–0:14 with small dips at 0:02.5, 0:07 and 0:13, groove 0:14.5–0:48, long natural fade 0:48–0:58. Only usable piece: the fade 0:50–0:58 as a loss candidate, if it doesn't sound sad.
+**v2 (`M04b_Results Stings_v2.mp3`): not better for stings.** Again one continuous 61 s piece with no gaps. Tempo is close (120) and the peak is fine (−0.8 dBFS), but it reads as G♯ minor, which risks sounding sad (brief: "never sad"). Structure: lighter opening 0:00–0:14 with small dips at 0:02.5, 0:07 and 0:13, groove 0:14.5–0:48, long natural fade 0:48–0:58. Only usable piece: the fade 0:50–0:58 as a loss candidate, if it doesn't sound sad.
 
 **Recommended next step:** generate each sting separately (one request each, 5–8 s), prompts:
 
@@ -140,14 +144,22 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 
 **Separate stings: Approved, fix in edit.** Asked for 6 s each; Flow Music still returned about a minute each (it seems to have a minimum length), but both are now single-mood, major-key pieces with very even level (LRA ~2 LU).
 
-- `M04b_Draw Sting.mp3`: F major, 117.5 BPM, −16 LUFS. 2 s fade-in, steady to 1:01.5, then a quick ending.
+- `M04b_Draw Sting.mp3`: F major, 120 BPM, −16 LUFS. 2 s fade-in, steady to 1:01.5, then a quick ending.
   - **Cut:** the last ~6 s (about 0:55.5–1:02), which includes the real ending. Backup: 0:01.5–0:08 with a 1 s fade.
 - `M04b_Loss Sting.mp3`: A♭ major (same key as M04, a nice link), slow feel, −14.2 LUFS, true peak −0.2 dBFS.
   - **Cut:** the last ~6 s (about 0:54–1:00), including its natural 2 s decay. Backup: 0:00–0:06 with a 1 s fade.
   - **Fix:** it's the loudest cue so far for a "gentle" sting: play it about 3–4 dB below the draw sting; −1 dBTP.
 - Mood ("playful" vs "encouraging, never sad") can't be measured; confirm by ear.
 
-### Theme cues (B-/E- for five themes) · Pending
+### B-GAR · Enchanted Garden Boss · Approved if the mood fits
+
+- 2:57, **120 BPM in G major**, not the 124 BPM D minor asked for. Brighter and more playful than planned; "tension and fun" is now mostly fun.
+- Structure: quiet intro 0:00–0:15, steady drive 0:16–2:18 with small dips (0:46–1:00, 1:18, 1:46), softer outro 2:20–2:48, fade by 2:54, then 2.3 s of silence.
+- **Loop:** 0:16–2:18 on bar boundaries. −1 dBTP.
+- **Pairing rule:** the Escape cue must share tempo and key for the crossfade. Cheapest fix: keep B-GAR and generate **E-GAR at 120 BPM, G major** (change the last line of the E-GAR prompt to "120 BPM, G major, 2 minutes or more of loopable material"). Alternative: regenerate B-GAR in D minor at 124.
+- If the theme table changes, Crystal Caverns also runs at 120 BPM (F♯ minor), which is fine because the keys differ.
+
+### Theme cues (other B-/E- cues) · Pending
 
 Each Boss/Escape pair must share tempo and key (see `art_prompt.md` §5) for the crossfade when the boss falls.
 
