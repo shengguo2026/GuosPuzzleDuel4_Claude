@@ -238,7 +238,7 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 - The AI opponent uses only legal inputs through the same command queue as humans (BOSS-05). Five AI tiers by reaction delay, path planning depth, bomb-risk tolerance and Super use.
 - Campaign = Solo vs AI. Standard difficulty links AI, boss and maze tier; Custom sets them separately (PROG-05).
 
-### 2.4 Content and progression (PROG-01 to PROG-05, BAL-09) — ⏳ needs your approval (v2.0 PROG-04: do not invent)
+### 2.4 Content and progression (PROG-01 to PROG-05, BAL-09) — ✅ approach approved; the level manifest itself is approved level by level before M5
 
 **D-16 How levels are authored** — ✅ **Decided 15 Nov: B** (the full 65-level manifest is delivered for level-by-level approval before M5)
 - A. Hand-drawn tile maps for all 65 levels.
@@ -285,15 +285,15 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 
 ### 2.6 Network, persistence, operations (NET-01 to 10, DB-01 to 04, OPS-01 to 04)
 
-**D-23 Network numbers (NET-01)**: heartbeat 2 s, unresponsive at 6 s → DISCONNECT_PAUSED; inputs older than 250 ms (8 ticks) are applied at the current tick, not rewound; interpolation buffer 100 ms; reconnect token rotates on each reconnect, expires at grace end.
+**D-23 Network numbers (NET-10)** — ✅ **Decided 15 Nov**: heartbeat 2 s, unresponsive at 6 s → DISCONNECT_PAUSED; inputs older than 250 ms (8 ticks) are applied at the current tick, not rewound; interpolation buffer 100 ms; reconnect token rotates on each reconnect, expires at grace end.
 
-**D-24 Security (NET-09, NET-10)**: invite token 128-bit random, single-room, revocable; session credential bound to device + slot; Origin check on WebSocket upgrade; schema validation on every message; per-connection rate limit (60 msgs/s). HTTPS/WSS stays a later evaluation item (NET-09); v1 stays HTTP on LAN with the warning text the GDD asks for.
+**D-24 Security (NET-09, NET-10)** — ✅ **Decided 15 Nov**: invite token 128-bit random, single-room, revocable; session credential bound to device + slot; Origin check on WebSocket upgrade; schema validation on every message; per-connection rate limit (60 msgs/s). HTTPS/WSS stays a later evaluation item (NET-09); v1 stays HTTP on LAN with the warning text the GDD asks for.
 
-**D-25 Ports (OPS-02, OPS-03)**: one Node bootstrap tries 3000, then 3001 … 3019 (20 candidates), reports the actually bound port to the launcher, URL and QR. Single host per user-data directory via a lock file with PID + start time plus SQLite `BEGIN EXCLUSIVE` check.
+**D-25 Ports (OPS-02, OPS-03)** — ✅ **Decided 15 Nov**: one Node bootstrap tries 3000, then 3001 … 3019 (20 candidates), reports the actually bound port to the launcher, URL and QR. Single host per user-data directory via a lock file with PID + start time plus SQLite `BEGIN EXCLUSIVE` check.
 
-**D-26 Backups (OPS-02)**: automatic backup after each finalized session and daily (7 daily / 4 weekly / 3 monthly, as GDD), using SQLite online backup API into the user-data directory, no encryption in v1 (local only), manual Back Up / Restore and profile export/import as signed JSON (SHA-256 hash for integrity).
+**D-26 Backups (DB-03, DB-04)** — ✅ **Decided 15 Nov**: automatic backup after each finalized session and daily (7 daily / 4 weekly / 3 monthly, as GDD), using SQLite online backup API into the user-data directory, no encryption in v1 (local only), manual Back Up / Restore and profile export/import as signed JSON (SHA-256 hash for integrity).
 
-**D-27 Where user data lives (OPS-04)**: Windows `%LOCALAPPDATA%\GuosPuzzleDuel4\`, macOS `~/Library/Application Support/GuosPuzzleDuel4/`, Linux `~/.local/share/guos-puzzle-duel-4/`.
+**D-27 Where user data lives (OPS-04)** — ✅ **Decided 15 Nov**: Windows `%LOCALAPPDATA%\GuosPuzzleDuel4\`, macOS `~/Library/Application Support/GuosPuzzleDuel4/`, Linux `~/.local/share/guos-puzzle-duel-4/`.
 
 ### 2.6b Music (AV-01, LOCKED in v2.0)
 
