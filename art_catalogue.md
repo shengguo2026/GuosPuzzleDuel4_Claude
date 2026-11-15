@@ -27,6 +27,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | B-NEO | `B-NEO_Neon Circuit Boss.mp3` | **Approved** | Boss Phase, Neon Circuit |
 | E-NEO | `E-NEO_Neon Circuit Escape.mp3` | **Approved, fix in edit** (cut breakdowns) | Escape Phase, Neon Circuit |
 | B-VOL | `B-VOL_Volcanic Citadel Boss.mp3` | **Approved** | Boss Phase, Volcanic Citadel |
+| E-VOL | `E-VOL_Volcanic Citadel Escape.mp3` | **Approved, fix in edit** (level and peak) | Escape Phase, Volcanic Citadel |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -97,6 +98,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | B-NEO | 2:27 | 136 (136) | no clear key, chromatic around G/F♯ (A minor) | −14.4 LUFS | 8.5 LU | −0.7 dBFS |
 | E-NEO | 2:54 | 136 (136) | D, major/minor mix (A minor) | −15.5 LUFS | 8.3 LU | −1.2 dBFS |
 | B-VOL | 2:48 | 140 (140) | F minor (C minor) | −15.9 LUFS | 4.9 LU | −0.3 dBFS |
+| E-VOL | 2:57 | 146 (140) | no clear key, chromatic around G/F♯ (C minor) | −13.5 LUFS | 3.6 LU | **+0.2 dBFS** |
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
@@ -233,7 +235,16 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - Very even level (LRA 4.9 LU), ideal for a loop. The first 20 s alternate with short drum drop-outs (taiko-style hits and gaps), then a steady drive from 0:20 to 2:44 with only a brief dip at 1:58. Ends with a fairly hard stop at 2:45.
 - **Fix in edit:** loop 0:20–2:44 on bar lines (one bar = 1.714 s at 140 BPM), drop the hard ending; true peak −0.3 dBFS → −1 dBTP.
 
-### Theme cues (other B-/E- cues) · Pending
+### E-VOL · Volcanic Citadel Escape · Approved, fix in edit
+
+- 2:57, **146 BPM** (asked 140; faster suits the final sprint), no clear key (chromatic, around G/F♯) instead of C minor.
+- Most constant cue of the set (LRA 3.6 LU): drive from 0:12 to 2:51 with only small dips at 0:40 and 2:12. Short intro, fade by 2:54.
+- **Loudest cue** at −13.5 LUFS and true peak **+0.2 dBFS** (over full scale).
+- **Fix in edit:** loop 0:12–2:51; turn down about 2 dB to sit with the other Escape cues; −1 dBTP.
+
+### Music status
+
+All 14 cues are delivered and approved (M04 covers win; M04b Draw/Loss Sting cover draw and loss). Every cue still gets the −1 dBTP trim and loop cut in the edit.
 
 Flow Music doesn't reliably hit the requested tempo or key, but since the stinger-bridge decision (15 Nov) Boss and Escape cues no longer need to match. Use the prompts in `art_prompt.md` as written.
 
