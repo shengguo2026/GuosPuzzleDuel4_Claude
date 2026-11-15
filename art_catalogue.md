@@ -16,7 +16,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M02 | `M02_Waiting for the Duel.mp3` | **Approved** | Lobby, ready-up, countdown |
 | M03 | `M03_Quiet Gallery.mp3` | **Approved** | Store, Museum, Profiles, Statistics |
 | M04 | `M04_Results Fanfare.mp3` | Approved for **win** only | Results (win) |
-| M04b | `M04b_Results Stings.mp3` | Pending | Results (draw, loss) |
+| M04b | `M04b_Results Stings.mp3` | Candidates cut, confirm by ear | Results (draw, loss) |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -66,7 +66,7 @@ Locked camera, no movement. The man in the centre keeps his arms crossed, breath
 
 ## Music
 
-All four delivered cues are 48 kHz stereo MP3 at 128 kb/s. All have a true peak around −0.5 to −0.8 dBFS: **trim to −1 dBTP during OGG/M4A conversion** (applies to every cue).
+All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak around −0.5 to −0.8 dBFS (M04b goes over 0): **trim to −1 dBTP during OGG/M4A conversion** (applies to every cue).
 
 | Cue | Length | Tempo (target) | Key (target) | Loudness | LRA | True peak |
 |---|---|---|---|---|---|---|
@@ -74,6 +74,7 @@ All four delivered cues are 48 kHz stereo MP3 at 128 kb/s. All have a true peak 
 | M02 | 2:57 | 103.4 (104) | C major (major) | −15.9 LUFS | 8.8 LU | −0.8 dBFS |
 | M03 | 2:40 | 89 (90) | D major (major) | −17.2 LUFS | 10.4 LU | −0.5 dBFS |
 | M04 | 1:42 | 117.5 (118) | A♭ major (major) | −15.5 LUFS | 5.2 LU | −0.5 dBFS |
+| M04b | 1:02 | 112 (118) | D major (A♭ major) | −15.2 LUFS | 9.5 LU | **+0.6 dBFS** |
 
 ### M01 · Crown of the Maze · Approved, fix in edit (confirm mood)
 
@@ -109,6 +110,15 @@ Two short instrumental stings for a colourful arcade game, about 5 seconds each,
 ```
 
 If Flow won't separate them, generate each sting on its own.
+
+### M04b · Results Stings · Candidates cut, confirm by ear
+
+- Again Flow ignored the layout: a 62 s continuous piece, not two 5 s stings with silence between. D major at 112 BPM instead of A♭ at 118 (acceptable: stings play on their own, not mixed with M04).
+- Structure: bright opening 0:00–0:05.5, soft passage 0:05.5–0:13, groove 0:13–0:55, soft 0:55.5–0:58, final hit 0:58–0:59.4, silence.
+- **Draw candidate:** 0:00–0:05.5 (bright, playful opening), with a 0.3 s fade out.
+- **Loss candidate:** 0:05.5–0:13 (soft, about 10 dB quieter), with fades in and out. Alternative: 0:55.5–0:59.4 (soft lead-in plus final hit).
+- **Issue:** true peak +0.6 dBFS (inter-sample overs); normalise to −1 dBTP in the edit.
+- If the moods don't fit by ear, generate each sting on its own with a very short prompt.
 
 ### Theme cues (B-/E- for five themes) · Pending
 
