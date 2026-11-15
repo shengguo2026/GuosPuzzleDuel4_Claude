@@ -16,7 +16,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M02 | `M02_Waiting for the Duel.mp3` | **Approved** | Lobby, ready-up, countdown |
 | M03 | `M03_Quiet Gallery.mp3` | **Approved** | Store, Museum, Profiles, Statistics |
 | M04 | `M04_Results Fanfare.mp3` | Approved for **win** only | Results (win) |
-| M04b | `M04b_Results Stings.mp3` | Candidates cut, confirm by ear | Results (draw, loss) |
+| M04b | `M04b_Draw Sting.mp3`, `M04b_Loss Sting.mp3` | **Approved, fix in edit** (confirm mood by ear) | Results (draw, loss) |
+| M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -76,6 +77,8 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | M04 | 1:42 | 117.5 (118) | A♭ major (major) | −15.5 LUFS | 5.2 LU | −0.5 dBFS |
 | M04b | 1:02 | 112 (118) | D major (A♭ major) | −15.2 LUFS | 9.5 LU | **+0.6 dBFS** |
 | M04b v2 | 1:01 | 117.5 (118) | G♯ minor (A♭ major) | −14.5 LUFS | 8.0 LU | −0.8 dBFS |
+| M04b Draw | 1:05 | 117.5 (118) | F major (major) | −16.0 LUFS | 2.4 LU | −0.8 dBFS |
+| M04b Loss | 1:02 | ~81 / 161 (118) | A♭ major (major) | −14.2 LUFS | 2.3 LU | −0.2 dBFS |
 
 ### M01 · Crown of the Maze · Approved, fix in edit (confirm mood)
 
@@ -135,6 +138,15 @@ A 6-second gentle "better luck next time" music sting for a colourful arcade gam
 
 Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still return a longer piece; then the opening seconds usually hold the sting.
 
+**Separate stings: Approved, fix in edit.** Asked for 6 s each; Flow Music still returned about a minute each (it seems to have a minimum length), but both are now single-mood, major-key pieces with very even level (LRA ~2 LU).
+
+- `M04b_Draw Sting.mp3`: F major, 117.5 BPM, −16 LUFS. 2 s fade-in, steady to 1:01.5, then a quick ending.
+  - **Cut:** the last ~6 s (about 0:55.5–1:02), which includes the real ending. Backup: 0:01.5–0:08 with a 1 s fade.
+- `M04b_Loss Sting.mp3`: A♭ major (same key as M04, a nice link), slow feel, −14.2 LUFS, true peak −0.2 dBFS.
+  - **Cut:** the last ~6 s (about 0:54–1:00), including its natural 2 s decay. Backup: 0:00–0:06 with a 1 s fade.
+  - **Fix:** it's the loudest cue so far for a "gentle" sting: play it about 3–4 dB below the draw sting; −1 dBTP.
+- Mood ("playful" vs "encouraging, never sad") can't be measured; confirm by ear.
+
 ### Theme cues (B-/E- for five themes) · Pending
 
 Each Boss/Escape pair must share tempo and key (see `art_prompt.md` §5) for the crossfade when the boss falls.
@@ -148,7 +160,7 @@ Boss patterns 1 (Orb Shot), 3 (Twin Orbs) and 8 (Ball Rain) throw "balls" (docs/
 ## Lessons for the next prompts
 
 - Flow follows short prompts with a start frame better than long ones; ask for no sound on video. Flow may still add audio and reinterpret small details (the ball cluster became two balls).
-- Flow Music tends to ignore multi-part structure; ask for one part per generation.
+- Flow Music tends to ignore multi-part structure; ask for one part per generation. It also returns about a minute even when asked for 6 s, so plan to cut stings from the ending.
 - Name the key explicitly ("bright major key") and ask for a resolving final chord.
 - Images: if a character reference doesn't exist yet, describe it in words and say what it is NOT (e.g. "NOT the boss", "NOT a cannon").
 - Images: specify empty margins as percentages ("top 22% empty sky") and "camera pulled far back".
