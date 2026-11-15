@@ -75,6 +75,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | M03 | 2:40 | 89 (90) | D major (major) | −17.2 LUFS | 10.4 LU | −0.5 dBFS |
 | M04 | 1:42 | 117.5 (118) | A♭ major (major) | −15.5 LUFS | 5.2 LU | −0.5 dBFS |
 | M04b | 1:02 | 112 (118) | D major (A♭ major) | −15.2 LUFS | 9.5 LU | **+0.6 dBFS** |
+| M04b v2 | 1:01 | 117.5 (118) | G♯ minor (A♭ major) | −14.5 LUFS | 8.0 LU | −0.8 dBFS |
 
 ### M01 · Crown of the Maze · Approved, fix in edit (confirm mood)
 
@@ -119,6 +120,20 @@ If Flow won't separate them, generate each sting on its own.
 - **Loss candidate:** 0:05.5–0:13 (soft, about 10 dB quieter), with fades in and out. Alternative: 0:55.5–0:59.4 (soft lead-in plus final hit).
 - **Issue:** true peak +0.6 dBFS (inter-sample overs); normalise to −1 dBTP in the edit.
 - If the moods don't fit by ear, generate each sting on its own with a very short prompt.
+
+**v2 (`M04b_Results Stings_v2.mp3`): not better for stings.** Again one continuous 61 s piece with no gaps. Tempo is right (117.5) and the peak is fine (−0.8 dBFS), but it reads as G♯ minor, which risks sounding sad (brief: "never sad"). Structure: lighter opening 0:00–0:14 with small dips at 0:02.5, 0:07 and 0:13, groove 0:14.5–0:48, long natural fade 0:48–0:58. Only usable piece: the fade 0:50–0:58 as a loss candidate, if it doesn't sound sad.
+
+**Recommended next step:** generate each sting separately (one request each, 5–8 s), prompts:
+
+```text
+A 6-second playful "close match" music sting for a colourful arcade game: marimba and light brass, good-humoured, bright major key, ends on a clean final chord. Instrumental, no sound effects.
+```
+
+```text
+A 6-second gentle "better luck next time" music sting for a colourful arcade game: soft piano and warm pads, encouraging and friendly, major key, never sad, ends on a soft final chord. Instrumental, no sound effects.
+```
+
+Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still return a longer piece; then the opening seconds usually hold the sting.
 
 ### Theme cues (B-/E- for five themes) · Pending
 
