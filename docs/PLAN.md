@@ -118,7 +118,7 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 - B. Keep our earlier extra class "cracked wall" that a normal bomb breaks. More destruction and faster exploration, but a deviation from v2.0 that needs a GDD revision.
 - Either way: the generator guarantees every mandatory route (spawn → boss, spawn → token, token → opposite entrance) exists **without destroying anything** and with timed gates recurring open; destruction only adds shortcuts. Destroyed walls stay destroyed. Sealed shortcuts are placed symmetrically and both escape paths stay valid with or without them (ENV-WA-05).
 
-### 2.2b Environment (new in GDD v2.0, section 4) — ⏳ all open
+### 2.2b Environment (new in GDD v2.0, section 4) — ✅ all decided 15 Nov
 
 All environment entities are host-simulated in ticks, placed **point-symmetrically** (D-11) so P1 and P2 face the same elements, drawn in code (no new art), and **identical in every theme** (M-005; the theme changes only the look).
 
@@ -161,9 +161,9 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - Warnings, traps within the visible radius, players' own markers, tokens, HUD and objective arrows stay visible (ENV-VI-03).
 - **Shared screen (Local VS)**: the screen shows the **union** of what both players can see. Both players get exactly the same information, so parity holds. **WiFi VS**: each device shows only its own player's view.
 
-**D-34 Phase shortcuts** (ENV-WA-05): 2 symmetric pairs of sealed shortcut walls per maze (Small 1 pair); they open on the boss-defeat tick together with the token spawn, and are drawn as sealed doors with a crown symbol so players can plan the escape.
+**D-34 Phase shortcuts** (ENV-WA-05) — ✅ **Decided 15 Nov**: sealed doors in mirrored pairs (Small 1 pair, Medium and Large 2 pairs), on routes from the boss arena toward the exits (tokens appear at the boss, D-13); they open on the boss-defeat tick together with the token spawn; drawn as sealed doors with a crown symbol, visible from the start so players can plan the sprint; both exits stay reachable without them.
 
-**D-35 Interaction matrix** (ENV-TR-08, ENV-TE-05, §17): implemented as one ordered tick pipeline (D-12) plus one test per row of GDD §17. Open rows are closed by the rules above.
+**D-35 Interaction matrix** (ENV-TR-08, ENV-TE-05, §17) — ✅ **Decided 15 Nov**: implemented as one ordered tick pipeline (D-12) plus one test per row of GDD §17. Open rows are closed by the rules above.
 
 ### 2.3 Match flow, boss and victory (G-001 to G-011, BOSS-01 to BOSS-05)
 
