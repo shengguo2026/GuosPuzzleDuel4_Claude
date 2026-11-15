@@ -122,7 +122,7 @@ Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running
 
 All environment entities are host-simulated in ticks, placed **point-symmetrically** (D-11) so P1 and P2 face the same elements, drawn in code (no new art), and **identical in every theme** (M-005; the theme changes only the look).
 
-**D-28 Traps** (ENV-TR-01 to 08, BAL-03)
+**D-28 Traps** (ENV-TR-01 to 08, BAL-03) — ✅ **Decided 15 Nov**
 - All traps are **always visible** (no hidden traps; ENV-TR-07). Never placed on a tile every route must cross (validator).
 - **Spike Trap**: on contact, 1 Life and **0.5 s** immobilized; a maze spike persists until triggered (then removed) or destroyed by a Shield.
 - **Shock Trap**: cycles **1.5 s dangerous / 2.5 s safe**, with a **0.5 s** warning glow before it turns dangerous; contact in the dangerous window costs 1 Life; not consumed (it keeps cycling) until a Shield destroys it.
