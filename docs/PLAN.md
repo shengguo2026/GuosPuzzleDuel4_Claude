@@ -60,10 +60,20 @@ Notation: **Rec** marks the recommended option. Numbers are starting values kept
 - **B (Rec). Same button, tap vs. hold**: tap (released < 0.25 s) = normal ability; hold shows a charge ring; release after **2.0 s** with 3 energy = Super; release between 0.25 s and 2.0 s cancels with **no cost**. Cost is deducted on commit only (host tick of release). Charging does not slow movement. Taking damage cancels the charge (no cost).
 - If energy < 3 the ring does not fill (greyed); tapping still gives a normal ability.
 
-**D-04 Resource regeneration details**
+**D-04 Resource regeneration details** — ✅ **Decided 15 Nov: GDD values as default + Energy presets**
 - Attack +1 per **12 tiles entered by the player's own movement input**. Progress carries over (not reset when stopping). Knock-back or other forced movement does not count (C-002).
 - Defense +1 per **7.0 s continuously standing still** with no movement input, not charging, not stunned, not paused. Any movement input resets the 7 s counter to zero.
 - Both at 3 cap: progress stops (no banking).
+- **Added rule (all presets):** Defense does not regenerate while the player's own Shield or Super Shield barrier is active. This prevents a chained Super Shield blockade.
+- **Energy setting** (drop-down; host-owned shared setting in Local VS, WiFi VS and Custom; changing it resets both Ready flags per G-007). Campaign and Challenges use fixed values per level so stars, medals and records stay comparable; "Scarce Energy" challenges use Tactical.
+
+| Preset | Attack +1 per | Defense +1 per | Super Bomb from 0 (running) | Shield max uptime | Gap after a Super Shield before the next one |
+|---|---|---|---|---|---|
+| Tactical | 15 tiles (2.5 s) | 9 s | 7.5 s | 25% | ≥ 29 s |
+| **Normal (default, GDD C-002/C-003)** | **12 tiles (2.0 s)** | **7 s** | **6.0 s** | **30%** | **≥ 23 s** |
+| Fast | 9 tiles (1.5 s) | 5 s | 4.5 s | 37.5% | ≥ 17 s |
+
+Limits that keep every preset fair: Super Bomb always needs ≥ 4.5 s of running (a barrier cannot be answered instantly), the blockade gap is always ≥ 17 s, and a normal Shield is never up more than 40% of the time. Starting energy stays 1/3 in all presets. Values live in `balance.v1.json`; the three presets are the only player-facing choices (no free number entry).
 
 ### 2.2 Combat (C-004 to C-007, BAL-04)
 
