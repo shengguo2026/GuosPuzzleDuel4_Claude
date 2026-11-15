@@ -11,7 +11,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 |---|---|---|---|
 | IV-01 | `guos-puzzle-duel-iv-title_v2.png` | **Approved** | Title background, Flow start/end frame, package image, Museum entrance |
 | IV-01 | `guos-puzzle-duel-iv-title.png` (v1) | Rejected | Superseded by v2 |
-| FLOW-IV-TITLE-LOOP | `FLOW-IV-TITLE-LOOP.mp4` | Pending | Title loop clip (prompt below) |
+| FLOW-IV-TITLE-LOOP | `TitleLoop.mp4` | **Approved, fix in edit** | Title loop clip (use 1.0–7.9 s, crossfade loop) |
 | M01 | `M01_Crown of the Maze.mp3` | Approved, fix in edit (mood to confirm by ear) | Title, dashboard menus |
 | M02 | `M02_Waiting for the Duel.mp3` | **Approved** | Lobby, ready-up, countdown |
 | M03 | `M03_Quiet Gallery.mp3` | **Approved** | Store, Museum, Profiles, Statistics |
@@ -46,17 +46,21 @@ Not yet checked by analysis on any music cue: the four-note "crown" motif. Confi
 
 ## Video
 
-### FLOW-IV-TITLE-LOOP · Pending
+### FLOW-IV-TITLE-LOOP · Approved, fix in edit
 
-Start frame (and end frame, if offered): title v2. 8 s, 16:9. Flow works best with a short prompt, the start frame and no sound; any audio is stripped in the edit.
+Delivered as `TitleLoop.mp4` (save in the repo as `FLOW-IV-TITLE-LOOP.mp4`): 1280×720, 24 fps, 7.9 s, H.264 with an AAC audio track.
+
+- Frame 0 matches title v2. Guo's face, crown and pose stay identical; he blinks. Explorer and Robot stay in their gates; maze walls never change shape; no text.
+- **Change from the still:** within the first 0.5 s the sports-ball cluster splits into two balls, a soccer ball left of his head and a basketball right. Stable from about 1.0 s to the end. Looks good; accepted.
+- **Sparkles:** from about 2 s, sparkle fountains rise into the top sky where the title text sits. Busy but not blocking; the title gets a soft shadow/glow in code to stay readable.
+- **Fix in edit:** use 1.0–7.9 s, crossfade the last ~0.5 s into the start for a seamless loop; strip the audio; poster image = a frame at 1.0 s (not v2, so there's no jump from the cluster to two balls when the video starts).
+- Resolution is 720p versus the 1672×941 still; acceptable for a background behind UI.
+
+Prompt used (short, start frame only, no sound):
 
 ```text
 Locked camera, no movement. The man in the centre keeps his arms crossed, breathes slowly and blinks once; the sports balls beside his shoulder slowly rotate in their glow. The explorer and the robot stay still in their gates; the robot's eyes softly pulse. Torches flicker, crystals twinkle, sparkles drift upward. The maze stays exactly the same. Nobody walks or changes pose. Mouths closed. No text. No sound, no music.
 ```
-
-Fallback if it drifts: "Locked camera. Torches flicker, crystals twinkle, sparkles drift upward, the man blinks once." Last resort: animate the still in code (no credit cost).
-
-What I check: Guo's face identical, balls stay at his shoulder, both heroes stay in their gates, walls don't warp, no text. A usable 0–5 s range is enough.
 
 ---
 
@@ -112,9 +116,13 @@ Each Boss/Escape pair must share tempo and key (see `art_prompt.md` §5) for the
 
 ---
 
+## Proposed: boss attack balls drawn as sports balls
+
+Boss patterns 1 (Orb Shot), 3 (Twin Orbs) and 8 (Ball Rain) throw "balls" (docs/PLAN.md D-14); they are drawn in code and their look was not specified. Proposal: draw them as sports balls (soccer, basketball, tennis, volleyball) to match Guo's orb and the title loop. Awaiting Guo's decision.
+
 ## Lessons for the next prompts
 
-- Flow follows short prompts with a start frame better than long ones; ask for no sound on video.
+- Flow follows short prompts with a start frame better than long ones; ask for no sound on video. Flow may still add audio and reinterpret small details (the ball cluster became two balls).
 - Flow Music tends to ignore multi-part structure; ask for one part per generation.
 - Name the key explicitly ("bright major key") and ask for a resolving final chord.
 - Images: if a character reference doesn't exist yet, describe it in words and say what it is NOT (e.g. "NOT the boss", "NOT a cannon").
