@@ -20,6 +20,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
 | B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | **Approved, fix in edit** (stretch to 124 BPM) | Boss Phase, Enchanted Garden |
 | E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved, fix in edit** | Escape Phase, Enchanted Garden |
+| B-DES | `B-DES_Desert Ruins Boss.mp3` | **Approved**; E-DES to be generated at 133 BPM, C minor | Boss Phase, Desert Ruins |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -83,6 +84,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | M04b Loss | 1:02 | 82 (118) | A♭ major (major) | −14.2 LUFS | 2.3 LU | −0.2 dBFS |
 | B-GAR | 2:57 | 120 (124) | G major (D minor) | −16.2 LUFS | 7.8 LU | −0.6 dBFS |
 | E-GAR | 3:00 | 124 (124) | D, major/minor mix (D minor) | −14.5 LUFS | 9.2 LU | −0.2 dBFS |
+| B-DES | 3:02 | 133 (128) | C, Arabic-style mixed scale (E minor) | −15.6 LUFS | 8.1 LU | −0.2 dBFS |
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
@@ -171,6 +173,13 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - Time-stretch B-GAR from 120 to 124 BPM (+3.3%, pitch kept), so beats line up at the crossfade.
 - Keys: G major → D centre is a move to the closely related dominant key, which sounds like a lift, fitting "the boss is down, now race". The 0.5–1.0 s crossfade sits under the boss-defeat sound, which masks the harmonic change.
 - If it still sounds off in game, regenerate B-GAR at 124 BPM, D minor (original prompt) rather than E-GAR.
+
+### B-DES · Desert Ruins Boss · Approved
+
+- 3:02, **133 BPM** (very clear), key centre **C** with an Arabic-style scale (both E♭ and E, strong F and G), so neither plain major nor minor. Brief asked 128 BPM, E minor; the scale suits the desert theme well.
+- Structure: intro 0:00–0:14, near-silent break around 0:16, drive 0:18–0:48, dip 0:48–0:53, full energy 0:54–2:58, short ending at 2:58.
+- **Loop:** 0:18–2:58 (consider skipping the 0:48–0:53 dip). True peak −0.2 dBFS → −1 dBTP.
+- **E-DES:** generate with the original E-DES prompt but ending in "133 BPM, C minor with an Arabic-style scale, 2 minutes or more of loopable material." Then I measure and pair.
 
 ### Theme cues (other B-/E- cues) · Pending
 
