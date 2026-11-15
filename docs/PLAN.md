@@ -143,7 +143,7 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - **Conveyor**: pushes the player one tile in its arrow direction every 6 ticks (5 tiles/s) while they stand on it. Moving with the arrow is faster (only the player's own steps count for Attack); moving against it = standing still (but it does not count as stationary for Defense); stepping sideways off is always possible.
 - Priority when combined: teleport > ice slide > conveyor push > the player's own input. A boost only changes speed, never direction.
 
-**D-31 Pickups** (ENV-PU-01 to 05, BAL-12)
+**D-31 Pickups** (ENV-PU-01 to 05, BAL-12) — ✅ **Decided 15 Nov**
 - Attack Orb (+1 Attack), Defense Orb (+1 Defense), Healing Heart (+1 Life), each up to the cap of 3.
 - **At cap, the pickup is not consumed** (it stays for later or for the rival).
 - Collected by the first player to **enter** the tile; if both enter on the same tick, neither collects that tick (symmetric, V-001); it stays for whoever enters next. Players may pass through each other (no body-blocking).
