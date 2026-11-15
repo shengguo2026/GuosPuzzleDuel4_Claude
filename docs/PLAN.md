@@ -41,7 +41,7 @@ Notation: **Rec** marks the recommended option. Numbers are starting values kept
 - Why B: the GDD counts Attack regeneration in *tiles* (C-002), uses tile mazes, and wants deterministic host simulation. B makes "qualifying tile", collision, prediction and replay exact. A causes wall-sliding edge cases and makes reconciliation harder.
 - Values: 30 Hz tick, **5 ticks per tile (6 tiles/s)**, no speed differences between characters (E-006).
 
-**D-02 Input maps** — ✅ **Decided 15 Nov (Guo's layout)**; touch details pending confirmation (D-02a, D-02b)
+**D-02 Input maps** — ✅ **Decided 15 Nov (Guo's layout)**; D-02a/b accepted; D-02c pending
 - Solo / single keyboard player (one hand): **W A S D** move, **Q = Bomb, E = Shield**. Alternative: arrows + **Numpad 1 / Numpad 2**.
 - Shared keyboard (Local VS):
   - P1: **W A S D** move, **Q** Bomb, **E** Shield.
@@ -50,8 +50,9 @@ Notation: **Rec** marks the recommended option. Numbers are starting values kept
 - All rebindable in Settings; rebinding rejects conflicts between the two Local VS players. A key-test page shows which keys the keyboard reports, to spot ghosting.
 - Touch (phones/tablets): **swipe to move** on the left/centre of the screen, **two right-thumb buttons ≥ 64 px** (Bomb, Shield) with a hold-to-charge ring.
   - A swipe (≥ 24 px) sets the heading; the character keeps moving that way until a wall, and a swipe made before a junction is buffered and taken at the next possible turn (same cornering buffer as the keyboard).
-  - **D-02a (pending, Rec):** a short tap in the swipe area stops the character (needed to stand still for Defense regeneration).
-  - **D-02b (pending, Rec):** a floating 4-way D-pad stays available in Settings as an accessibility option.
+  - **D-02a (accepted):** a short tap in the swipe area stops the character (needed to stand still for Defense regeneration).
+  - **D-02b (accepted):** a floating 4-way D-pad is the alternative touch scheme.
+  - **D-02c (pending, Rec) where the touch scheme is chosen:** it is a device-local preference (UI-008: presentation only, never affects fairness), stored on the device, so it never resets anyone's Ready. It can be changed in: (1) a one-time "Choose your controls" card the first time a touch device joins, with a 10-second practice; (2) Settings → Controls at any time; (3) the pre-game lobby, on the player's own panel (only shown on touch devices); (4) the pause menu: immediately in Solo, and in WiFi VS while an agreed pause is active (no unilateral pause just to switch). Extra options there: swipe sensitivity, left-handed layout (buttons on the left), button size.
   - The swipe area ignores the outer 24 px of the screen (iOS/Android back gestures) and blocks browser scrolling, pull-to-refresh and zoom during a match.
 
 **D-03 Charge (Super Bomb / Super Shield) input**
