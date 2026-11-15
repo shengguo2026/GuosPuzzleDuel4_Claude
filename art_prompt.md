@@ -68,7 +68,7 @@ The boss stands in the maze centre as a large billboard sprite over the arena; t
 | Achievement pictures (~28) | GPD2 base badges (`*.full/.badge/.silhouette.webp`) | Tier frame (Bronze/Silver/Gold/Platinum) drawn in code; mapping below |
 | Extra achievement pictures | GPD2 pack art (barrierWars, combat, grandGauntlet, …) | Reserve pool if the catalogue grows |
 | WiFi / shared-keyboard achievements | `Pictures/TowerDefense/ACH-WIFI-HANDSHAKE.png`, `ACH-HOT-SEAT-DUEL.png` | Only if you like the mixed style; otherwise GPD2 `onlineChampion`, `duelist` |
-| Bombs, shields, blasts, barrier, Freeze tiles, entrances/gates, HUD icons | Drawn in code (vector + particles) | Needed for crisp scaling, colour-blind patterns and the graphics-quality setting |
+| Bombs, shields, blasts, Super Shield walls, traps, teleporters, boost/ice/conveyor tiles, orbs and hearts, timed gates, fog, entrances, HUD icons | Drawn in code (vector + particles) | Needed for crisp scaling, colour-blind patterns and the graphics-quality setting |
 | Maze tiles for the 5 themes | Procedural (palette + pattern per theme) | IV-06…10 optional upgrade |
 | Store cosmetics (colour trims, token shapes, trails, nameplates) | Drawn in code | Zero art per item |
 | Museum room backgrounds | Gradient + theme pattern + reused art cards | |
@@ -265,6 +265,8 @@ Fallback if two tries fail: I build the loop in code from the still (slow orb gl
 ### Shared exclusions (append to every request)
 
 > Instrumental only, no lyrics, no vocals, no choir words, no recognizable copyrighted melody, no imitation of a named artist, composer, film, anime or game soundtrack, no harsh mastering, no clipped transients, no abrupt ending, no explosions, alarms or sound effects embedded in the music, no long exposed solo that prevents looping. Leave frequency space for announcer voice, warning cues and impact sounds.
+
+> **Pending D-36 (PLAN.md):** GDD v2.0 (AV-01) locks music that varies by the five themes and by Boss/Escape phase, plus separate menu, lobby, store/museum and result music. If D-36 option A is chosen, M02/M03 become five theme pairs (10 cues) and a Lobby cue is added; I will rewrite this section then.
 
 ### Overview
 
