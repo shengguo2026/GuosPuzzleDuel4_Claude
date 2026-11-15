@@ -18,7 +18,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M04 | `M04_Results Fanfare.mp3` | Approved for **win** only | Results (win) |
 | M04b | `M04b_Draw Sting.mp3`, `M04b_Loss Sting.mp3` | **Approved, fix in edit** (confirm mood by ear) | Results (draw, loss) |
 | M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
-| B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | Approved if the mood fits; E-GAR must match 120 BPM, G major | Boss Phase, Enchanted Garden |
+| B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | **Approved, fix in edit** (stretch to 124 BPM) | Boss Phase, Enchanted Garden |
+| E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved, fix in edit** | Escape Phase, Enchanted Garden |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -81,6 +82,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | M04b Draw | 1:05 | 120 (118) | F major (major) | −16.0 LUFS | 2.4 LU | −0.8 dBFS |
 | M04b Loss | 1:02 | 82 (118) | A♭ major (major) | −14.2 LUFS | 2.3 LU | −0.2 dBFS |
 | B-GAR | 2:57 | 120 (124) | G major (D minor) | −16.2 LUFS | 7.8 LU | −0.6 dBFS |
+| E-GAR | 3:00 | 124 (124) | D, major/minor mix (D minor) | −14.5 LUFS | 9.2 LU | −0.2 dBFS |
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
@@ -159,7 +161,20 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - **Pairing rule:** the Escape cue must share tempo and key for the crossfade. Cheapest fix: keep B-GAR and generate **E-GAR at 120 BPM, G major** (change the last line of the E-GAR prompt to "120 BPM, G major, 2 minutes or more of loopable material"). Alternative: regenerate B-GAR in D minor at 124.
 - If the theme table changes, Crystal Caverns also runs at 120 BPM (F♯ minor), which is fine because the keys differ.
 
+### E-GAR · Enchanted Garden Escape · Approved, fix in edit
+
+- 3:00, **124 BPM centred on D** (mix of D major and D minor colour), matching the original brief; generated with the unchanged prompt, so it does **not** match B-GAR's 120 BPM G major.
+- Structure: quiet intro 0:00–0:13, drive 0:14–1:16, dip 1:18–1:30, drive to 2:54, short ending, 2.3 s silence. Louder than B-GAR by about 1.7 LU, which suits the sprint.
+- **Loop:** 0:14–2:54 (or skip the 1:18–1:30 dip if it drags). True peak −0.2 dBFS → −1 dBTP.
+
+**Pairing fix in edit (instead of regenerating):**
+- Time-stretch B-GAR from 120 to 124 BPM (+3.3%, pitch kept), so beats line up at the crossfade.
+- Keys: G major → D centre is a move to the closely related dominant key, which sounds like a lift, fitting "the boss is down, now race". The 0.5–1.0 s crossfade sits under the boss-defeat sound, which masks the harmonic change.
+- If it still sounds off in game, regenerate B-GAR at 124 BPM, D minor (original prompt) rather than E-GAR.
+
 ### Theme cues (other B-/E- cues) · Pending
+
+Lesson from the Garden pair: Flow Music doesn't reliably hit the requested key. Generate the Boss cue first, measure it, then put its actual tempo and key into the Escape prompt.
 
 Each Boss/Escape pair must share tempo and key (see `art_prompt.md` §5) for the crossfade when the boss falls.
 
