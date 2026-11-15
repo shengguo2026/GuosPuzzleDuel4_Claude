@@ -247,13 +247,13 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 
 **D-17 Stars (Campaign)** — ✅ **Decided 15 Nov**: three independent stars per level, each earned in any run and kept forever: ⭐ win; ⭐ win within the level's par time (set per level in the manifest); ⭐ win without losing a Life. Replays never remove a star. Max 40 × 3 = 120 (PROG-01).
 
-**D-18 Challenge categories (5 × 5)** — proposed names:
-1. **Speed Escape** (win under par time; medals by time).
-2. **Boss Breaker** (deal the most boss damage / finish boss under time).
-3. **Blockade Master** (Super Shield and Super Bomb focused, Escape-start scenarios).
-4. **Scarce Energy** (start at 0 energy, slower regen).
-5. **Iron Will** (1 Life, harder boss).
-Bronze/Silver/Gold thresholds per challenge in the manifest.
+**D-18 Challenge categories (5 × 5)** — ✅ **Decided 15 Nov**:
+1. **Speed Escape**: win as fast as possible; medals by time.
+2. **Boss Breaker**: defeat the boss fast with the most hits; medals by boss time.
+3. **Blockade Master**: starts in the Escape Phase against a rival who blocks with Super Shields; break through with Super Bombs, set your own blockades.
+4. **Scarce Energy**: start at 0 energy with the Tactical refill preset; win through orbs and terrain.
+5. **Iron Will**: 1 Life, stronger boss, more traps.
+Bronze/Silver/Gold thresholds per challenge are set in the level manifest (approved before M5).
 
 **D-19 Random challenges**: seed + size + tier; records kept per `(generatorVersion, seed, size, tier)`; shareable 8-character seed code.
 
