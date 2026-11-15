@@ -263,11 +263,16 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 
 ### 2.5 Economy, achievements, Museum (ECON-01 to 07, MUS-01 to 05, BAL-10, CONTENT-01)
 
-**D-20 Starting economy (all PROVISIONAL, data file)**
+**D-20 Starting economy (all PROVISIONAL, data file)** — ✅ **Decided 15 Nov**
 - Match reward = base (Solo 40 / Local VS 30 per player / WiFi VS 40) × tier factor (0.8/1.0/1.2/1.5/2.0) + 3 × own boss damage + 20 win bonus. Draw: half of win bonus. Guests: none.
 - Fox Adventurer 600, Mystic Slime 900 credits, or achievement unlock.
 - Cosmetics v1: **colour trims, token shapes, trail effects, nameplate frames**: all drawn in code, so the Store needs no new art.
 - Anti-farming: diminishing rewards after 10 completed matches between the same two profiles within 1 hour (50%, then 25%), reset after 1 hour. Never zero.
+- First-time content rewards: 10 per new Campaign star; Challenge medals Bronze 20 / Silver 40 / Gold 80. Achievements: Bronze 25 / Silver 50 / Gold 100 / Platinum 250. Cosmetics 100–300. Target about 8–15 credits per minute.
+- **Weekly sale (Guo, 15 Nov; ported from GPD2 `featuredShelf`)**: every ISO week (Monday 00:00 host local time) the Store shows a "On sale this week" shelf of **4 items at 20% off** (price rounded down to a multiple of 5). The items are picked deterministically from the week number and item IDs, so no scheduled job is needed and every client sees the same shelf. Any item for sale can appear (characters and cosmetics); nothing is exclusive and every item stays buyable at full price in other weeks.
+  - The **host clock** decides the week (host-authoritative, ECON-01); a device with a wrong clock cannot get a sale price.
+  - The price is fixed at commit: if the week changes while a WiFi purchase waits for host approval, the request is re-shown with the new price instead of charging a different amount.
+  - A refund within 10 minutes (ECON-05) returns exactly what was paid.
 
 **D-21 Achievements**: a catalog of ~30, Bronze/Silver/Gold/Platinum, each using an existing GPD2 or Tower Defense badge picture with a tier frame drawn in code. Mapping in `art_prompt.md` §2.
 
