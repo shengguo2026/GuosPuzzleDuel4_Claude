@@ -149,7 +149,7 @@ All environment entities are host-simulated in ticks, placed **point-symmetrical
 - Collected by the first player to **enter** the tile; if both enter on the same tick, neither collects that tick (symmetric, V-001); it stays for whoever enters next. Players may pass through each other (no body-blocking).
 - No respawn. Per maze (symmetric pairs): Small 2 Attack + 2 Defense + 0 Hearts; Medium 4 + 4 + 2; Large 6 + 6 + 2. Never on traps, teleporters, gates or the boss arena.
 
-**D-32 Timed gates** (ENV-GA-01 to 04, BAL-06)
+**D-32 Timed gates** (ENV-GA-01 to 04, BAL-06) — ✅ **Decided 15 Nov**
 - Default cycle **4 s open / 3 s closed**, with a **1 s closing warning**; authored levels may change the cycle and offset but must reopen within 5 s.
 - A closed gate blocks players and bombs (bomb explodes on it, no damage to the gate).
 - If a player is on the gate tile when it should close, it stays open until the tile is clear, then closes (never crushes).
