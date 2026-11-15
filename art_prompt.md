@@ -169,6 +169,33 @@ Title key art for a colourful top-down arcade maze duel game. A large glowing ti
 [paste the shared style block]
 ```
 
+### IV-11 to IV-30 · Boss tier sets (pending your choice; drafted for "4 new sets × 5 poses")
+
+One costume per difficulty tier. **Hard reuses the Puzzle Duel III set unchanged.** Each new pose is a Codex **edit** of the matching Duel III pose, so the face and pose stay identical and only the costume, crown and aura change.
+
+- **Size:** 1024×1024, transparent background (same as the source).
+- **Attach:** the source pose from `Pictures/GuosPuzzleDuelIII/boss/` (the image to edit) and, from the second pose of a tier on, the approved idle of that tier as the costume reference.
+- **Poses per tier (5):** `01-idle`, `02-charging`, `03-attack`, `05-hit`, `07-defeated` (same numbers as the source files). Recovering, freeze-cast and victory are made in code from these.
+- **Save as:** `GuosPuzzleDuelIV/boss/<tier>/guo-boss-<tier>-<NN>-<pose>.png`, for example `boss/easy/guo-boss-easy-01-idle.png`.
+- **What I check:** face, glasses and hair identical to the source, pose identical, no blue or red aura (those mean P1/P2), clean transparent edges, no text.
+
+Edit prompt (one per pose; change only `<COSTUME>`):
+
+```text
+Edit the attached image. Keep the man's face, glasses, hair, expression, pose, hand positions, body size and framing exactly the same, and keep the transparent background. Change only his outfit, headwear and magic effects to: <COSTUME>. The glowing orb or magic effect stays in the same place and size as in the original, only its colours change.
+[paste the shared style block]
+```
+
+| Tier | `<COSTUME>` | Folder |
+|---|---|---|
+| Easy · Coach Guo | a mint-green and white sports tracksuit with a silver whistle on a cord, a simple mint baseball cap instead of the crown, and a small calm mint-and-white orb with soft sparkles | `boss/easy/` |
+| Medium · Referee Guo | a black-and-white striped referee shirt with a black collar, a small golden whistle crown, and a yellow-and-white orb with bright card-shaped sparkles | `boss/medium/` |
+| Hard · Champion Guo | *(reuse the Duel III set, no generation)* | `GuosPuzzleDuelIII/boss/` |
+| Extreme · Storm Guo | a dark charcoal armoured tracksuit with silver plates on the shoulders and forearms, a jagged silver crown, and a crackling violet-and-white lightning orb with small lightning arcs | `boss/extreme/` |
+| Ultimate · Emperor Guo | a flowing black-and-gold emperor robe with a high collar and gold embroidery, a large ornate golden crown with white gems, and three small white-gold flame orbs circling the main orb | `boss/ultimate/` |
+
+Order: make each tier's idle first, approve it, then the other four poses with it attached.
+
 ### IV-06 to IV-10 · Theme tile sheets (optional polish)
 
 The game ships procedural tiles that already look clean; these sheets only add texture. Make them last, and only if time allows. One image per theme, 1024×1024, a **2×2 grid of four square tiles seen straight from above** (orthographic, no perspective), each tile filling its quarter with a 2 px gap:
@@ -288,4 +315,5 @@ Five themes share M02/M03; each theme adds a quiet ambience layer synthesised in
 3. **IV-01 Title** with IV-02/IV-03 attached.
 4. **FLOW-IV-TITLE-LOOP** from IV-01.
 5. **M02 + M03** (needed for the in-match feel test), then **M01**.
-6. Optional: M04, M05, then the tile sheets IV-06 … IV-10.
+6. Boss tier sets IV-11 … IV-30 (if chosen), Easy and Ultimate first.
+7. Optional: M04, M05, then the tile sheets IV-06 … IV-10.
