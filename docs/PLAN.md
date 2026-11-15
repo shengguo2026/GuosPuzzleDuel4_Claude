@@ -276,7 +276,9 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 
 **D-21 Achievements** — ✅ **Decided 15 Nov** (33 achievements: the 29 listed in `art_prompt.md` §2 plus Trap Buster, Portal Hopper, Ice Dancer, Heart Collector): a catalog of ~30, Bronze/Silver/Gold/Platinum, each using an existing GPD2 or Tower Defense badge picture with a tier frame drawn in code. Mapping in `art_prompt.md` §2.
 
-**D-22 Museum**: six rooms as card galleries. Exhibits reuse existing art (boss poses, achievement badges, character portraits, maze thumbnails rendered from seeds). Public showcase = up to 6 chosen exhibit cards plus profile name and character, nothing else (MUS-04).
+**D-22 Museum** — ✅ **Decided 15 Nov**: six rooms as card galleries. Exhibits reuse existing art (boss poses, achievement badges, character portraits, maze thumbnails rendered from seeds). Public showcase = up to 6 chosen exhibit cards plus profile name and character, nothing else (MUS-04).
+
+**D-22a Profile viewer** (UI-02 Profiles/Statistics, PROFILE-03) — ⏳: the player's own credits balance, credit history (ledger with reason per entry), match history, statistics, progress and inventory are shown in the **Profile** and **Statistics** screens. On the host PC every saved profile can be opened there; a remote device sees only the profile it is using in the current room. Optional per-profile **4-digit PIN** (Rec) that protects opening a profile on the host PC and selecting it from a remote device.
 
 ### 2.6 Network, persistence, operations (NET-01 to 10, DB-01 to 04, OPS-01 to 04)
 
