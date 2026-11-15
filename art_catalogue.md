@@ -20,7 +20,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
 | B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | **Approved, fix in edit** (stretch to 124 BPM) | Boss Phase, Enchanted Garden |
 | E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved, fix in edit** | Escape Phase, Enchanted Garden |
-| B-DES | `B-DES_Desert Ruins Boss.mp3` | **Approved**; E-DES to be generated at 133 BPM, C minor | Boss Phase, Desert Ruins |
+| B-DES | `B-DES_Desert Ruins Boss.mp3` | **Approved** | Boss Phase, Desert Ruins |
+| E-DES | `E-DES_Desert Ruins Escape.mp3` | Good track, **does not pair** with B-DES; decision pending | Escape Phase, Desert Ruins |
 | IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
@@ -85,6 +86,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 | B-GAR | 2:57 | 120 (124) | G major (D minor) | −16.2 LUFS | 7.8 LU | −0.6 dBFS |
 | E-GAR | 3:00 | 124 (124) | D, major/minor mix (D minor) | −14.5 LUFS | 9.2 LU | −0.2 dBFS |
 | B-DES | 3:02 | 133 (128) | C, Arabic-style mixed scale (E minor) | −15.6 LUFS | 8.1 LU | −0.2 dBFS |
+| E-DES | 2:55 | 144 (133 to match) | F♯/E♭ minor area (C to match) | −14.9 LUFS | 3.5 LU | −0.1 dBFS |
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
@@ -180,6 +182,12 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
 - Structure: intro 0:00–0:14, near-silent break around 0:16, drive 0:18–0:48, dip 0:48–0:53, full energy 0:54–2:58, short ending at 2:58.
 - **Loop:** 0:18–2:58 (consider skipping the 0:48–0:53 dip). True peak −0.2 dBFS → −1 dBTP.
 - **E-DES:** generate with the original E-DES prompt but ending in "133 BPM, C minor with an Arabic-style scale, 2 minutes or more of loopable material." Then I measure and pair.
+
+### E-DES · Desert Ruins Escape · Decision pending
+
+- 2:55, **144 BPM**, key centre around **F♯ / E♭ minor**, very even level (LRA 3.5 LU: ideal for a sprint loop). Short intro 0:00–0:13, then constant drive to 2:52. True peak −0.1 dBFS → −1 dBTP.
+- Flow ignored "133 BPM, C minor". Against B-DES: 8% faster and a tritone away from C, the most distant key possible. A plain crossfade would clash; the tempo gap is too large to stretch cleanly and the key gap too large to pitch-shift.
+- **Options:** (A) regenerate E-DES until it lands near 133 BPM / C; (B) keep it and change the Boss → Escape transition for all themes to a "stinger bridge": boss music fades out under a ~1 s boss-defeat stinger, Escape starts on its own downbeat. Then no theme pair needs matching tempo or key. Asked Guo.
 
 ### Theme cues (other B-/E- cues) · Pending
 
