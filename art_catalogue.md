@@ -30,7 +30,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | E-VOL | `E-VOL_Volcanic Citadel Escape.mp3` | **Approved, fix in edit** (level and peak) | Escape Phase, Volcanic Citadel |
 | IV-02 | `characters/char-explorer.png` | **Approved** | Explorer portrait and head token |
 | IV-03 | `characters/char-robot.png` | **Approved** | Robot portrait and head token |
-| IV-04, IV-05 | `char-fox.png`, `char-slime.png` | Pending | Match IV-02 framing (1024×1536) |
+| IV-04 | `characters/char-fox.png` | **Approved** | Fox portrait and head token |
+| IV-05 | `char-slime.png` | Pending | Match IV-02 framing (1024×1536) |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -68,6 +69,15 @@ Not yet checked by analysis on any music cue: the four-note "crown" motif. Confi
 - Small difference: the eyes are happy closed arcs rather than the round eyes in the title crop. It reads friendly and is accepted.
 - Framing lines up with the Explorer: figure spans y 50–1488 (Explorer 31–1500), same line weight and shading. Big head, about a third of the height.
 - Clean transparent background, no shadow, no text, no large pure blue or red areas.
+
+### IV-04 · Fox Adventurer portrait · Approved
+
+`char-fox.png`, 1024×1536 RGBA, same size as IV-02 and IV-03.
+
+- Matches the brief: amber-orange fur with cream muzzle and chest, big pointed ears, aviator goggles on the forehead, teal vest with brass buttons, belt with pouches, brown boots, fluffy white-tipped tail, left hand on hip, right hand holding a glowing lantern, confident closed-mouth smile.
+- Lines up with the Explorer and Robot: ear tips at y 16 and feet at y 1513 (Explorer 31–1500), same line weight and shading; the three read as one set.
+- Orange is the dominant colour but is not pure red, so it stays distinct from the P2 red ring.
+- Clean transparent background, no shadow, no text. The tail reaches x 972, which leaves enough margin.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
