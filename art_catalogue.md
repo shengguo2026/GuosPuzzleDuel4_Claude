@@ -32,6 +32,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-03 | `characters/char-robot.png` | **Approved** | Robot portrait and head token |
 | IV-04 | `characters/char-fox.png` | **Approved** | Fox portrait and head token |
 | IV-05 | `characters/char-slime.png` | **Approved** (re-framed to 1024×1536) | Slime portrait and head token |
+| IV-11 | `boss/easy/guo-boss-easy-01-idle.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, idle; costume reference for the other Easy poses |
+| IV-12 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -89,6 +91,15 @@ Delivered as `char-slime.png` at 1312×1199 (not the 1024×1536 of the other thr
 - The face is large, so the head token reads easily at 48 px.
 
 **Characters complete:** IV-02 to IV-05 are all approved.
+
+### IV-11 · Easy · Coach Guo · idle · Approved, resized
+
+Delivered at 1254×1254; the repo copy is resized to 1024×1024 to match the Duel III source, with faint alpha noise (values 1–3) cleared.
+
+- Face, glasses, hair, smile, crossed arms and body size are identical to `guo-boss-01-idle.png` (compared side by side at the same scale).
+- Costume as specified: mint-green and white tracksuit, silver whistle on a cord, mint baseball cap instead of the crown. The sports-ball cluster stays in place with a mint-and-white glow and sparkles.
+- No blue or red aura, clean transparent edges, no text.
+- **Use it as the costume reference** for Easy poses 02 to 08.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
