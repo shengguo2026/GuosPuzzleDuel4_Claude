@@ -31,7 +31,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-02 | `characters/char-explorer.png` | **Approved** | Explorer portrait and head token |
 | IV-03 | `characters/char-robot.png` | **Approved** | Robot portrait and head token |
 | IV-04 | `characters/char-fox.png` | **Approved** | Fox portrait and head token |
-| IV-05 | `char-slime.png` | Pending | Match IV-02 framing (1024×1536) |
+| IV-05 | `characters/char-slime.png` | **Approved** (re-framed to 1024×1536) | Slime portrait and head token |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -78,6 +78,17 @@ Not yet checked by analysis on any music cue: the four-note "crown" motif. Confi
 - Lines up with the Explorer and Robot: ear tips at y 16 and feet at y 1513 (Explorer 31–1500), same line weight and shading; the three read as one set.
 - Orange is the dominant colour but is not pure red, so it stays distinct from the P2 red ring.
 - Clean transparent background, no shadow, no text. The tail reaches x 972, which leaves enough margin.
+
+### IV-05 · Mystic Slime portrait · Approved, re-framed
+
+Delivered as `char-slime.png` at 1312×1199 (not the 1024×1536 of the other three). The repo copy is re-framed losslessly to match the set: faint alpha noise (values 1–3) across the empty canvas cleared, the figure cropped and placed unscaled on a transparent 1024×1536 canvas, centred, bottom at y 1497 (Explorer's boots end at 1500). The original stays in Guo's `pictures` folder.
+
+- Matches the brief: glossy semi-translucent mint-and-lime droplet body with sparkles and bubbles inside, large shiny dark eyes, rosy cheeks, small closed-mouth smile, tilted violet wizard hat with a golden star, stubby arms with the right one waving.
+- Height in the set: top of hat at y 465, about 67% of the frame, close to the Explorer's head-to-knee as specified. It's wider than the others (x 38–984) because of its round body, but fits inside the frame.
+- Same line weight and glossy shading as the other three; the four read as one set.
+- The face is large, so the head token reads easily at 48 px.
+
+**Characters complete:** IV-02 to IV-05 are all approved.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
