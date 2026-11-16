@@ -28,7 +28,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | E-NEO | `E-NEO_Neon Circuit Escape.mp3` | **Approved, fix in edit** (cut breakdowns) | Escape Phase, Neon Circuit |
 | B-VOL | `B-VOL_Volcanic Citadel Boss.mp3` | **Approved** | Boss Phase, Volcanic Citadel |
 | E-VOL | `E-VOL_Volcanic Citadel Escape.mp3` | **Approved, fix in edit** (level and peak) | Escape Phase, Volcanic Citadel |
-| IV-02, IV-03 | `char-explorer.png`, `char-robot.png` | Pending | Must match the heroes in title v2 |
+| IV-02 | `characters/char-explorer.png` | **Approved** | Explorer portrait and head token |
+| IV-03 to IV-05 | `char-robot.png`, `char-fox.png`, `char-slime.png` | Pending | Match IV-02 framing (1024×1536) |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -46,6 +47,17 @@ Not yet checked by analysis on any music cue: the four-note "crown" motif. Confi
 - All five theme colours, torches, crystals; no text.
 - Minor, accepted: theme colours are mixed through the maze rather than in sections; the Robot faces the viewer rather than the boss.
 - **Follow-up:** the heroes were drawn from text, so IV-02 and IV-03 must match them. Crop each hero from v2 and attach it as an extra reference when generating the portraits.
+
+### IV-02 · Explorer portrait · Approved
+
+`char-explorer.png`, 1024×1536 RGBA (asked 1024×1024; accepted, see framing note).
+
+- Matches the Explorer in title v2: wide-brim sand hat with brown band and brass buckle, short brown hair, olive-green scarf, khaki multi-pocket jacket, brown satchel, rolled map in his right hand, brown lace-up boots.
+- Full body, three-quarter view, friendly closed-mouth smile, eyes on the viewer; head about a third of body height.
+- Clean transparent background (alpha 0 outside the figure), no ground shadow, no text. No large pure blue or red areas.
+- Figure spans x 104–916, y 31–1500 (2%–98% of the height): tighter than the 8%/92% asked, but nothing is cut.
+- Head reads clearly at 48 px (token test done).
+- **Framing note for IV-03 to IV-05:** generate at the same 1024×1536 portrait size with the same head-top and feet positions, and attach this file, so all four line up. In the pipeline I pad to a square and cut the head token.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
