@@ -29,7 +29,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | B-VOL | `B-VOL_Volcanic Citadel Boss.mp3` | **Approved** | Boss Phase, Volcanic Citadel |
 | E-VOL | `E-VOL_Volcanic Citadel Escape.mp3` | **Approved, fix in edit** (level and peak) | Escape Phase, Volcanic Citadel |
 | IV-02 | `characters/char-explorer.png` | **Approved** | Explorer portrait and head token |
-| IV-03 to IV-05 | `char-robot.png`, `char-fox.png`, `char-slime.png` | Pending | Match IV-02 framing (1024×1536) |
+| IV-03 | `characters/char-robot.png` | **Approved** | Robot portrait and head token |
+| IV-04, IV-05 | `char-fox.png`, `char-slime.png` | Pending | Match IV-02 framing (1024×1536) |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -58,6 +59,15 @@ Not yet checked by analysis on any music cue: the four-note "crown" motif. Confi
 - Figure spans x 104–916, y 31–1500 (2%–98% of the height): tighter than the 8%/92% asked, but nothing is cut.
 - Head reads clearly at 48 px (token test done).
 - **Framing note for IV-03 to IV-05:** generate at the same 1024×1536 portrait size with the same head-top and feet positions, and attach this file, so all four line up. In the pipeline I pad to a square and cut the head token.
+
+### IV-03 · Robot portrait · Approved
+
+`char-robot.png`, 1024×1536 RGBA, same size as IV-02.
+
+- Matches the Robot in title v2: pearl-white and silver body, dark screen face with mint-green eyes and smile, mint light strips on the chest and limbs, short antenna with a glowing yellow tip, three-fingered hands, right hand waving, grey feet.
+- Small difference: the eyes are happy closed arcs rather than the round eyes in the title crop. It reads friendly and is accepted.
+- Framing lines up with the Explorer: figure spans y 50–1488 (Explorer 31–1500), same line weight and shading. Big head, about a third of the height.
+- Clean transparent background, no shadow, no text, no large pure blue or red areas.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
