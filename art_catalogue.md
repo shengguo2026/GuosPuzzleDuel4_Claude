@@ -46,7 +46,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-22 | `boss/medium/guo-boss-medium-04-freeze-cast.png` | **Approved** (resized to 1024×1024; optional frost regen) | Medium · Referee Guo, freeze-cast |
 | IV-23 | `boss/medium/guo-boss-medium-05-hit.png` | **Approved** v2 (resized to 1024×1024) | Medium · Referee Guo, hit |
 | IV-24 | `boss/medium/guo-boss-medium-06-recovering.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, recovering |
-| IV-25 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-25 | `boss/medium/guo-boss-medium-07-defeated.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, defeated |
+| IV-26 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -223,6 +224,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Closed eyes, gentle smile, glasses, hands crossed on the chest and body size match `guo-boss-06-recovering.png`.
 - Healing swirl, leaves, plus signs and sparkles kept (prompt line "Keep the healing swirl, leaves and plus signs … recoloured to soft yellow and white"), with yellow cards around the ball cluster.
 - Long sleeves as in IV-20 (accepted). Clean edges, no text, no blue or red aura.
+
+### IV-25 · Medium · Referee Guo · defeated · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Rolled-up dizzy eyes, open mouth, glasses, drooping hands with wobble marks and body size match `guo-boss-07-defeated.png`.
+- Dizzy star ring recoloured to gold-white, small whistle crown tipped to the side, falling streaks and yellow cards around the ball cluster (prompt line "Keep the dizzy star ring … tipped crown … falling streaks").
+- Short sleeves as in the idle. Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
