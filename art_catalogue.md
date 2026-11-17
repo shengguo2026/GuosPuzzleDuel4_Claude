@@ -54,7 +54,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-30 | `boss/extreme/guo-boss-extreme-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, freeze-cast |
 | IV-31 | `boss/extreme/guo-boss-extreme-05-hit.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, hit |
 | IV-32 | `boss/extreme/guo-boss-extreme-06-recovering.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, recovering |
-| IV-33 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-33 | `boss/extreme/guo-boss-extreme-07-defeated.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, defeated |
+| IV-34 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -298,6 +299,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Closed eyes, gentle smile, glasses, hands crossed on the chest and body size match `guo-boss-06-recovering.png`.
 - Healing swirl, leaves, plus signs and sparkles kept, recoloured soft violet-white; small lightning arcs around the ball cluster. Armour and crown match the Extreme idle.
 - Clean edges, no text, no blue or red aura.
+
+### IV-33 · Extreme · Storm Guo · defeated · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Rolled-up dizzy eyes, open mouth, glasses, drooping hands with wobble marks and body size match `guo-boss-07-defeated.png`.
+- Dizzy star ring recoloured violet-white, jagged silver crown tipped to the side, falling streaks and lightning arcs around the ball cluster.
+- Specks beside the orb on a light preview disappear on a dark background; the only blue is the volleyball's own stripe. Clean edges, no text.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
