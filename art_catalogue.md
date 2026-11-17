@@ -38,7 +38,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-14 | `boss/easy/guo-boss-easy-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, freeze-cast (Museum only) |
 | IV-15 | `boss/easy/guo-boss-easy-05-hit.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, hit |
 | IV-16 | `boss/easy/guo-boss-easy-06-recovering.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, recovering |
-| IV-17 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
+| IV-17 | `boss/easy/guo-boss-easy-07-defeated.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, defeated |
+| IV-18 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -146,6 +147,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Closed eyes, gentle smile, glasses, hands crossed on the chest, and body size match `guo-boss-06-recovering.png`.
 - Healing swirl, leaves, plus signs and sparkles keep their layout, recoloured from lime to mint; the ball cluster stays beside his shoulder.
 - Costume matches the Easy idle; no red or blue aura, clean edges, no text.
+
+### IV-17 · Easy · Coach Guo · defeated · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Rolled-up dizzy eyes, open mouth, glasses, drooping hands with wobble marks, and body size match `guo-boss-07-defeated.png`.
+- The dizzy star ring is recoloured from gold to mint; the cap is knocked askew in place of the Duel III tipped crown, a fitting swap.
+- Ball cluster drops beside him with mint fall streaks instead of purple; costume matches the Easy idle; clean edges, no text.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
