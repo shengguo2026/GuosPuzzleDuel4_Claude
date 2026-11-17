@@ -53,7 +53,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-29 | `boss/extreme/guo-boss-extreme-03-attack.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, attack |
 | IV-30 | `boss/extreme/guo-boss-extreme-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, freeze-cast |
 | IV-31 | `boss/extreme/guo-boss-extreme-05-hit.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, hit |
-| IV-32 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-32 | `boss/extreme/guo-boss-extreme-06-recovering.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, recovering |
+| IV-33 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -289,6 +290,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Startled face, glasses, flinching lean, both raised palms, passing ball cluster and body size match `guo-boss-05-hit.png`.
 - Impact star and wobble marks kept, recoloured violet-white; lightning trail on the ball cluster; no frost. Armour and crown match the Extreme idle.
 - Faint specks beside the orb on a light preview vanish on a dark background (cleared with the alpha<4 pass). Clean edges, no text, no blue or red aura.
+
+### IV-32 · Extreme · Storm Guo · recovering · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Closed eyes, gentle smile, glasses, hands crossed on the chest and body size match `guo-boss-06-recovering.png`.
+- Healing swirl, leaves, plus signs and sparkles kept, recoloured soft violet-white; small lightning arcs around the ball cluster. Armour and crown match the Extreme idle.
+- Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
