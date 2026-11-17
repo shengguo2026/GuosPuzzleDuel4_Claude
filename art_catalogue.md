@@ -62,7 +62,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-38 | `boss/ultimate/guo-boss-ultimate-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, freeze-cast |
 | IV-39 | `boss/ultimate/guo-boss-ultimate-05-hit.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, hit |
 | IV-40 | `boss/ultimate/guo-boss-ultimate-06-recovering.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, recovering |
-| IV-41 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-41 | `boss/ultimate/guo-boss-ultimate-07-defeated.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, defeated |
+| IV-42 | `boss/ultimate/guo-boss-ultimate-08-victory.png` | Pending | Edit of `guo-boss-08-victory.png`; last boss pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -371,6 +372,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Closed eyes, calm smile, glasses, hands crossed on the chest and body size match `guo-boss-06-recovering.png`.
 - Healing swirl, leaves and plus signs all kept and recoloured white and gold; ball cluster with flame orbs on the right.
 - Robe, twin gold dragons and crown match the Ultimate idle. Clean edges, no text, no blue or red aura.
+
+### IV-41 · Ultimate · Emperor Guo · defeated · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Rolled-up eyes, open mouth, tilted head, limp drooping hands with wobble marks and body size match `guo-boss-07-defeated.png`.
+- Dizzy star ring recoloured white and gold, the crown tipped sideways, falling streaks above and below the ball cluster kept.
+- The fallen orb glows a little brighter than the dim, smoky original; acceptable, it still reads as dropped. Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
