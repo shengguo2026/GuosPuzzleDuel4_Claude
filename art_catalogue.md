@@ -57,7 +57,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-33 | `boss/extreme/guo-boss-extreme-07-defeated.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, defeated |
 | IV-34 | `boss/extreme/guo-boss-extreme-08-victory.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, victory · Extreme set complete |
 | IV-35 | `boss/ultimate/guo-boss-ultimate-01-idle.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, idle · colour reference for poses 02 to 08 |
-| IV-36 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-36 | `boss/ultimate/guo-boss-ultimate-02-charging.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, charging |
+| IV-37 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -326,6 +327,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Black robe with gold dragon and cloud embroidery and a high collar; large ornate gold crown with white gems; white-gold orb with three small flame orbs, clear of the face.
 - At 48 px the black-and-gold reads clearly apart from Hard (purple and gold) and Extreme (dark violet and silver).
 - The crown tip touches the top edge of the canvas; acceptable, nothing is cut off. Clean edges, no text, no blue or red aura.
+
+### IV-36 · Ultimate · Emperor Guo · charging · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Stern face, glasses, the left hand above and right palm under the ball cluster, and body size match `guo-boss-02-charging.png`.
+- Energy rings and sparkles recoloured white and gold, with the three small flame orbs around the cluster; robe, embroidery and crown match the Ultimate idle.
+- The red and yellow specks visible in the chat preview sit only in fully transparent pixels (alpha below 4); they are cleared in the repo copy and invisible on dark and white backgrounds. Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
