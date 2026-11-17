@@ -44,7 +44,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-20 | `boss/medium/guo-boss-medium-02-charging.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, charging |
 | IV-21 | `boss/medium/guo-boss-medium-03-attack.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, attack |
 | IV-22 | `boss/medium/guo-boss-medium-04-freeze-cast.png` | **Approved** (resized to 1024×1024; optional frost regen) | Medium · Referee Guo, freeze-cast |
-| IV-23 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-23 | `boss/medium/guo-boss-medium-05-hit.png` | **Approved** v2 (resized to 1024×1024) | Medium · Referee Guo, hit |
+| IV-24 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -203,6 +204,16 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Calm smile, glasses, hair, both raised clawed hands framing the orb, and body size match `guo-boss-04-freeze-cast.png`.
 - Aura recoloured to yellow-white with yellow-card sparkles; short sleeves and small whistle crown match the Medium idle. No blue, clean edges, no text.
 - **Possible fix:** the snowflakes and frost crystals of the source (kept in the Easy version) were replaced by cards, so the pose reads as a generic cast rather than a freeze. The in-game Freeze Field VFX carries the meaning, so this is accepted. Optional regen: add "keep the snowflakes and frost crystals around the hands, tinted pale yellow and white" to the prompt.
+
+### IV-23 · Medium · Referee Guo · hit · v2 Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- **v1 rejected (not pushed):** snowflakes and frost crystals over the forearm and ball trail (the freeze-cast frost sentence carried into the prompt), which would read as Freeze Field; the impact star and wobble marks were missing.
+- **v2:** prompt added "Keep the yellow impact star beside his head and the small wobble marks around the crown exactly as in the original. No snowflakes, no ice, no frost."
+- Startled face, glasses, flinching lean, both raised palms, passing ball cluster and body size match `guo-boss-05-hit.png`; yellow impact star and gold wobble marks restored; no frost.
+- Costume matches the Medium idle; clean edges, no text, no blue or red aura.
+- **Lesson:** keep pose-specific additions (like the frost sentence) out of the shared Medium prompt.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
