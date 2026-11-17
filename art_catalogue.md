@@ -59,7 +59,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-35 | `boss/ultimate/guo-boss-ultimate-01-idle.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, idle · colour reference for poses 02 to 08 |
 | IV-36 | `boss/ultimate/guo-boss-ultimate-02-charging.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, charging |
 | IV-37 | `boss/ultimate/guo-boss-ultimate-03-attack.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, attack |
-| IV-38 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-38 | `boss/ultimate/guo-boss-ultimate-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, freeze-cast |
+| IV-39 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -344,6 +345,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Smirk, glasses, lunging stance, outstretched right hand, left hand low and body size match `guo-boss-03-attack.png`.
 - Curved motion trail and sparkles recoloured white and gold, with flame orbs around the thrown ball cluster; robe with twin gold dragons and crown match the Ultimate idle.
 - Clean edges, no text, no blue or red aura.
+
+### IV-38 · Ultimate · Emperor Guo · freeze-cast · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Calm smile, glasses, both open hands either side of the ball cluster and body size match `guo-boss-04-freeze-cast.png`.
+- Snowflakes, frost crystals, frosted hands and icy swirls all kept and recoloured white and pale gold, with no blue (the only blue pixels are the volleyball's stripe); flame orbs added around the cluster.
+- Robe, twin gold dragons and crown match the Ultimate idle. The robe fills the canvas width, as the original jacket does. Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
