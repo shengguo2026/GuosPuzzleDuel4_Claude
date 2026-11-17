@@ -40,7 +40,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-16 | `boss/easy/guo-boss-easy-06-recovering.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, recovering |
 | IV-17 | `boss/easy/guo-boss-easy-07-defeated.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, defeated |
 | IV-18 | `boss/easy/guo-boss-easy-08-victory.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, victory · Easy set complete |
-| IV-19 to IV-42 | Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose; Medium idle next |
+| IV-19 | `boss/medium/guo-boss-medium-01-idle.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, idle (costume reference for the Medium set) |
+| IV-20 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -164,6 +165,16 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Laughing face, glasses, open arms (left reaching out, right palm up under the ball cluster) and body size match `guo-boss-08-victory.png`.
 - Orb glow, rings and sparkles recoloured from purple-gold to mint-white; the mint cap replaces the whistle crown; costume matches the Easy idle.
 - Clean edges, no text, no blue or red aura. With this pose the Easy set (IV-11 to IV-18) is complete.
+
+### IV-19 · Medium · Referee Guo · idle · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Face, calm smile, glasses, hair, crossed arms and body size match `guo-boss-01-idle.png`.
+- Black-and-white striped short-sleeve referee shirt with black collar and placket; small golden whistle crown (smaller than Champion Guo's, as asked).
+- Orb glow is yellow-white with card-shaped sparkles (yellow cards) circling it, in the same place and size as the source.
+- Reads clearly at 48 px: the stripes and yellow orb separate it from the purple Hard tier. No blue or red aura, clean edges, no text.
+- Use this image as the costume reference for Medium poses 02–08.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
