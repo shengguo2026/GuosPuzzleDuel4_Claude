@@ -45,7 +45,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-21 | `boss/medium/guo-boss-medium-03-attack.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, attack |
 | IV-22 | `boss/medium/guo-boss-medium-04-freeze-cast.png` | **Approved** (resized to 1024×1024; optional frost regen) | Medium · Referee Guo, freeze-cast |
 | IV-23 | `boss/medium/guo-boss-medium-05-hit.png` | **Approved** v2 (resized to 1024×1024) | Medium · Referee Guo, hit |
-| IV-24 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-24 | `boss/medium/guo-boss-medium-06-recovering.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, recovering |
+| IV-25 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -214,6 +215,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Startled face, glasses, flinching lean, both raised palms, passing ball cluster and body size match `guo-boss-05-hit.png`; yellow impact star and gold wobble marks restored; no frost.
 - Costume matches the Medium idle; clean edges, no text, no blue or red aura.
 - **Lesson:** keep pose-specific additions (like the frost sentence) out of the shared Medium prompt.
+
+### IV-24 · Medium · Referee Guo · recovering · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Closed eyes, gentle smile, glasses, hands crossed on the chest and body size match `guo-boss-06-recovering.png`.
+- Healing swirl, leaves, plus signs and sparkles kept (prompt line "Keep the healing swirl, leaves and plus signs … recoloured to soft yellow and white"), with yellow cards around the ball cluster.
+- Long sleeves as in IV-20 (accepted). Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
