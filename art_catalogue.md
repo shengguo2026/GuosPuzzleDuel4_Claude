@@ -41,7 +41,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-17 | `boss/easy/guo-boss-easy-07-defeated.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, defeated |
 | IV-18 | `boss/easy/guo-boss-easy-08-victory.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, victory · Easy set complete |
 | IV-19 | `boss/medium/guo-boss-medium-01-idle.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, idle (costume reference for the Medium set) |
-| IV-20 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-20 | `boss/medium/guo-boss-medium-02-charging.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, charging |
+| IV-21 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -175,6 +176,15 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Orb glow is yellow-white with card-shaped sparkles (yellow cards) circling it, in the same place and size as the source.
 - Reads clearly at 48 px: the stripes and yellow orb separate it from the purple Hard tier. No blue or red aura, clean edges, no text.
 - Use this image as the costume reference for Medium poses 02–08.
+
+### IV-20 · Medium · Referee Guo · charging · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Stern frown, glasses, hair, hand over the orb, cupped lower hand and body size match `guo-boss-02-charging.png`.
+- Orb glow, rings and sparkles recoloured from purple-gold to yellow-white with yellow-card sparkles; small whistle crown matches the Medium idle.
+- Minor variance: sleeves are long here (black cuffs) while the idle shows short sleeves; the source pose has long sleeves, and the difference is invisible at play size. Accepted.
+- Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
