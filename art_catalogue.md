@@ -60,7 +60,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-36 | `boss/ultimate/guo-boss-ultimate-02-charging.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, charging |
 | IV-37 | `boss/ultimate/guo-boss-ultimate-03-attack.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, attack |
 | IV-38 | `boss/ultimate/guo-boss-ultimate-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, freeze-cast |
-| IV-39 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-39 | `boss/ultimate/guo-boss-ultimate-05-hit.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, hit |
+| IV-40 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -353,6 +354,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Calm smile, glasses, both open hands either side of the ball cluster and body size match `guo-boss-04-freeze-cast.png`.
 - Snowflakes, frost crystals, frosted hands and icy swirls all kept and recoloured white and pale gold, with no blue (the only blue pixels are the volleyball's stripe); flame orbs added around the cluster.
 - Robe, twin gold dragons and crown match the Ultimate idle. The robe fills the canvas width, as the original jacket does. Clean edges, no text, no blue or red aura.
+
+### IV-39 · Ultimate · Emperor Guo · hit · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Startled face, sideways glance, open mouth, both raised palms, recoil lean and body size match `guo-boss-05-hit.png`.
+- Impact star and wobble marks around the crown kept and recoloured gold; ball cluster with white-gold trail and flame orbs; no snowflakes, ice or frost.
+- Robe, twin gold dragons and crown match the Ultimate idle. Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
