@@ -55,7 +55,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-31 | `boss/extreme/guo-boss-extreme-05-hit.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, hit |
 | IV-32 | `boss/extreme/guo-boss-extreme-06-recovering.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, recovering |
 | IV-33 | `boss/extreme/guo-boss-extreme-07-defeated.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, defeated |
-| IV-34 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-34 | `boss/extreme/guo-boss-extreme-08-victory.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, victory · Extreme set complete |
+| IV-35 to IV-42 | Ultimate poses | Pending | Edit of the matching Duel III pose; Ultimate idle next |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -307,6 +308,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Rolled-up dizzy eyes, open mouth, glasses, drooping hands with wobble marks and body size match `guo-boss-07-defeated.png`.
 - Dizzy star ring recoloured violet-white, jagged silver crown tipped to the side, falling streaks and lightning arcs around the ball cluster.
 - Specks beside the orb on a light preview disappear on a dark background; the only blue is the volleyball's own stripe. Clean edges, no text.
+
+### IV-34 · Extreme · Storm Guo · victory · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Laughing face, glasses, open arms with the right palm up under the ball cluster and body size match `guo-boss-08-victory.png`.
+- Orb rings and sparkles recoloured violet-white with lightning arcs; armour and jagged silver crown match the Extreme idle.
+- Clean edges, no text, no blue or red aura. With this pose the Extreme set (IV-27 to IV-34) is complete.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
