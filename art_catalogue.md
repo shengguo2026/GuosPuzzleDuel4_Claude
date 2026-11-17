@@ -35,7 +35,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-11 | `boss/easy/guo-boss-easy-01-idle.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, idle; costume reference for the other Easy poses |
 | IV-12 | `boss/easy/guo-boss-easy-02-charging.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, charging |
 | IV-13 | `boss/easy/guo-boss-easy-03-attack.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, attack |
-| IV-14 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
+| IV-14 | `boss/easy/guo-boss-easy-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, freeze-cast (Museum only) |
+| IV-15 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -118,6 +119,15 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Face, sly smile, glasses, throwing pose (right arm thrust forward with open hand, left hand low and back) and body size match `guo-boss-03-attack.png`.
 - Costume matches the Easy idle; the ball cluster and its trailing swirl keep their place and size with a mint glow.
 - No blue or red aura, clean edges, no text.
+
+### IV-14 · Easy · Coach Guo · freeze-cast · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Face, calm smile, glasses, both hands raised with spread fingers around the ball cluster, and body size match `guo-boss-04-freeze-cast.png`.
+- The Duel III ice-blue aura is now mint-green and white with snowflakes and frost crystals, which also keeps blue (P1 colour) out of the boss art.
+- Costume matches the Easy idle; no red or blue aura, clean edges, no text.
+- Used only in the Museum Boss Hall (Easy never casts Freeze Field, D-14).
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
