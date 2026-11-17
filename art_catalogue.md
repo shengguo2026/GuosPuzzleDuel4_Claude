@@ -48,7 +48,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-24 | `boss/medium/guo-boss-medium-06-recovering.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, recovering |
 | IV-25 | `boss/medium/guo-boss-medium-07-defeated.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, defeated |
 | IV-26 | `boss/medium/guo-boss-medium-08-victory.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, victory · Medium set complete |
-| IV-27 to IV-42 | Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose; Extreme idle next |
+| IV-27 | `boss/extreme/guo-boss-extreme-01-idle.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, idle (costume reference for the Extreme set) |
+| IV-28 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -243,6 +244,15 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Clean edges, no text, no blue or red aura. With this pose the Medium set (IV-19 to IV-26) is complete.
 
 **Medium-set lesson:** a short pose-specific line ("Keep the <effect> exactly as in the original, only recoloured …") stops the card sparkles from replacing pose effects (frost, impact star, healing swirl, dizzy stars). Use the same approach for Extreme and Ultimate, and never carry one pose's line into another pose.
+
+### IV-27 · Extreme · Storm Guo · idle · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Face, calm smile, glasses, hair, crossed arms and body size match `guo-boss-01-idle.png`.
+- Dark charcoal tracksuit with violet piping, silver armour plates on shoulders and forearms, jagged silver crown with violet gems; crackling violet-white lightning orb in the same place and size.
+- 48 px test against Easy, Medium and Hard idles: the charcoal-and-silver body and silver crown separate clearly from Hard's purple-and-gold; the orb glow is similar in hue, but the body carries the difference. No blue or red aura, clean edges, no text.
+- Use this image as the costume reference for Extreme poses 02–08.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
