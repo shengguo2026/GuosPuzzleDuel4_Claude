@@ -63,7 +63,7 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-39 | `boss/ultimate/guo-boss-ultimate-05-hit.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, hit |
 | IV-40 | `boss/ultimate/guo-boss-ultimate-06-recovering.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, recovering |
 | IV-41 | `boss/ultimate/guo-boss-ultimate-07-defeated.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, defeated |
-| IV-42 | `boss/ultimate/guo-boss-ultimate-08-victory.png` | Pending | Edit of `guo-boss-08-victory.png`; last boss pose |
+| IV-42 | `boss/ultimate/guo-boss-ultimate-08-victory.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, victory · Ultimate set and all 32 boss poses complete |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -380,6 +380,15 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Rolled-up eyes, open mouth, tilted head, limp drooping hands with wobble marks and body size match `guo-boss-07-defeated.png`.
 - Dizzy star ring recoloured white and gold, the crown tipped sideways, falling streaks above and below the ball cluster kept.
 - The fallen orb glows a little brighter than the dim, smoky original; acceptable, it still reads as dropped. Clean edges, no text, no blue or red aura.
+
+### IV-42 · Ultimate · Emperor Guo · victory · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Laughing face, glasses, open arms with the right palm up under the ball cluster and body size match `guo-boss-08-victory.png`.
+- Orb rings and sparkles recoloured white and gold with the three flame orbs; robe, twin gold dragons and crown match the Ultimate idle.
+- The outstretched left hand reaches the left edge of the canvas, as in the original. Clean edges, no text, no blue or red aura.
+- With this pose the Ultimate set (IV-35 to IV-42) is complete, and so are all four tiers of boss poses (IV-11 to IV-42). A 128 px row of the eight Ultimate poses reads as one consistent set.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
