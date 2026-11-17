@@ -47,7 +47,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-23 | `boss/medium/guo-boss-medium-05-hit.png` | **Approved** v2 (resized to 1024×1024) | Medium · Referee Guo, hit |
 | IV-24 | `boss/medium/guo-boss-medium-06-recovering.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, recovering |
 | IV-25 | `boss/medium/guo-boss-medium-07-defeated.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, defeated |
-| IV-26 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-26 | `boss/medium/guo-boss-medium-08-victory.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, victory · Medium set complete |
+| IV-27 to IV-42 | Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose; Extreme idle next |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -232,6 +233,16 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Rolled-up dizzy eyes, open mouth, glasses, drooping hands with wobble marks and body size match `guo-boss-07-defeated.png`.
 - Dizzy star ring recoloured to gold-white, small whistle crown tipped to the side, falling streaks and yellow cards around the ball cluster (prompt line "Keep the dizzy star ring … tipped crown … falling streaks").
 - Short sleeves as in the idle. Clean edges, no text, no blue or red aura.
+
+### IV-26 · Medium · Referee Guo · victory · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Laughing face, glasses, open arms with the right palm up under the ball cluster and body size match `guo-boss-08-victory.png`.
+- Orb glow, rings and sparkles recoloured to yellow-white with yellow cards; short sleeves and small whistle crown match the Medium idle.
+- Clean edges, no text, no blue or red aura. With this pose the Medium set (IV-19 to IV-26) is complete.
+
+**Medium-set lesson:** a short pose-specific line ("Keep the <effect> exactly as in the original, only recoloured …") stops the card sparkles from replacing pose effects (frost, impact star, healing swirl, dizzy stars). Use the same approach for Extreme and Ultimate, and never carry one pose's line into another pose.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
