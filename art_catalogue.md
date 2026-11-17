@@ -51,7 +51,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-27 | `boss/extreme/guo-boss-extreme-01-idle.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, idle (costume reference for the Extreme set) |
 | IV-28 | `boss/extreme/guo-boss-extreme-02-charging.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, charging |
 | IV-29 | `boss/extreme/guo-boss-extreme-03-attack.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, attack |
-| IV-30 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-30 | `boss/extreme/guo-boss-extreme-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, freeze-cast |
+| IV-31 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -271,6 +272,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Smirk, glasses, hair, lunging stance, outstretched throwing hand, trailing left hand and body size match `guo-boss-03-attack.png`.
 - Curved motion trail kept, recoloured violet-white with lightning arcs; armoured charcoal tracksuit and jagged silver crown match the Extreme idle.
 - Clean edges, no text, no blue or red aura.
+
+### IV-30 · Extreme · Storm Guo · freeze-cast · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Calm smile, glasses, hair, both clawed hands framing the orb and body size match `guo-boss-04-freeze-cast.png`.
+- Snowflakes, frost crystals and icy swirls kept (prompt line "Keep the snowflakes, frost crystals and icy swirls … pale violet and white, with no blue"), mixed with small lightning arcs; reads clearly as a freeze. No blue.
+- Armoured charcoal tracksuit and jagged silver crown match the Extreme idle; clean edges, no text.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
