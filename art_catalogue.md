@@ -58,7 +58,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-34 | `boss/extreme/guo-boss-extreme-08-victory.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, victory · Extreme set complete |
 | IV-35 | `boss/ultimate/guo-boss-ultimate-01-idle.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, idle · colour reference for poses 02 to 08 |
 | IV-36 | `boss/ultimate/guo-boss-ultimate-02-charging.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, charging |
-| IV-37 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-37 | `boss/ultimate/guo-boss-ultimate-03-attack.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, attack |
+| IV-38 to IV-42 | remaining Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -335,6 +336,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Stern face, glasses, the left hand above and right palm under the ball cluster, and body size match `guo-boss-02-charging.png`.
 - Energy rings and sparkles recoloured white and gold, with the three small flame orbs around the cluster; robe, embroidery and crown match the Ultimate idle.
 - The red and yellow specks visible in the chat preview sit only in fully transparent pixels (alpha below 4); they are cleared in the repo copy and invisible on dark and white backgrounds. Clean edges, no text, no blue or red aura.
+
+### IV-37 · Ultimate · Emperor Guo · attack · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Smirk, glasses, lunging stance, outstretched right hand, left hand low and body size match `guo-boss-03-attack.png`.
+- Curved motion trail and sparkles recoloured white and gold, with flame orbs around the thrown ball cluster; robe with twin gold dragons and crown match the Ultimate idle.
+- Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
