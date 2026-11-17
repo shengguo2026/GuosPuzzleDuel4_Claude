@@ -50,7 +50,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-26 | `boss/medium/guo-boss-medium-08-victory.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, victory · Medium set complete |
 | IV-27 | `boss/extreme/guo-boss-extreme-01-idle.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, idle (costume reference for the Extreme set) |
 | IV-28 | `boss/extreme/guo-boss-extreme-02-charging.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, charging |
-| IV-29 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-29 | `boss/extreme/guo-boss-extreme-03-attack.png` | **Approved** (resized to 1024×1024) | Extreme · Storm Guo, attack |
+| IV-30 to IV-42 | remaining Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -261,6 +262,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 
 - Stern frown, glasses, hair, hand over the orb, cupped lower hand and body size match `guo-boss-02-charging.png`.
 - Energy rings and sparkles kept, recoloured violet-white with small lightning arcs; charcoal armoured tracksuit and jagged silver crown match the Extreme idle.
+- Clean edges, no text, no blue or red aura.
+
+### IV-29 · Extreme · Storm Guo · attack · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Smirk, glasses, hair, lunging stance, outstretched throwing hand, trailing left hand and body size match `guo-boss-03-attack.png`.
+- Curved motion trail kept, recoloured violet-white with lightning arcs; armoured charcoal tracksuit and jagged silver crown match the Extreme idle.
 - Clean edges, no text, no blue or red aura.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
