@@ -43,7 +43,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-19 | `boss/medium/guo-boss-medium-01-idle.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, idle (costume reference for the Medium set) |
 | IV-20 | `boss/medium/guo-boss-medium-02-charging.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, charging |
 | IV-21 | `boss/medium/guo-boss-medium-03-attack.png` | **Approved** (resized to 1024×1024) | Medium · Referee Guo, attack |
-| IV-22 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
+| IV-22 | `boss/medium/guo-boss-medium-04-freeze-cast.png` | **Approved** (resized to 1024×1024; optional frost regen) | Medium · Referee Guo, freeze-cast |
+| IV-23 to IV-42 | remaining Medium, Extreme and Ultimate poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -194,6 +195,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Smirk, glasses, hair, lunging stance, outstretched throwing hand, trailing left hand and body size match `guo-boss-03-attack.png`.
 - Ball trail and glow recoloured from purple-gold to yellow-white with yellow-card sparkles; short sleeves and small whistle crown match the Medium idle.
 - Clean edges, no text, no blue or red aura.
+
+### IV-22 · Medium · Referee Guo · freeze-cast · Approved, resized (optional regen)
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Calm smile, glasses, hair, both raised clawed hands framing the orb, and body size match `guo-boss-04-freeze-cast.png`.
+- Aura recoloured to yellow-white with yellow-card sparkles; short sleeves and small whistle crown match the Medium idle. No blue, clean edges, no text.
+- **Possible fix:** the snowflakes and frost crystals of the source (kept in the Easy version) were replaced by cards, so the pose reads as a generic cast rather than a freeze. The in-game Freeze Field VFX carries the meaning, so this is accepted. Optional regen: add "keep the snowflakes and frost crystals around the hands, tinted pale yellow and white" to the prompt.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
