@@ -37,7 +37,8 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-13 | `boss/easy/guo-boss-easy-03-attack.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, attack |
 | IV-14 | `boss/easy/guo-boss-easy-04-freeze-cast.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, freeze-cast (Museum only) |
 | IV-15 | `boss/easy/guo-boss-easy-05-hit.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, hit |
-| IV-16 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
+| IV-16 | `boss/easy/guo-boss-easy-06-recovering.png` | **Approved** (resized to 1024×1024) | Easy · Coach Guo, recovering |
+| IV-17 to IV-42 | other boss tier poses | Pending | Edit of the matching Duel III pose |
 
 Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
 
@@ -137,6 +138,14 @@ Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with
 - Startled face (wide eyes, open mouth), glasses, flinching lean with both palms raised, and body size match `guo-boss-05-hit.png`.
 - Impact star and wobble marks are mint instead of gold; the ball cluster flies past with a mint glow, same place and size.
 - Costume matches the Easy idle (the cap stays on); no red or blue aura, clean edges, no text.
+
+### IV-16 · Easy · Coach Guo · recovering · Approved, resized
+
+Delivered at 1254×1254 (attached in chat); repo copy resized to 1024×1024 with faint alpha noise cleared.
+
+- Closed eyes, gentle smile, glasses, hands crossed on the chest, and body size match `guo-boss-06-recovering.png`.
+- Healing swirl, leaves, plus signs and sparkles keep their layout, recoloured from lime to mint; the ball cluster stays beside his shoulder.
+- Costume matches the Easy idle; no red or blue aura, clean edges, no text.
 
 **v1: Rejected** (`guos-puzzle-duel-iv-title.png`)
 
