@@ -1,7 +1,7 @@
 # Guo's Puzzle Duel IV: asset catalogue
 
 Status of generated art, video and music, reviewed against `art_prompt.md`.
-Source folder: `C:\AI\Claude\Assets\GuosPuzzleDuel4`. Last updated 2026-11-15.
+Source folder: `C:\AI\Claude\Assets\GuosPuzzleDuel4`. Last updated 2026-11-20.
 
 Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fix it when I convert · **Needs regeneration** · **Rejected** · **Pending** = not delivered yet.
 
@@ -12,11 +12,11 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-01 | `guos-puzzle-duel-iv-title_v2.png` | **Approved** | Title background, Flow start/end frame, package image, Museum entrance |
 | IV-01 | `guos-puzzle-duel-iv-title.png` (v1) | Rejected | Superseded by v2 |
 | FLOW-IV-TITLE-LOOP | `TitleLoop.mp4` | **Approved, fix in edit** | Title loop clip (use 1.0–7.9 s, crossfade loop) |
-| M01 | `M01_Crown of the Maze.mp3` | Approved, fix in edit (mood to confirm by ear) | Title, dashboard menus |
+| M01 | `M01_Crown of the Maze.mp3` | **Approved, fix in edit** (mood confirmed by ear, 20 Nov) | Title, dashboard menus |
 | M02 | `M02_Waiting for the Duel.mp3` | **Approved** | Lobby, ready-up, countdown |
 | M03 | `M03_Quiet Gallery.mp3` | **Approved** | Store, Museum, Profiles, Statistics |
 | M04 | `M04_Results Fanfare.mp3` | Approved for **win** only | Results (win) |
-| M04b | `M04b_Draw Sting.mp3`, `M04b_Loss Sting.mp3` | **Approved, fix in edit** (confirm mood by ear) | Results (draw, loss) |
+| M04b | `M04b_Draw Sting.mp3`, `M04b_Loss Sting.mp3` | **Approved, fix in edit** (mood confirmed by ear, 20 Nov) | Results (draw, loss) |
 | M04b | `M04b_Results Stings.mp3`, `_v2` | Fallback only | Superseded by the separate stings |
 | B-GAR | `B-GAR_Enchanted Garden Boss.mp3` | **Approved** | Boss Phase, Enchanted Garden |
 | E-GAR | `E-GAR_Enchanted Garden Escape.mp3` | **Approved** | Escape Phase, Enchanted Garden |
@@ -65,7 +65,9 @@ Status key: **Approved** = use as is · **Approved, fix in edit** = usable, I fi
 | IV-41 | `boss/ultimate/guo-boss-ultimate-07-defeated.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, defeated |
 | IV-42 | `boss/ultimate/guo-boss-ultimate-08-victory.png` | **Approved** (resized to 1024×1024) | Ultimate · Emperor Guo, victory · Ultimate set and all 32 boss poses complete |
 
-Not yet checked by analysis on any music cue: the four-note "crown" motif. Confirm it by ear.
+Music checked by ear by Guo on 20 Nov: moods (M01, M04b, B-GAR) and the four-note "crown" motif are fine.
+
+Pending (optional, any time): IV-06 to IV-10 theme tiles, 20 images, prompts in [`tile_prompts.md`](tile_prompts.md).
 
 ---
 
@@ -445,7 +447,7 @@ All delivered cues are 48 kHz stereo MP3 at 128 kb/s. Most have a true peak arou
 
 Tempo is measured by autocorrelation over the whole track (±0.1 BPM); earlier readings of 117.5 were a coarse estimate.
 
-### M01 · Crown of the Maze · Approved, fix in edit (confirm mood)
+### M01 · Crown of the Maze · Approved, fix in edit (mood confirmed by ear)
 
 - Structure: quiet intro 0:00–0:15, full 0:15–0:45, calm dip 0:50–1:05 (menu-friendly), full 1:35–2:24, quiet outro.
 - **Issue: key.** Reads as G minor (or E♭ major with a minor colour), not the bright major asked for. May sound moodier than "cheeky and friendly". Listen and decide.
@@ -512,7 +514,7 @@ Save as `M04b_Draw Sting.mp3` and `M04b_Loss Sting.mp3`. Flow Music may still re
   - **Fix:** it's the loudest cue so far for a "gentle" sting: play it about 3–4 dB below the draw sting; −1 dBTP.
 - Mood ("playful" vs "encouraging, never sad") can't be measured; confirm by ear.
 
-### B-GAR · Enchanted Garden Boss · Approved if the mood fits
+### B-GAR · Enchanted Garden Boss · Approved (mood confirmed by ear)
 
 - 2:57, **120 BPM in G major**, not the 124 BPM D minor asked for. Brighter and more playful than planned; "tension and fun" is now mostly fun.
 - Structure: quiet intro 0:00–0:15, steady drive 0:16–2:18 with small dips (0:46–1:00, 1:18, 1:46), softer outro 2:20–2:48, fade by 2:54, then 2.3 s of silence.
@@ -599,9 +601,10 @@ Each Boss/Escape pair must share tempo and key (see `art_prompt.md` §5) for the
 
 - **15 Nov · Boss → Escape music: stinger bridge.** When the boss falls, the boss cue fades out (about 0.3–0.5 s) under a ~1 s boss-defeat stinger, and the Escape cue starts on its own downbeat. Replaces the 0.5–1.0 s crossfade; theme pairs need not share tempo or key. Plan docs updated.
 
-## Proposed: boss attack balls drawn as sports balls
-
-Boss patterns 1 (Orb Shot), 3 (Twin Orbs) and 8 (Ball Rain) throw "balls" (docs/PLAN.md D-14); they are drawn in code and their look was not specified. Proposal: draw them as sports balls (soccer, basketball, tennis, volleyball) to match Guo's orb and the title loop. Awaiting Guo's decision.
+- **20 Nov · Boss attack balls are sports balls (approved by Guo).** Patterns 1 (Orb Shot), 3 (Twin Orbs) and 8 (Ball Rain) throw sports balls (soccer, basketball, tennis, volleyball), drawn in code, to match Guo's orb, the title art and the title loop.
+- **20 Nov · All sound effects are synthesised in code** (port of GPD2 `audio/synth.ts`), including the ~1 s boss-defeat stinger of the stinger bridge. No sound files to generate.
+- **20 Nov · Music ear check passed** (Guo): all 14 cues approved; only the planned loop cuts and −1 dBTP trims remain, done in the asset pipeline.
+- **20 Nov · Theme tiles:** the 2×2 tile sheet is replaced by four single tiles per theme following the v2.0 wall classes (floor, solid wall, destructible wall, sealed shortcut door); prompts in [`tile_prompts.md`](tile_prompts.md). Optional; can be added after M7.
 
 ## Lessons for the next prompts
 

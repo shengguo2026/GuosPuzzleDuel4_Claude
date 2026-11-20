@@ -2,7 +2,7 @@
 
 A colourful top-down tile-maze arcade duel: two players fight a shared boss (Guo), then race to collect their own token and escape through the rival's original entrance. Solo vs AI, shared-keyboard Local VS and Local WiFi VS with an authoritative PC host and browser clients.
 
-Status: **planning** (no game code yet).
+Status: **implementation plan approved** (20 Nov 2026); M0 next. All required art and music is delivered in the Pictures repo; the optional theme tiles are in [tile_prompts.md](tile_prompts.md).
 
 ## Documents
 
@@ -20,15 +20,13 @@ First time:
 cd C:\AI\Claude
 git clone https://github.com/shengguo2026/GuosPuzzleDuel4_Claude.git
 cd GuosPuzzleDuel4_Claude
-git fetch origin claude/project-thread-90x0d0
-git checkout claude/project-thread-90x0d0
 ```
 
 Later, to get the newest work:
 
 ```powershell
 cd C:\AI\Claude\GuosPuzzleDuel4_Claude
-git checkout claude/project-thread-90x0d0
+git checkout main
 git pull
 ```
 
