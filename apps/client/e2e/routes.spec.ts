@@ -56,7 +56,7 @@ test('OPS-02: the page reaches the host over HTTP and WebSocket on the bound por
 test('UI-06: the language switch shows Chinese and German, and is remembered', async ({ page }) => {
   await page.goto('/');
   await page.getByTestId('language').selectOption('zh');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('郭的迷宫对决 IV');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('盛国的迷宫对决 IV');
   await expect(page.getByTestId('nav-settings')).toContainText('设置');
   await page.getByTestId('language').selectOption('de');
   await expect(page.getByTestId('nav-settings')).toContainText('Einstellungen');

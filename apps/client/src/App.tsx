@@ -83,7 +83,6 @@ export function App() {
       <div className="app" lang={locale === 'zh' ? 'zh-Hans' : locale}>
         <header className="top">
           <Link to="/" className="brand" testId="home">
-            <img src="/favicon.svg" alt="" width={40} height={40} />
             <h1>{ctx.t('app.title')}</h1>
           </Link>
           <label className="lang">
