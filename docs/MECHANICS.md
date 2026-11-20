@@ -1,6 +1,6 @@
 # Guo's Puzzle Duel IV: game mechanics (canonical rules)
 
-Status: **draft for Guo's approval** (M0, 20 Nov 2026). Sources: GDD v2.0 ([`Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf`](Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf)) and the decisions D-01 to D-36 in [`PLAN.md`](PLAN.md).
+Status: **approved by Guo on 20 Nov 2026** (M0), including all 24 details in section 20. Sources: GDD v2.0 ([`Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf`](Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf)) and the decisions D-01 to D-36 in [`PLAN.md`](PLAN.md).
 
 This document turns the decided design into exact, numbered, testable rules. Code in `packages/sim` and its tests implement these rules and cite their numbers (for example `it('BM-04 / AB-05: bomb explodes in front of a wall', …)`). Every tunable number lives in [`packages/rules/balance.v1.json`](../packages/rules/balance.v1.json) and is referenced here as `balance:<path>`; the value in brackets is the current default. Requirement → test mapping is in [`TRACEABILITY.md`](TRACEABILITY.md).
 
@@ -101,7 +101,7 @@ This document turns the decided design into exact, numbered, testable rules. Cod
 
 - **SH-01** **Target tile**: the tile in front of the player = the neighbour in facing direction of the player's logical tile, or of the reserved destination if the player is mid-step 🟡 M0 (so a running player shields ahead of themselves, not into their own path).
 - **SH-02** **Placement is legal** only on a tile that is floor-like (MV-08 base classes), not a closed timed gate, not occupied by a player (MV-08), with no token, teleporter pad, pickup, shield or Super Shield [D-08]. Illegal ⇒ nothing happens, no energy spent. A trap on the tile does **not** prevent placement (SH-04). A boss ball on the tile is destroyed 🟡 M0.
-- **SH-03** **Normal Shield** [AB-03, D-08]: costs 1 Defense, stays **90 ticks** (3 s). It is a wall for everyone (both players including the caster), bombs (BM-03) and boss attacks (balls are destroyed on contact; shockwave stops at it, BS-12).
+- **SH-03** **Normal Shield** [AB-03, D-08]: costs 1 Defense, stays **90 ticks** (3 s). It is a wall for everyone (both players including the caster, who cannot pass it for the whole 90 ticks), bombs (BM-03) and boss attacks: it stops **any number** of boss balls during its lifetime (each ball is destroyed on contact, the shield is unharmed) and the shockwave stops at it (BS-12). Confirmed by Guo, 20 Nov.
 - **SH-04** **Shield on a trap** [AB-03, ENV-TR-06, D-08]: if the target tile holds a trap (maze or boss trap, any state), the trap is destroyed on the placement tick and the Shield stays its full 90 ticks.
 - **SH-05** **Super Shield** [AB-04, D-09]: tap-and-hold Super (CH-03), Escape Phase only, costs 3 Defense, same placement rules, stays **450 ticks** (15 s). Only a Super Bomb removes it. At most one active Super Shield per player.
 - **SH-06** **Same tile, same tick**: two shield placements (any kinds, either player) aimed at the same tile on the same tick ⇒ neither is placed, neither pays [D-12 step 1].
@@ -311,7 +311,7 @@ One automated test per row [D-35]. Rule references show where each answer comes 
 
 ## 20. M0 details that need your OK
 
-These are the 🟡 points: details PLAN.md does not state exactly, which I fixed so the rules are codable. Everything else in this document is PLAN.md or the GDD restated. All numbers below are PROVISIONAL in `balance.v1.json` and can change after the play-tests.
+These are the 🟡 points: details PLAN.md does not state exactly, which I fixed so the rules are codable. **All 24 approved by Guo on 20 Nov 2026.** Everything else in this document is PLAN.md or the GDD restated. All numbers below are PROVISIONAL in `balance.v1.json` and can change after the play-tests.
 
 | # | Rule | What I fixed | Why |
 |---|---|---|---|

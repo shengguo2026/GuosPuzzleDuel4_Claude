@@ -2,7 +2,7 @@
 
 A colourful top-down tile-maze arcade duel: two players fight a shared boss (Guo), then race to collect their own token and escape through the rival's original entrance. Solo vs AI, shared-keyboard Local VS and Local WiFi VS with an authoritative PC host and browser clients.
 
-Status: **implementation plan approved** (20 Nov 2026); M0 (rules and balance file) in review. All required art and music is delivered in the Pictures repo; the optional theme tiles are in [tile_prompts.md](tile_prompts.md).
+Status: **implementation plan approved** (20 Nov 2026); M0 (rules and balance file) approved. All required art and music is delivered in the Pictures repo; the optional theme tiles are in [tile_prompts.md](tile_prompts.md).
 
 ## Documents
 

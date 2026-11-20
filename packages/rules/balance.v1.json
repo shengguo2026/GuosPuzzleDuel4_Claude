@@ -2,7 +2,7 @@
   "$schema": "./balance.v1.schema.json",
   "schemaVersion": 1,
   "balanceVersion": "1.0.0-m0",
-  "notes": "Canonical tunable values for Guo's Puzzle Duel IV. Rules: docs/MECHANICS.md. LOCKED = fixed by the GDD (change needs a GDD revision); PROVISIONAL = starting value, tunable after play-tests and balance runs. 'M0' in ref = detail fixed in M0, awaiting Guo's OK (MECHANICS.md section 20). Durations are simulation ticks at sim.tickRateHz.",
+  "notes": "Canonical tunable values for Guo's Puzzle Duel IV. Rules: docs/MECHANICS.md. LOCKED = fixed by the GDD (change needs a GDD revision); PROVISIONAL = starting value, tunable after play-tests and balance runs. 'M0' in ref = detail fixed in M0 and approved by Guo on 20 Nov 2026 (MECHANICS.md section 20). Durations are simulation ticks at sim.tickRateHz.",
   "sim": {
     "tickRateHz": {"value": 30, "status": "LOCKED", "unit": "Hz", "ref": ["NET-03", "D-01", "SIM-01"]},
     "snapshotRateHz": {"value": 20, "status": "PROVISIONAL", "unit": "Hz", "ref": ["NET-03", "D-23"]}
