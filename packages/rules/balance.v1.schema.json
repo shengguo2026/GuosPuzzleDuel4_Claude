@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/shengguo2026/GuosPuzzleDuel4_Claude/packages/rules/balance.v1.schema.json",
+  "title": "Guo's Puzzle Duel IV balance file v1",
+  "description": "Every tunable value is a field object {value, status, unit, ref}. status LOCKED = fixed by the GDD; PROVISIONAL = tunable starting value. Rules that use the values: docs/MECHANICS.md.",
+  "type": "object",
+  "required": [
+    "schemaVersion", "balanceVersion", "sim", "match", "maze", "movement", "energy", "life",
+    "abilities", "bombs", "shields", "traps", "teleporters", "terrain", "pickups", "gates",
+    "visibility", "boss", "network", "economy", "profiles", "backups", "ops"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "balanceVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-z0-9.]+)?$" },
+    "notes": { "type": "string" },
+    "sim": { "$ref": "#/$defs/group" },
+    "match": { "$ref": "#/$defs/group" },
+    "maze": { "$ref": "#/$defs/group" },
+    "movement": { "$ref": "#/$defs/group" },
+    "energy": {
+      "allOf": [
+        { "$ref": "#/$defs/group" },
+        {
+          "type": "object",
+          "required": ["presets", "defaultPreset"],
+          "properties": {
+            "presets": {
+              "type": "object",
+              "required": ["tactical", "normal", "fast"],
+              "propertyNames": { "enum": ["tactical", "normal", "fast"] }
+            }
+          }
+        }
+      ]
+    },
+    "life": { "$ref": "#/$defs/group" },
+    "abilities": { "$ref": "#/$defs/group" },
+    "bombs": { "$ref": "#/$defs/group" },
+    "shields": { "$ref": "#/$defs/group" },
+    "traps": { "$ref": "#/$defs/group" },
+    "teleporters": { "$ref": "#/$defs/group" },
+    "terrain": { "$ref": "#/$defs/group" },
+    "pickups": { "$ref": "#/$defs/group" },
+    "gates": { "$ref": "#/$defs/group" },
+    "visibility": { "$ref": "#/$defs/group" },
+    "boss": {
+      "allOf": [
+        { "$ref": "#/$defs/group" },
+        {
+          "type": "object",
+          "required": ["tiers", "patterns"],
+          "properties": {
+            "tiers": {
+              "type": "object",
+              "required": ["easy", "medium", "hard", "extreme", "ultimate"],
+              "propertyNames": { "$ref": "#/$defs/tier" },
+              "additionalProperties": {
+                "type": "object",
+                "required": ["hp", "cooldownTicks", "rage", "trapSeedCount", "wallRaiseCount"]
+              }
+            },
+            "patterns": {
+              "type": "object",
+              "required": ["orbShot", "shockwave", "twinOrbs", "freezeField", "trapSeeding", "wallRaise", "darknessPulse", "ballRain"],
+              "propertyNames": { "enum": ["orbShot", "shockwave", "twinOrbs", "freezeField", "trapSeeding", "wallRaise", "darknessPulse", "ballRain"] },
+              "additionalProperties": {
+                "type": "object",
+                "required": ["number", "warningTicks", "fromTier"],
+                "properties": {
+                  "number": { "type": "integer", "minimum": 1, "maximum": 8 },
+                  "fromTier": {
+                    "type": "object",
+                    "properties": { "value": { "$ref": "#/$defs/tier" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "network": { "$ref": "#/$defs/group" },
+    "economy": { "$ref": "#/$defs/group" },
+    "profiles": { "$ref": "#/$defs/group" },
+    "backups": { "$ref": "#/$defs/group" },
+    "ops": { "$ref": "#/$defs/group" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "tier": { "enum": ["easy", "medium", "hard", "extreme", "ultimate"] },
+    "field": {
+      "type": "object",
+      "required": ["value", "status", "unit", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            { "type": "number" },
+            { "type": "boolean" },
+            { "type": "string" },
+            { "type": "array", "items": { "type": "number" }, "minItems": 1 },
+            { "type": "object", "additionalProperties": { "type": "number" } }
+          ]
+        },
+        "status": { "enum": ["LOCKED", "PROVISIONAL"] },
+        "unit": { "type": "string", "minLength": 1 },
+        "ref": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 }
+      }
+    },
+    "group": {
+      "description": "A group holds fields and nested groups; a boss pattern group also holds its plain pattern number.",
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "number": { "type": "integer", "minimum": 1, "maximum": 8 }
+      },
+      "additionalProperties": {
+        "anyOf": [
+          { "$ref": "#/$defs/field" },
+          {
+            "allOf": [
+              { "not": { "required": ["value", "status"] } },
+              { "$ref": "#/$defs/group" }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
