@@ -1,0 +1,308 @@
+{
+  "$schema": "./balance.v1.schema.json",
+  "schemaVersion": 1,
+  "balanceVersion": "1.0.0-m0",
+  "notes": "Canonical tunable values for Guo's Puzzle Duel IV. Rules: docs/MECHANICS.md. LOCKED = fixed by the GDD (change needs a GDD revision); PROVISIONAL = starting value, tunable after play-tests and balance runs. 'M0' in ref = detail fixed in M0, awaiting Guo's OK (MECHANICS.md section 20). Durations are simulation ticks at sim.tickRateHz.",
+  "sim": {
+    "tickRateHz": {"value": 30, "status": "LOCKED", "unit": "Hz", "ref": ["NET-03", "D-01", "SIM-01"]},
+    "snapshotRateHz": {"value": 20, "status": "PROVISIONAL", "unit": "Hz", "ref": ["NET-03", "D-23"]}
+  },
+  "match": {
+    "countdownStepTicks": {"value": 30, "status": "LOCKED", "unit": "ticks", "ref": ["G-005", "SIM-06"]},
+    "timerTicks": {
+      "small": {"value": 10800, "status": "PROVISIONAL", "unit": "ticks", "ref": ["TIME-01", "BAL-02", "FL-05"]},
+      "medium": {"value": 18000, "status": "PROVISIONAL", "unit": "ticks", "ref": ["TIME-01", "BAL-02", "FL-05"]},
+      "large": {"value": 27000, "status": "PROVISIONAL", "unit": "ticks", "ref": ["TIME-01", "BAL-02", "FL-05"]}
+    },
+    "urgencyCueTicksRemaining": {"value": [3600, 1800, 900, 300], "status": "LOCKED", "unit": "ticks", "ref": ["TIME-05"]}
+  },
+  "maze": {
+    "sizes": {
+      "small": {"value": 15, "status": "LOCKED", "unit": "tiles", "ref": ["M-001"]},
+      "medium": {"value": 21, "status": "LOCKED", "unit": "tiles", "ref": ["M-001"]},
+      "large": {"value": 31, "status": "LOCKED", "unit": "tiles", "ref": ["M-001"]}
+    },
+    "shortcutPairs": {
+      "small": {"value": 1, "status": "PROVISIONAL", "unit": "pairs", "ref": ["D-34", "MZ-06"]},
+      "medium": {"value": 2, "status": "PROVISIONAL", "unit": "pairs", "ref": ["D-34", "MZ-06"]},
+      "large": {"value": 2, "status": "PROVISIONAL", "unit": "pairs", "ref": ["D-34", "MZ-06"]}
+    }
+  },
+  "movement": {
+    "unitsPerTile": {"value": 300, "status": "LOCKED", "unit": "units", "ref": ["MV-01"]},
+    "ownUnitsPerTick": {"value": 60, "status": "PROVISIONAL", "unit": "units/tick", "ref": ["D-01", "CTRL-04", "MV-02"]},
+    "iceUnitsPerTick": {"value": 60, "status": "PROVISIONAL", "unit": "units/tick", "ref": ["D-30", "MV-02"]},
+    "conveyorUnitsPerTick": {"value": 50, "status": "PROVISIONAL", "unit": "units/tick", "ref": ["D-30", "MV-02"]},
+    "keyboardTurnBufferTicks": {"value": 8, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-01", "MV-06", "M0"]}
+  },
+  "energy": {
+    "attackStart": {"value": 1, "status": "LOCKED", "unit": "segments", "ref": ["CTRL-02", "EN-01"]},
+    "attackCap": {"value": 3, "status": "LOCKED", "unit": "segments", "ref": ["CTRL-02", "EN-01"]},
+    "defenseStart": {"value": 1, "status": "LOCKED", "unit": "segments", "ref": ["CTRL-03", "EN-01"]},
+    "defenseCap": {"value": 3, "status": "LOCKED", "unit": "segments", "ref": ["CTRL-03", "EN-01"]},
+    "defaultPreset": {"value": "normal", "status": "PROVISIONAL", "unit": "preset", "ref": ["D-04", "EN-04"]},
+    "presets": {
+      "tactical": {
+        "attackTiles": {"value": 15, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-04"]},
+        "defenseTicks": {"value": 270, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-04"]}
+      },
+      "normal": {
+        "attackTiles": {"value": 12, "status": "LOCKED", "unit": "tiles", "ref": ["CTRL-02", "D-04"]},
+        "defenseTicks": {"value": 210, "status": "LOCKED", "unit": "ticks", "ref": ["CTRL-03", "D-04"]}
+      },
+      "fast": {
+        "attackTiles": {"value": 9, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-04"]},
+        "defenseTicks": {"value": 150, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-04"]}
+      }
+    }
+  },
+  "life": {
+    "start": {"value": 3, "status": "LOCKED", "unit": "life", "ref": ["G-003", "EN-05"]},
+    "cap": {"value": 3, "status": "LOCKED", "unit": "life", "ref": ["G-003", "ENV-PU-03"]},
+    "invulnerableTicks": {"value": 45, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-07", "EN-06"]},
+    "maxLossPerTick": {"value": 1, "status": "PROVISIONAL", "unit": "life", "ref": ["EN-06", "M0"]}
+  },
+  "abilities": {
+    "tapMaxTicks": {"value": 7, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-03", "CH-02"]},
+    "chargeTicks": {"value": 60, "status": "LOCKED", "unit": "ticks", "ref": ["AB-02", "AB-04", "CH-03"]},
+    "superCost": {"value": 3, "status": "LOCKED", "unit": "segments", "ref": ["AB-02", "AB-04"]}
+  },
+  "bombs": {
+    "normalCost": {"value": 1, "status": "LOCKED", "unit": "segments", "ref": ["AB-01"]},
+    "ticksPerTile": {"value": 3, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-05", "BM-02"]},
+    "rangeTiles": {"value": 8, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-05", "BM-02"]},
+    "normalBlastRadius": {"value": 1, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-06", "BM-05", "M0"]},
+    "superBlastRadius": {"value": 2, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-06", "BM-05", "M0"]},
+    "normalBossDamage": {"value": 1, "status": "PROVISIONAL", "unit": "hp", "ref": ["D-06", "BM-06"]},
+    "superBossDamage": {"value": 3, "status": "PROVISIONAL", "unit": "hp", "ref": ["D-06", "BM-06"]}
+  },
+  "shields": {
+    "normalCost": {"value": 1, "status": "LOCKED", "unit": "segments", "ref": ["AB-03"]},
+    "normalTicks": {"value": 90, "status": "LOCKED", "unit": "ticks", "ref": ["AB-03", "SH-03"]},
+    "superTicks": {"value": 450, "status": "LOCKED", "unit": "ticks", "ref": ["AB-04", "SH-05"]},
+    "maxActiveSuperPerPlayer": {"value": 1, "status": "PROVISIONAL", "unit": "count", "ref": ["D-09", "SH-05"]}
+  },
+  "traps": {
+    "spikeImmobilizeTicks": {"value": 15, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-28", "ENV-TR-01", "BAL-03"]},
+    "shockSafeTicks": {"value": 75, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-28", "ENV-TR-02", "BAL-03"]},
+    "shockDangerTicks": {"value": 45, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-28", "ENV-TR-02", "BAL-03"]},
+    "shockWarningTicks": {"value": 15, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-28", "TR-04"]},
+    "snareImmobilizeTicks": {"value": 60, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-28", "ENV-TR-03", "BAL-03"]},
+    "bossTrapWarningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-TR-05", "D-28"]},
+    "bossTrapLifetimeTicks": {"value": 300, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-TR-05", "D-28"]}
+  },
+  "teleporters": {
+    "cooldownTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-TP-03", "D-29", "BAL-04"]}
+  },
+  "terrain": {
+    "boostTicks": {"value": 90, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-TE-01", "D-30", "BAL-05"]},
+    "boostOwnUnitsPerTick": {"value": 78, "status": "PROVISIONAL", "unit": "units/tick", "ref": ["ENV-TE-01", "D-30", "MV-02"]},
+    "conveyorWithArrowUnitsPerTick": {"value": 110, "status": "PROVISIONAL", "unit": "units/tick", "ref": ["D-30", "TE-05", "M0"]}
+  },
+  "pickups": {
+    "perSize": {
+      "small": {
+        "attackOrbs": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]},
+        "defenseOrbs": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]},
+        "hearts": {"value": 0, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]}
+      },
+      "medium": {
+        "attackOrbs": {"value": 4, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]},
+        "defenseOrbs": {"value": 4, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]},
+        "hearts": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]}
+      },
+      "large": {
+        "attackOrbs": {"value": 6, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]},
+        "defenseOrbs": {"value": 6, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]},
+        "hearts": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-31", "BAL-12"]}
+      }
+    }
+  },
+  "gates": {
+    "default": {
+      "openTicks": {"value": 120, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-GA-01", "D-32", "BAL-06"]},
+      "closedTicks": {"value": 90, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-GA-01", "D-32", "BAL-06"]},
+      "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["ENV-GA-02", "D-32"]}
+    },
+    "maxClosedTicks": {"value": 150, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-32", "GA-04"]}
+  },
+  "visibility": {
+    "fogRadiusTiles": {"value": 2, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-33", "ENV-VI-01", "BAL-06"]},
+    "darknessRadiusTiles": {"value": 3, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-33", "ENV-VI-02", "BAL-06"]},
+    "darknessTicks": {"value": 120, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-33", "ENV-VI-02", "BAL-06"]}
+  },
+  "boss": {
+    "arena": {
+      "coreRadius": {
+        "small": {"value": 1, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-11", "MZ-05"]},
+        "medium": {"value": 1, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-11", "MZ-05"]},
+        "large": {"value": 2, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-11", "MZ-05"]}
+      }
+    },
+    "minWarningTicks": {"value": 18, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14", "BS-02"]},
+    "recoveryTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["BS-02", "M0"]},
+    "rageHpFraction": {"value": 0.3, "status": "PROVISIONAL", "unit": "fraction", "ref": ["D-14", "BS-03"]},
+    "rageCooldownFactor": {"value": 0.75, "status": "PROVISIONAL", "unit": "factor", "ref": ["D-14", "BS-03"]},
+    "ballTicksPerTile": {"value": 4, "status": "PROVISIONAL", "unit": "ticks", "ref": ["BS-07", "M0"]},
+    "shockwaveTicksPerRing": {"value": 4, "status": "PROVISIONAL", "unit": "ticks", "ref": ["BS-07", "M0"]},
+    "shockwaveRings": {"value": 4, "status": "PROVISIONAL", "unit": "rings", "ref": ["D-14", "BS-07"]},
+    "freezeRadiusTiles": {"value": 2, "status": "PROVISIONAL", "unit": "tiles", "ref": ["BS-07", "M0"]},
+    "freezeTicks": {"value": 120, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14", "BS-07"]},
+    "trapSeedDistance": {"value": [2, 4], "status": "PROVISIONAL", "unit": "tiles", "ref": ["BS-07", "M0"]},
+    "wallRaiseDistance": {"value": [2, 5], "status": "PROVISIONAL", "unit": "tiles", "ref": ["BS-07", "M0"]},
+    "wallTicks": {"value": 240, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14", "WL-03"]},
+    "ballRainZoneSize": {"value": 3, "status": "PROVISIONAL", "unit": "tiles", "ref": ["D-14", "BS-07"]},
+    "patterns": {
+      "orbShot": {
+        "number": 1,
+        "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "easy", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "shockwave": {
+        "number": 2,
+        "warningTicks": {"value": 36, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "easy", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "twinOrbs": {
+        "number": 3,
+        "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "medium", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "freezeField": {
+        "number": 4,
+        "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "medium", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "trapSeeding": {
+        "number": 5,
+        "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "medium", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "wallRaise": {
+        "number": 6,
+        "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "hard", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "darknessPulse": {
+        "number": 7,
+        "warningTicks": {"value": 30, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "extreme", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      },
+      "ballRain": {
+        "number": 8,
+        "warningTicks": {"value": 36, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "fromTier": {"value": "ultimate", "status": "LOCKED", "unit": "tier", "ref": ["D-14"]}
+      }
+    },
+    "tiers": {
+      "easy": {
+        "hp": {"value": 6, "status": "PROVISIONAL", "unit": "hp", "ref": ["BOSS-02", "BAL-01"]},
+        "cooldownTicks": {"value": 120, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "rage": {"value": false, "status": "PROVISIONAL", "unit": "flag", "ref": ["D-14"]},
+        "trapSeedCount": {"value": 0, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14"]},
+        "wallRaiseCount": {"value": 0, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14"]}
+      },
+      "medium": {
+        "hp": {"value": 9, "status": "PROVISIONAL", "unit": "hp", "ref": ["BOSS-02", "BAL-01"]},
+        "cooldownTicks": {"value": 105, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "rage": {"value": false, "status": "PROVISIONAL", "unit": "flag", "ref": ["D-14"]},
+        "trapSeedCount": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14"]},
+        "wallRaiseCount": {"value": 0, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14"]}
+      },
+      "hard": {
+        "hp": {"value": 12, "status": "PROVISIONAL", "unit": "hp", "ref": ["BOSS-02", "BAL-01"]},
+        "cooldownTicks": {"value": 90, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "rage": {"value": true, "status": "PROVISIONAL", "unit": "flag", "ref": ["D-14"]},
+        "trapSeedCount": {"value": 3, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14", "M0"]},
+        "wallRaiseCount": {"value": 1, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14", "M0"]}
+      },
+      "extreme": {
+        "hp": {"value": 15, "status": "PROVISIONAL", "unit": "hp", "ref": ["BOSS-02", "BAL-01"]},
+        "cooldownTicks": {"value": 78, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "rage": {"value": true, "status": "PROVISIONAL", "unit": "flag", "ref": ["D-14"]},
+        "trapSeedCount": {"value": 3, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14", "M0"]},
+        "wallRaiseCount": {"value": 1, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14", "M0"]}
+      },
+      "ultimate": {
+        "hp": {"value": 18, "status": "PROVISIONAL", "unit": "hp", "ref": ["BOSS-02", "BAL-01"]},
+        "cooldownTicks": {"value": 66, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-14"]},
+        "rage": {"value": true, "status": "PROVISIONAL", "unit": "flag", "ref": ["D-14"]},
+        "trapSeedCount": {"value": 4, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14"]},
+        "wallRaiseCount": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14", "M0"]}
+      }
+    }
+  },
+  "network": {
+    "heartbeatTicks": {"value": 60, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-23", "NET-10"]},
+    "unresponsiveTicks": {"value": 180, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-23", "NET-10"]},
+    "staleInputTicks": {"value": 8, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-23", "NET-10"]},
+    "interpolationMs": {"value": 100, "status": "PROVISIONAL", "unit": "ms", "ref": ["D-23"]},
+    "reconnectGraceMs": {"value": 30000, "status": "LOCKED", "unit": "ms", "ref": ["TIME-03", "NET-06"]},
+    "pauseRequestExpiryMs": {"value": 10000, "status": "PROVISIONAL", "unit": "ms", "ref": ["PLAN 2.7", "TIME-02"]},
+    "maxVoluntaryPauseMs": {"value": 300000, "status": "LOCKED", "unit": "ms", "ref": ["TIME-02"]},
+    "maxMessagesPerSecond": {"value": 60, "status": "PROVISIONAL", "unit": "msgs/s", "ref": ["D-24"]}
+  },
+  "economy": {
+    "baseReward": {
+      "solo": {"value": 40, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+      "localVsPerPlayer": {"value": 30, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+      "wifiVs": {"value": 40, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]}
+    },
+    "tierFactor": {
+      "easy": {"value": 0.8, "status": "PROVISIONAL", "unit": "factor", "ref": ["D-20"]},
+      "medium": {"value": 1.0, "status": "PROVISIONAL", "unit": "factor", "ref": ["D-20"]},
+      "hard": {"value": 1.2, "status": "PROVISIONAL", "unit": "factor", "ref": ["D-20"]},
+      "extreme": {"value": 1.5, "status": "PROVISIONAL", "unit": "factor", "ref": ["D-20"]},
+      "ultimate": {"value": 2.0, "status": "PROVISIONAL", "unit": "factor", "ref": ["D-20"]}
+    },
+    "bossDamageCreditsPerHp": {"value": 3, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+    "winBonus": {"value": 20, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+    "drawBonusFraction": {"value": 0.5, "status": "PROVISIONAL", "unit": "fraction", "ref": ["D-20"]},
+    "antiFarming": {
+      "freeMatchesPerHour": {"value": 10, "status": "PROVISIONAL", "unit": "matches", "ref": ["D-20"]},
+      "factors": {"value": [0.5, 0.25], "status": "PROVISIONAL", "unit": "factor", "ref": ["D-20"]},
+      "windowMinutes": {"value": 60, "status": "PROVISIONAL", "unit": "minutes", "ref": ["D-20"]}
+    },
+    "prices": {
+      "foxAdventurer": {"value": 600, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+      "mysticSlime": {"value": 900, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+      "cosmeticRange": {"value": [100, 300], "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]}
+    },
+    "contentRewards": {
+      "campaignStar": {"value": 10, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+      "challengeMedal": {
+        "bronze": {"value": 20, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+        "silver": {"value": 40, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+        "gold": {"value": 80, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]}
+      },
+      "achievement": {
+        "bronze": {"value": 25, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+        "silver": {"value": 50, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+        "gold": {"value": 100, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]},
+        "platinum": {"value": 250, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]}
+      }
+    },
+    "weeklySale": {
+      "items": {"value": 4, "status": "PROVISIONAL", "unit": "count", "ref": ["D-20"]},
+      "discount": {"value": 0.2, "status": "PROVISIONAL", "unit": "fraction", "ref": ["D-20"]},
+      "roundDownTo": {"value": 5, "status": "PROVISIONAL", "unit": "credits", "ref": ["D-20"]}
+    },
+    "refundWindowMinutes": {"value": 10, "status": "LOCKED", "unit": "minutes", "ref": ["ECON-05"]}
+  },
+  "profiles": {
+    "archiveDays": {"value": 30, "status": "LOCKED", "unit": "days", "ref": ["PROFILE-04"]},
+    "pinDigits": {"value": 4, "status": "PROVISIONAL", "unit": "digits", "ref": ["D-22a"]},
+    "pinLockoutAttempts": {"value": 5, "status": "PROVISIONAL", "unit": "attempts", "ref": ["D-22a"]},
+    "pinLockoutSeconds": {"value": [60, 900], "status": "PROVISIONAL", "unit": "seconds", "ref": ["D-22a"]},
+    "savedMazeNameMaxChars": {"value": 32, "status": "PROVISIONAL", "unit": "chars", "ref": ["D-19"]}
+  },
+  "backups": {
+    "daily": {"value": 7, "status": "PROVISIONAL", "unit": "count", "ref": ["DB-04", "D-26"]},
+    "weekly": {"value": 4, "status": "PROVISIONAL", "unit": "count", "ref": ["DB-04", "D-26"]},
+    "monthly": {"value": 3, "status": "PROVISIONAL", "unit": "count", "ref": ["DB-04", "D-26"]}
+  },
+  "ops": {
+    "firstPort": {"value": 3000, "status": "LOCKED", "unit": "port", "ref": ["OPS-02"]},
+    "lastPort": {"value": 3019, "status": "PROVISIONAL", "unit": "port", "ref": ["D-25", "OPS-02"]}
+  }
+}
