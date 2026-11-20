@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+dist/
+coverage/
+test-results/
+playwright-report/
+docs/
+*.md
+packages/rules/balance.v1.json
+packages/rules/balance.v1.schema.json

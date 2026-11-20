@@ -1,0 +1,88 @@
+# CI (implementation plan WP 1.2, QA-01): typecheck, lint, unit tests, start-script
+# smoke tests and Playwright E2E on Windows and Ubuntu with Node.js 24.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Checks (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Show versions
+        run: |
+          node --version
+          pnpm --version
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm format:check
+      - name: Unit tests
+        run: pnpm test
+      - run: pnpm build
+      - name: Start-script smoke tests
+        run: pnpm test:smoke
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-results-${{ matrix.os }}
+          path: test-results/
+          if-no-files-found: ignore
+
+  e2e:
+    name: E2E (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Install Playwright Chromium
+        working-directory: apps/client
+        run: pnpm exec playwright install ${{ runner.os == 'Linux' && '--with-deps' || '' }} chromium
+      - run: pnpm test:e2e
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report-${{ matrix.os }}
+          path: |
+            apps/client/playwright-report/
+            apps/client/test-results/
+          if-no-files-found: ignore

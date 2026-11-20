@@ -1,12 +1,12 @@
 # Guo's Puzzle Duel IV: requirements traceability
 
-Status: M0 draft (20 Nov 2026). Every requirement ID of GDD v2.0 (sections 1 to 16, the §17 matrix and the §19 register) mapped to the rules in [`MECHANICS.md`](MECHANICS.md) or the decision in [`PLAN.md`](PLAN.md), the work package in [`implementation_plan.md`](implementation_plan.md) that delivers it, and the planned automated test (GDD Appendix B: "each module/PR must map requirements to tests").
+Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026. Every requirement ID of GDD v2.0 (sections 1 to 16, the §17 matrix and the §19 register) mapped to the rules in [`MECHANICS.md`](MECHANICS.md) or the decision in [`PLAN.md`](PLAN.md), the work package in [`implementation_plan.md`](implementation_plan.md) that delivers it, and the planned automated test (GDD Appendix B: "each module/PR must map requirements to tests").
 
 **Conventions**
 
 - Test titles start with the requirement ID so `pnpm test -t "G-009"` finds them. The suite is the package or app path (`sim/`, `rules/`, `host/`, `client/`, `content/`, `ai/`, `protocol/`; `e2e/` = Playwright; `tools/` = CI scripts).
 - "Evidence" marks requirements proved by a report or manual check instead of (or in addition to) a unit test; the Release gate (QA-06) collects them.
-- Status column: ⏳ planned (all rows at M0). Each milestone PR updates the rows it closes to ✅ with the test file.
+- Status column: ⏳ planned; 🟡 partly proved (the part still open is named); ✅ proved by the named test. Each milestone PR updates the rows it closes with the test file.
 
 ## 1. Vision and invariants
 
@@ -175,11 +175,11 @@ Status: M0 draft (20 Nov 2026). Every requirement ID of GDD v2.0 (sections 1 to 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
 | UI-01 | FL-01 (markers), D-13 | 2a.11, 6.7 | `e2e/a11y.spec.ts`: "UI-01: P1/P2 distinguishable in monochrome and high contrast" | ⏳ |
-| UI-02 | — | 1.5 | `e2e/routes.spec.ts`: "UI-02: every dashboard route opens" | ⏳ |
+| UI-02 | — | 1.5 | `e2e/routes.spec.ts`: "UI-02: every dashboard route opens" | ✅ M1: `apps/client/e2e/routes.spec.ts` |
 | UI-03 | G-004 | 3.2 | `e2e/lobby.spec.ts`: "UI-03: proposals, Ready resets, countdown cancel" | ⏳ |
 | UI-04 | — | 2a.11 | `e2e/hud.spec.ts`: "UI-04: HUD shows Life, energy, timer, phase, boss HP / token, goal, blockade on phone and shared screen" | ⏳ |
 | UI-05 | OC-05 | 2a.9 | `e2e/results.spec.ts`: "UI-05: results read the committed outcome once" | ⏳ |
-| UI-06 | D-02c | 1.5, 6.7 | `client/i18n.test.ts`: "UI-06: every string in EN/ZH/DE"; `e2e/a11y.spec.ts`: "UI-06: text scale, reduced motion, remap, touch target ≥ 64 px" | ⏳ |
+| UI-06 | D-02c | 1.5, 6.7 | `client/i18n.test.ts`: "UI-06: every string in EN/ZH/DE"; `e2e/a11y.spec.ts`: "UI-06: text scale, reduced motion, remap, touch target ≥ 64 px" | 🟡 M1: EN/ZH/DE scaffolding in `packages/content/test/i18n.test.ts`, `apps/client/e2e/routes.spec.ts`; a11y in 6.7 |
 | UI-07 | PLAN 2.7 | 6.5 | `e2e/language.spec.ts`: "UI-07: two devices in different languages show the same event" | ⏳ |
 
 ## 13. Audio and VFX
@@ -205,29 +205,29 @@ Status: M0 draft (20 Nov 2026). Every requirement ID of GDD v2.0 (sections 1 to 
 | NET-06 | OC-04 | 3.4 | `host/grace.test.ts`: "NET-06: reconnect at 29 s accepted, 31 s forfeit, deadline never reset" | ⏳ |
 | NET-07 | OC-04 | 3.4 | `host/grace.test.ts`: "NET-07: Leave forfeits; dual expiry is a neutral draw regardless of callback order" | ⏳ |
 | NET-08 | OC-04 | 3.4, 4.2 | `host/crash.test.ts`: "NET-08: restart after crash marks interrupted and grants nothing" | ⏳ |
-| NET-09 | D-24 | 1.3, 7.3 | `host/security.test.ts`: "NET-09: foreign Origin and unknown paths blocked; loopback-only by default" | ⏳ |
+| NET-09 | D-24 | 1.3, 7.3 | `host/security.test.ts`: "NET-09: foreign Origin and unknown paths blocked; loopback-only by default" | 🟡 M1: `apps/host/test/security.test.ts`, `host.test.ts`; security review in 7.3 |
 | NET-10 | D-23, D-24 | 3.1 | `protocol/schema.test.ts`: "NET-10: heartbeat 2 s / 6 s, stale input 8 ticks, rate limit 60/s, token rotation" | ⏳ |
 
 ## 15. Persistence and startup
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| DB-01 | D-27 | 1.4 | `host/db.test.ts`: "DB-01: cold start, migrations with pre-migration backup" | ⏳ |
+| DB-01 | D-27 | 1.4 | `host/db.test.ts`: "DB-01: cold start, migrations with pre-migration backup" | ✅ M1: `apps/host/test/db.test.ts` |
 | DB-02 | OC-05 | 4.2 | `host/db.test.ts`: "DB-02: fault injection between writes never leaves a partial commit" | ⏳ |
 | DB-03 | D-26 | 4.6 | `host/backup.test.ts`: "DB-03: manual backup/restore on sample data; safety backup before import" | ⏳ |
 | DB-04 | D-26 | 4.6 | `host/backup.test.ts`: "DB-04: 7/4/3 rotation; online backup API, never a raw WAL copy" | ⏳ |
-| OPS-01 | — | 1.6, 7.1 | `tools/start-scripts.test.ts`: "OPS-01: closing the browser does not stop the host"; Evidence: SEA package run | ⏳ |
-| OPS-02 | D-25 | 1.3 | `host/ports.test.ts`: "OPS-02: 3000 busy → 3001 with matching URL, WebSocket and QR" | ⏳ |
-| OPS-03 | D-25 | 1.3, 1.4 | `host/ports.test.ts`: "OPS-03: range exhausted exits clearly; port owner untouched; second host on same data dir refused" | ⏳ |
-| OPS-04 | D-27 | 1.4, 7.1 | `host/datadir.test.ts`: "OPS-04: user data outside install dir; update keeps profiles; LAN bind only when enabled" | ⏳ |
+| OPS-01 | — | 1.6, 7.1 | `tools/start-scripts.test.ts`: "OPS-01: closing the browser does not stop the host"; Evidence: SEA package run | 🟡 M1: `apps/host/test/host.test.ts`, `tools/test/start-scripts.test.ts`; SEA package in 7.1 |
+| OPS-02 | D-25 | 1.3 | `host/ports.test.ts`: "OPS-02: 3000 busy → 3001 with matching URL, WebSocket and QR" | ✅ M1: `apps/host/test/ports.test.ts`, `host.test.ts` |
+| OPS-03 | D-25 | 1.3, 1.4 | `host/ports.test.ts`: "OPS-03: range exhausted exits clearly; port owner untouched; second host on same data dir refused" | ✅ M1: `apps/host/test/ports.test.ts`, `db.test.ts`, `host.test.ts` |
+| OPS-04 | D-27 | 1.4, 7.1 | `host/datadir.test.ts`: "OPS-04: user data outside install dir; update keeps profiles; LAN bind only when enabled" | 🟡 M1: `apps/host/test/datadir.test.ts`, `host.test.ts`; update keeps profiles in 7.1 |
 
 ## 16. Quality and release
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| QA-01 | — | 1.1, 1.2 | CI: unit, sim goldens, property, bot-vs-bot, economy, E2E jobs produce artifacts | ⏳ |
+| QA-01 | — | 1.1, 1.2 | CI: unit, sim goldens, property, bot-vs-bot, economy, E2E jobs produce artifacts | 🟡 M1: `.github/workflows/ci.yml` (unit, lint rule test, smoke, E2E with artifacts on Windows + Ubuntu); sim, bot and economy jobs join from M2a |
 | QA-02 | — | 3.6 | `host/faults.test.ts`: "QA-02: latency 5–200 ms, jitter, loss, stalls, stale and duplicate inputs (logged fixtures)" | ⏳ |
-| QA-03 | D-25 | 1.3, 1.6 | `tools/start-scripts.test.ts`: "QA-03: port cases on start.bat and start.sh (Windows, Linux, macOS)" | ⏳ |
+| QA-03 | D-25 | 1.3, 1.6 | `tools/start-scripts.test.ts`: "QA-03: port cases on start.bat and start.sh (Windows, Linux, macOS)" | 🟡 M1: `tools/test/start-scripts.test.ts` in CI on Windows and Linux; macOS run in 7.2 |
 | QA-04 | — | 7.2 | Evidence: device report (Windows host, Android, iPhone/iPad, desktop browsers) | ⏳ |
 | QA-05 | — | 5.7 | Evidence: `docs/balance-report.md` (bot and human samples labelled) | ⏳ |
 | QA-06 | — | 7.5 | Evidence: signed six-gate report | ⏳ |
@@ -274,7 +274,7 @@ One test per row in `sim/matrix.test.ts` (WP 2b.10, D-35). Answers are in [MECHA
 | BAL-12 | D-31, PU-01 to PU-06 | `pickups.perSize` | `sim/pickups.test.ts` | ⏳ |
 | NET-01 (register) | D-23 | `network.heartbeatTicks`, `network.unresponsiveTicks`, `network.interpolationMs` | Network tests (3.6) | ⏳ |
 | NET-02 (register) | D-24 | `network.maxMessagesPerSecond` | Security tests (7.3) | ⏳ |
-| OPS-01 (register) | D-25 | `ops.firstPort`, `ops.lastPort` | Port tests (1.3) | ⏳ |
+| OPS-01 (register) | D-25 | `ops.firstPort`, `ops.lastPort` | Port tests (1.3) | ✅ M1: `packages/rules/test/balance.test.ts`, `apps/host/test/ports.test.ts` |
 | OPS-02 (register) | D-26 | `backups.*` | Backup tests (4.6) | ⏳ |
 | CONTENT-01 | D-21, D-20 | `packages/content` achievements and store | Manifest approval (4.4, 5.1) | ⏳ |
 
