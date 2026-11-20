@@ -1,6 +1,6 @@
 # Guo's Puzzle Duel IV: implementation plan
 
-Status: **draft for Guo's review** (v0.1, 15 Nov 2026). No code is written until this plan is approved.
+Status: **approved by Guo on 20 Nov 2026** (v1.0). M0 starts once the last open topics are settled.
 
 Inputs:
 - [`Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf`](Guos_Puzzle_Duel_IV_Full_Fidelity_GDD_v2.0.pdf): the requirements (IDs such as `G-009`, `ENV-TR-01`, `AB-03`).
@@ -187,7 +187,7 @@ Goal: a complete, deterministic match without the environment layer.
 | M4 | IV-02 to IV-05 character portraits | Coloured discs with initials |
 | M5 | IV-11 to IV-42 boss tier sets | Duel III set with a tier tint |
 | M6 | IV-01 title art, FLOW title loop, remaining 12 music cues | Code-drawn title, Duel II music |
-| Optional | IV-06 to IV-10 tile sheets | Procedural tiles |
+| Optional | IV-06 to IV-10 theme tiles (4 per theme, `tile_prompts.md`) | Procedural tiles; drop-in at any time, also after M7 |
 
 ---
 
@@ -195,10 +195,10 @@ Goal: a complete, deterministic match without the environment layer.
 
 | When | What |
 |---|---|
-| Now | Approve this plan (or name changes) |
+| ✅ 20 Nov | Plan approved |
 | End of M0 | Read and approve `MECHANICS.md` |
 | End of M2a, M2b | Play-tests on your PC; feel feedback |
 | End of M3 | Test with your phone/tablet on home Wi-Fi |
 | Before M5 | Approve the 65-level manifest level by level |
-| Through M4–M6 | Generate art and music per art_prompt.md and push to Pictures `GuosPuzzleDuel4/` |
+| Any time (optional) | Generate the 20 theme tiles per `tile_prompts.md` and push to Pictures `GuosPuzzleDuel4/tiles/`; all other art and music is delivered |
 | M7 | Real-device tests (Android, iPhone/iPad) and release sign-off |

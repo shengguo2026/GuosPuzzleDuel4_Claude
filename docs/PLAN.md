@@ -216,7 +216,7 @@ Notes: a player who reaches the exit on the tick they are knocked out counts as 
 
 **D-14 Boss: eight attack patterns** (BOSS-01 to 04, BAL-01, BAL-07) — ✅ **Signed off by Guo, 15 Nov** (pattern manifest and tier spread; numbers stay PROVISIONAL for balancing)
 - The boss (Guo) stays in the arena core and never walks. Every pattern runs warning → attack → recovery, with the warning never shorter than 0.6 s. It targets the nearest player; ties alternate so it never favours P1. Boss attacks deal 1 Life.
-- Proposed manifest (pose = boss art used during the pattern):
+- Proposed manifest (pose = boss art used during the pattern). **Look of the balls (20 Nov, Guo):** every ball the boss throws is drawn in code as a sports ball (soccer, basketball, tennis, volleyball), matching Guo's orb and the title art.
 
 | # | Pattern | What happens | Warning | From tier | Pose |
 |---|---|---|---|---|---|
@@ -311,7 +311,7 @@ Bronze/Silver/Gold thresholds per challenge are set in the level manifest (appro
 | TIME-02 | WiFi pause needs consent; what if the second player never answers? | Request expires after 10 s without an answer; the requester can still use Leave |
 | ECON-05/06 | "Access purchases" are not listed anywhere | v1: Challenge categories 4 and 5 and Large Random mazes can be bought early or unlocked by play |
 | MUS-04 | Who are "authorized LAN participants"? | Approved devices in the current room only |
-| M-005 | Five visual themes imply 5 tile sets | Procedural tiles first; Codex tile sheets are optional polish |
+| M-005 | Five visual themes imply 5 tile sets | Procedural tiles first; Codex theme tiles (`tile_prompts.md`) are optional polish |
 | ENV-* | Environment elements need visuals in all 5 themes | Drawn in code (shapes, icons, particles) with theme palettes; no new art |
 | ENV-VI-04 vs UI-04 | Fog on a shared screen vs HUD parity | Union view on the shared screen (D-33) |
 | Characters | "Robot", "Mystic Slime" need top-down sprites | In-maze tokens are drawn from the portrait head plus code-drawn body ring and direction arrow; no sprite sheets |
@@ -334,7 +334,7 @@ The GDD recommends Node host + SQLite + browser clients. I keep that core and ch
 | Host server | `apps/host`: Node `http` + **`ws`**, static file serving, room/session/approval, authoritative loop, port fallback | GPD2 lan-server uses `ws` |
 | Persistence | **SQLite via `node:sqlite`** (no native build); WAL mode; migrations with pre-migration backup; fallback `better-sqlite3` if a gap appears | Meets PR/DB requirements, easy to package |
 | Client | `apps/client`: **Vite + React 19** for menus/lobby/results; **PixiJS 8** (WebGL, Canvas fallback) for the match view | Static build, works offline over LAN; Pixi keeps 31×31 + particles at 60 FPS on phones and gives the Auto/High/Standard/Reduced quality switch |
-| Audio | Web Audio: music layers, Boss → Escape stinger bridge (fade under a ~1 s defeat stinger), priority mixer and ducking, synthesized SFX | Port GPD2 `audio/engine.ts`, `synth.ts`, `voices.ts` |
+| Audio | Web Audio: music layers, Boss → Escape stinger bridge (fade under a ~1 s defeat stinger, synthesised), priority mixer and ducking, all SFX synthesised in code (decided 20 Nov) | Port GPD2 `audio/engine.ts`, `synth.ts`, `voices.ts` |
 | Announcer | Offline TTS (espeak-ng + MBROLA) EN/ZH/DE, post-processed like GPD2's referee | Port GPD2 `tools/voice/build-voice.py`; no voice actor needed |
 | i18n | JSON per locale, CJK font subset for offline | GPD2 i18n + `subset-cjk-font.py` |
 | QR invites | `qrcode-generator` | Used in GPD2 |

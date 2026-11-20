@@ -6,7 +6,7 @@ Goal: **as few new assets as possible.**
 
 | Kind | Required | Optional polish |
 |---|---|---|
-| Codex images | **37** (1 title key art, 4 character portraits, 32 boss tier poses) | 5 theme tile sheets |
+| Codex images | **37** (1 title key art, 4 character portraits, 32 boss tier poses) | 20 theme tiles (4 per theme, `tile_prompts.md`) |
 | Flow video | **1** (title loop, 8 s) | — |
 | Flow Music cues | **14** (Title/Menu, Lobby, Store & Museum, Results, and a Boss + Escape cue for each of the 5 themes) | — |
 
@@ -24,7 +24,7 @@ Folder layout in the Pictures repo:
 GuosPuzzleDuel4/
   title/       IV-01 title key art
   characters/  IV-02 … IV-05
-  tiles/       IV-06 … IV-10 (optional)
+  tiles/       IV-06 … IV-10 (optional, one folder per theme)
   video/       FLOW-IV-TITLE-LOOP.mp4
   music/       M01 … M05
 ```
@@ -202,26 +202,9 @@ Order: make each tier's idle first, approve it, then the other seven poses with 
 
 The Easy tier never casts Freeze Field in the game (D-14), but its `04-freeze-cast` is still made for the Museum Boss Hall so every tier has a complete set.
 
-### IV-06 to IV-10 · Theme tile sheets (optional polish)
+### IV-06 to IV-10 · Theme tiles (optional polish)
 
-The game ships procedural tiles that already look clean; these sheets only add texture. Make them last, and only if time allows. One image per theme, 1024×1024, a **2×2 grid of four square tiles seen straight from above** (orthographic, no perspective), each tile filling its quarter with a 2 px gap:
-
-top-left **floor**, top-right **solid wall** (top face), bottom-left **breakable wall** (visible cracks), bottom-right **reinforced wall** (metal bands or crystal plates).
-
-Save as `GuosPuzzleDuel4/tiles/tiles-<theme>.png`. I make the floors seamless in the pipeline.
-
-```text
-A 2×2 sheet of four square top-down game tiles for a colourful arcade maze game, seen exactly from above, flat orthographic view, no perspective, no shadows falling outside the tiles, even lighting. Top-left: floor tile. Top-right: solid wall tile seen from above. Bottom-left: the same wall with clear cracks so it reads as breakable. Bottom-right: the same wall reinforced with <REINFORCEMENT>. Theme: <THEME>. Each tile fills its quarter exactly, separated by a thin neutral gap.
-[paste the shared style block]
-```
-
-| ID | `<THEME>` | `<REINFORCEMENT>` | Save as |
-|---|---|---|---|
-| IV-06 | Enchanted Garden: soft moss-and-clover floor with tiny flowers; hedge-block walls with leaves | woven golden vines and a brass plate | `tiles-garden.png` |
-| IV-07 | Desert Ruins: warm sand floor with faint patterned stones; sandstone brick walls | bronze bands and carved stone studs | `tiles-desert.png` |
-| IV-08 | Crystal Caverns: dark slate floor with tiny glowing specks; violet crystal-rock walls | clusters of bright cyan crystals | `tiles-crystal.png` |
-| IV-09 | Neon Circuit: dark navy floor with faint circuit lines; glossy dark panel walls with cyan edges | thick steel frames with glowing magenta strips | `tiles-neon.png` |
-| IV-10 | Volcanic Citadel: dark basalt floor with thin glowing orange cracks; black stone block walls | iron plates with glowing rivets | `tiles-volcanic.png` |
+Moved to its own file: [`tile_prompts.md`](tile_prompts.md) (20 Nov). Per theme four single top-down tiles (floor, solid wall, destructible wall, sealed shortcut door), 20 images in all, saved as `GuosPuzzleDuel4/tiles/<theme>/tile-<theme>-<a|b|c|d>-<name>.png`. The tiles follow the GDD v2.0 wall classes; the earlier "reinforced wall" tile is dropped because v2.0 has no such class. The game falls back to procedural tiles until they arrive, so they can be added at any time, also after M7.
 
 ---
 
@@ -381,4 +364,4 @@ Each theme has one **Boss** cue (Boss Phase: tension and fun while the boss atta
 4. **FLOW-IV-TITLE-LOOP** from IV-01.
 5. **B-GAR + E-GAR** (Garden is Campaign chapter 1 and the first in-match feel test), then **M01**, then the other four theme pairs, then M02, M03, M04.
 6. Boss tier sets IV-11 … IV-42, Easy and Ultimate first.
-7. Optional: the tile sheets IV-06 … IV-10.
+7. Optional: the theme tiles IV-06 … IV-10 (`tile_prompts.md`).
