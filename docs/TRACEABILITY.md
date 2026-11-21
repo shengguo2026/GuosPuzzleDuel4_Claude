@@ -1,6 +1,6 @@
 # Guo's Puzzle Duel IV: requirements traceability
 
-Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21 Nov 2026. Every requirement ID of GDD v2.0 (sections 1 to 16, the §17 matrix and the §19 register) mapped to the rules in [`MECHANICS.md`](MECHANICS.md) or the decision in [`PLAN.md`](PLAN.md), the work package in [`implementation_plan.md`](implementation_plan.md) that delivers it, and the planned automated test (GDD Appendix B: "each module/PR must map requirements to tests").
+Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21 Nov 2026; M2b rows updated 21 Nov 2026. Every requirement ID of GDD v2.0 (sections 1 to 16, the §17 matrix and the §19 register) mapped to the rules in [`MECHANICS.md`](MECHANICS.md) or the decision in [`PLAN.md`](PLAN.md), the work package in [`implementation_plan.md`](implementation_plan.md) that delivers it, and the planned automated test (GDD Appendix B: "each module/PR must map requirements to tests").
 
 **Conventions**
 
@@ -22,7 +22,7 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21
 | INV-04 | OC-05 | 4.2 | `host/finalize.test.ts`: "INV-04: finalizing twice returns the first result" | ⏳ |
 | INV-05 | SIM-02 | 2a.1, 3.4 | `e2e/match.spec.ts`: "TIME-02 / OC-04: Esc pauses (no ticks run)…"; grace deadline in M3 | 🟡 |
 | INV-06 | SIM-04, BS-14 | 2a.11, 6.4 | `sim/test/determinism.test.ts`: "M-005 / V-003 / INV-06…"; `e2e/match.spec.ts`: "M-005: changing the theme mid-match keeps the state hash"; audio settings in M6 | 🟡 |
-| INV-07 | MZ-07, BS-13 | 2a.2, 2b.9 | `sim/test/maze.test.ts`: "INV-07 / MZ-07 / MZ-03: thousands of seeds give symmetric mazes that pass the route check"; authored levels (M5) and environment (2b.9) open | 🟡 |
+| INV-07 | MZ-07, BS-13 | 2a.2, 2b.9 | `sim/test/maze.test.ts`: "INV-07 / MZ-07 / MZ-03…"; `sim/test/maze.property.test.ts`: "INV-07 / MZ-07: routes hold with traps, pads and conveyors avoided and gates open", "BS-13 / INV-07: …boss traps and walls never cut an objective that was reachable"; authored levels in M5 | 🟡 M2b: generated mazes with environment; authored levels in M5 |
 
 ## 2. Match rules and outcomes
 
@@ -55,55 +55,55 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| ENV-TR-01 | TR-03 | 2b.2 | `sim/traps.test.ts`: "ENV-TR-01: spike takes 1 Life once and immobilizes 15 ticks" | ⏳ |
-| ENV-TR-02 | TR-04 | 2b.2 | `sim/traps.test.ts`: "ENV-TR-02: shock hurts only in the dangerous window" | ⏳ |
-| ENV-TR-03 | TR-05 | 2b.2 | `sim/traps.test.ts`: "ENV-TR-03: snare immobilizes 60 ticks without damage" | ⏳ |
-| ENV-TR-04 | TR-07, TR-08, FL-01 | 2b.2, 2b.8 | `sim/traps.test.ts`: "ENV-TR-04: boss trap removed when triggered, destroyed, expired, boss defeated" | ⏳ |
-| ENV-TR-05 | TR-08 | 2b.2 | `sim/traps.test.ts`: "ENV-TR-05: boss trap harmless for 30 warning ticks, active 300 ticks" | ⏳ |
-| ENV-TR-06 | SH-04 | 2b.2 | `sim/shields.test.ts`: "ENV-TR-06: shield on a trap destroys it and keeps 90 ticks" | ⏳ |
-| ENV-TR-07 | TR-01, VI-04 | 2b.7, 6.7 | `client/visibility.test.ts`: "ENV-TR-07: trap and warning drawn under fog, darkness, high contrast, Reduced Effects" | ⏳ |
-| ENV-TR-08 | TR-10, section 17 | 2b.10 | `sim/matrix.test.ts`: "ENV-TR-08: trap vs movement, teleport landing, conveyor, shield, same-tick damage" | ⏳ |
-| ENV-TP-01 | TP-01, TP-02 | 2b.3 | `sim/teleport.test.ts`: "ENV-TP-01: A→B and B→A for both players, no energy cost" | ⏳ |
-| ENV-TP-02 | TP-02, TP-03 | 2b.3 | `sim/teleport.test.ts`: "ENV-TP-02: blocked destination waits on the pad, transports when free" | ⏳ |
-| ENV-TP-03 | TP-05 | 2b.3 | `sim/teleport.test.ts`: "ENV-TP-03: 30-tick cooldown, no A↔B oscillation in a long run" | ⏳ |
-| ENV-TP-04 | TP-06, EN-02 | 2b.3 | `sim/energy.test.ts`: "ENV-TP-04: teleport grants no Attack and is not delayed by animation" | ⏳ |
-| ENV-TP-05 | TP-04 | 2b.3 | `sim/teleport.test.ts`: "ENV-TP-05: simultaneous entry swaps; same-destination guard moves nobody" | ⏳ |
-| ENV-TE-01 | TE-01 | 2b.4 | `sim/terrain.test.ts`: "ENV-TE-01: boost 90 ticks at 78 units/tick; refresh, no stacking" | ⏳ |
-| ENV-TE-02 | TE-02, TE-03 | 2b.4 | `sim/terrain.test.ts`: "ENV-TE-02: ice slides to the first blocker or non-ice tile" | ⏳ |
-| ENV-TE-03 | TE-05, EN-02 | 2b.4 | `sim/energy.test.ts`: "ENV-TE-03: conveyor push never adds Attack" | ⏳ |
-| ENV-TE-04 | EN-03, TR-09 | 2a.4, 2b.2 | `sim/test/energy.test.ts`: "CTRL-03 / EN-03: charging an ability is not eligible for Defense"; snare and push cases in M2b | 🟡 |
-| ENV-TE-05 | TE-05, TE-06 | 2b.4, 2b.10 | `sim/matrix.test.ts`: "ENV-TE-05: ice/conveyor/boost/teleport priority table rows" | ⏳ |
-| ENV-PU-01 | PU-01, PU-02 | 2b.5 | `sim/pickups.test.ts`: "ENV-PU-01: Attack Orb +1, never above 3" | ⏳ |
-| ENV-PU-02 | PU-01, PU-02 | 2b.5 | `sim/pickups.test.ts`: "ENV-PU-02: Defense Orb +1, never above 3" | ⏳ |
-| ENV-PU-03 | PU-01, EN-07 | 2b.5 | `sim/pickups.test.ts`: "ENV-PU-03: Heart +1 Life, never above 3" | ⏳ |
-| ENV-PU-04 | PU-04, PU-05 | 2b.5 | `sim/pickups.test.ts`: "ENV-PU-04: one grant per pickup; same-tick entry grants nobody; no respawn" | ⏳ |
-| ENV-PU-05 | PU-06 | 2b.5, 2b.9 | `sim/maze.property.test.ts`: "ENV-PU-05: counts per size and forbidden tiles respected" | ⏳ |
-| ENV-GA-01 | GA-01 | 2b.6 | `sim/gates.test.ts`: "ENV-GA-01: 120 open / 90 closed; state event matches passability" | ⏳ |
-| ENV-GA-02 | GA-01, GA-02 | 2b.6 | `sim/gates.test.ts`: "ENV-GA-02: 30-tick warning; closed gate blocks players and bombs; bombs never destroy it" | ⏳ |
-| ENV-GA-03 | GA-03, GA-06 | 2b.6 | `sim/gates.test.ts`: "ENV-GA-03: occupied or reserved gate stays open until clear" | ⏳ |
-| ENV-GA-04 | GA-04, GA-05 | 2b.6 | `sim/gates.test.ts`: "ENV-GA-04: 100 000-tick run never seals an exit; closed ≤ 150 ticks" | ⏳ |
-| ENV-VI-01 | VI-02 | 2b.7 | `host/visibility.test.ts`: "ENV-VI-01: fog mask radius 2 per player" | ⏳ |
-| ENV-VI-02 | VI-03 | 2b.7 | `host/visibility.test.ts`: "ENV-VI-02: darkness 120 ticks, radius 3" | ⏳ |
-| ENV-VI-03 | VI-04 | 2b.7 | `client/visibility.test.ts`: "ENV-VI-03: warnings, markers, token, exit and HUD stay visible" | ⏳ |
-| ENV-VI-04 | VI-05 | 2b.7 | `client/visibility.test.ts`: "ENV-VI-04: shared screen shows the union; WiFi shows own view" | ⏳ |
+| ENV-TR-01 | TR-03 | 2b.2 | `sim/test/traps.test.ts`: "ENV-TR-01: spike takes 1 Life once and immobilizes 15 ticks" | ✅ |
+| ENV-TR-02 | TR-04 | 2b.2 | `sim/test/traps.test.ts`: "ENV-TR-02: shock hurts only in the dangerous window; it is never consumed" | ✅ |
+| ENV-TR-03 | TR-05 | 2b.2 | `sim/test/traps.test.ts`: "ENV-TR-03: snare immobilizes 60 ticks without damage" | ✅ |
+| ENV-TR-04 | TR-07, TR-08, FL-01 | 2b.2, 2b.8 | `sim/test/traps.test.ts`: "ENV-TR-04: boss trap removed when triggered, destroyed, expired or when the boss is defeated" | ✅ |
+| ENV-TR-05 | TR-08 | 2b.2 | `sim/test/traps.test.ts`: "ENV-TR-05: boss trap harmless for 30 warning ticks, then active 300 ticks", "TR-08: a boss shock trap cycles from its own activation tick" | ✅ |
+| ENV-TR-06 | SH-04 | 2b.2 | `sim/test/traps.test.ts`: "ENV-TR-06: shield on a trap destroys it and keeps 90 ticks"; `sim/test/matrix.test.ts`: "§17 shield…" | ✅ |
+| ENV-TR-07 | TR-01, VI-04 | 2b.7, 6.7 | `sim/test/matrix.test.ts`: "§17 visibility: warnings always shown"; `e2e/match.spec.ts` M2b test (screenshots); high contrast and Reduced Effects in 6.7 | 🟡 M2b: fog and darkness; a11y modes in 6.7 |
+| ENV-TR-08 | TR-10, section 17 | 2b.10 | `sim/test/matrix.test.ts`: "ENV-TR-08: trap vs teleport landing, conveyor push, same-tick damage"; `sim/test/traps.test.ts`: "TR-02…", "TR-06…" | ✅ |
+| ENV-TP-01 | TP-01, TP-02 | 2b.3 | `sim/test/teleport.test.ts`: "ENV-TP-01: A→B and B→A for both players, no energy cost" | ✅ |
+| ENV-TP-02 | TP-02, TP-03 | 2b.3 | `sim/test/teleport.test.ts`: "ENV-TP-02: blocked destination waits on the pad, transports on the first free tick", "TP-03…" | ✅ |
+| ENV-TP-03 | TP-05 | 2b.3 | `sim/test/teleport.test.ts`: "ENV-TP-03: 30-tick cooldown, no A↔B oscillation in a long run" | ✅ |
+| ENV-TP-04 | TP-06, EN-02 | 2b.3 | `sim/test/matrix.test.ts`: "§17 teleport: no Attack; transport on the entry tick; cooldown" | ✅ |
+| ENV-TP-05 | TP-04 | 2b.3 | `sim/test/teleport.test.ts`: "ENV-TP-05: simultaneous entry swaps; same-destination guard moves nobody" | ✅ |
+| ENV-TE-01 | TE-01 | 2b.4 | `sim/test/terrain.test.ts`: "ENV-TE-01: boost 90 ticks at 78 units/tick; refresh, no stacking" | ✅ |
+| ENV-TE-02 | TE-02, TE-03 | 2b.4 | `sim/test/terrain.test.ts`: "ENV-TE-02: ice slides to the first non-ice tile; no turning; slid tiles give no Attack", "TE-03…" | ✅ |
+| ENV-TE-03 | TE-05, EN-02 | 2b.4 | `sim/test/matrix.test.ts`: "§17 conveyor: only own share counts for Attack"; `sim/test/terrain.test.ts`: "TE-05: conveyor decision table…" | ✅ |
+| ENV-TE-04 | EN-03, TR-09 | 2a.4, 2b.2 | `sim/test/energy.test.ts`: "CTRL-03 / EN-03…"; `sim/test/matrix.test.ts`: "§17 snare: counter resets and restarts after snare"; `sim/test/terrain.test.ts`: "TE-05: a blocked push leaves the player in place (ineligible for Defense)" | ✅ |
+| ENV-TE-05 | TE-05, TE-06 | 2b.4, 2b.10 | `sim/test/matrix.test.ts`: "ENV-TE-05: ice/conveyor/boost/teleport priority table rows" | ✅ |
+| ENV-PU-01 | PU-01, PU-02 | 2b.5 | `sim/test/pickups.test.ts`: "ENV-PU-01: Attack Orb +1, never above 3 (at cap it stays)" | ✅ |
+| ENV-PU-02 | PU-01, PU-02 | 2b.5 | `sim/test/pickups.test.ts`: "ENV-PU-02: Defense Orb +1, never above 3" | ✅ |
+| ENV-PU-03 | PU-01, EN-07 | 2b.5 | `sim/test/pickups.test.ts`: "ENV-PU-03: Heart +1 Life, never above 3" | ✅ |
+| ENV-PU-04 | PU-04, PU-05 | 2b.5 | `sim/test/pickups.test.ts`: "ENV-PU-04: one grant per pickup; same-tick entry grants nobody; no respawn" | ✅ |
+| ENV-PU-05 | PU-06 | 2b.5, 2b.9 | `sim/test/maze.property.test.ts`: "ENV-PU-05: counts per size and forbidden tiles respected" | ✅ |
+| ENV-GA-01 | GA-01 | 2b.6 | `sim/test/gates.test.ts`: "ENV-GA-01: 120 open / 90 closed; the gate event matches passability" | ✅ |
+| ENV-GA-02 | GA-01, GA-02 | 2b.6 | `sim/test/gates.test.ts`: "ENV-GA-02: 30-tick warning; closed gate blocks players and bombs; bombs never destroy it" | ✅ |
+| ENV-GA-03 | GA-03, GA-06 | 2b.6 | `sim/test/gates.test.ts`: "ENV-GA-03: occupied or reserved gate stays open until clear; the cycle is delayed" | ✅ |
+| ENV-GA-04 | GA-04, GA-05 | 2b.6 | `sim/test/gates.test.ts`: "ENV-GA-04: 100 000-tick run never seals an exit; closed ≤ 150 ticks" | ✅ |
+| ENV-VI-01 | VI-02 | 2b.7 | `sim/test/visibility.test.ts`: "ENV-VI-01: fog mask radius 2 per player; outside fog the view is normal"; host-side filtering in M3 | 🟡 M2b: mask in sim; WiFi filtering in M3 |
+| ENV-VI-02 | VI-03 | 2b.7 | `sim/test/visibility.test.ts`: "ENV-VI-02: darkness 120 ticks, radius 3 for every player" | ✅ |
+| ENV-VI-03 | VI-04 | 2b.7 | `sim/test/matrix.test.ts`: "§17 visibility: warnings always shown"; renderer draws alerts, tokens, exits and the boss above the fog (`e2e/match.spec.ts` M2b test) | 🟡 M2b: shared screen; WiFi in M3 |
+| ENV-VI-04 | VI-05 | 2b.7 | `sim/test/visibility.test.ts`: "ENV-VI-04: shared screen shows the union; WiFi shows own view"; WiFi rendering in M3 | 🟡 M2b: shared screen; WiFi in M3 |
 | ENV-WA-01 | WL-01, BM-06 | 2a.5 | `sim/test/combat.test.ts`: "BM-06 / ENV-WA-01 / ENV-WA-02…" | ✅ |
 | ENV-WA-02 | WL-02, BM-05, BM-06 | 2a.5 | `sim/test/combat.test.ts`: "BM-06 / ENV-WA-01 / ENV-WA-02: destructible walls fall only to Super Bombs; solid walls never" | ✅ |
-| ENV-WA-03 | WL-03, BS-13 | 2b.8 | `sim/walls.test.ts`: "ENV-WA-03: boss wall expires at 240 ticks or breaks to a Super Bomb; revision increments" | ⏳ |
-| ENV-WA-04 | WL-04, BM-06 | 2b.6 | `sim/walls.test.ts`: "ENV-WA-04: Super Bomb on a timed gate has no effect" | ⏳ |
+| ENV-WA-03 | WL-03, BS-13 | 2b.8 | `sim/test/walls.test.ts`: "ENV-WA-03: boss wall expires at 240 ticks or breaks to a Super Bomb; revision increments", "ENV-WA-03: a boss wall blocks players, bombs and balls" | ✅ |
+| ENV-WA-04 | WL-04, BM-06 | 2b.6 | `sim/test/walls.test.ts`: "ENV-WA-04: Super Bomb on a timed gate has no effect" | ✅ |
 | ENV-WA-05 | MZ-06, FL-01 | 2a.7 | `sim/test/flip.test.ts`: "G-008 / FL-01…", "ENV-WA-05: both exits stay reachable without the shortcuts" | ✅ |
-| ENV-WA-06 | MZ-08 | 2b.1, 3.3 | `sim/revision.test.ts`: "ENV-WA-06: every passability change increments revision with one event"; `client/reconcile.test.ts`: "ENV-WA-06: prediction reconciles after geometry change" | ⏳ |
+| ENV-WA-06 | MZ-08 | 2b.1, 3.3 | `sim/test/revision.test.ts`: "ENV-WA-06: every passability change increments revision with one event"; client prediction reconcile in M3 | 🟡 M2b: sim revision; reconcile in M3 |
 
 ## 5. Movement, energy, abilities
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
 | CTRL-01 | MV-06, D-02 | 2a.9, 3.5 | `e2e/match.spec.ts`: "CTRL-01: two players on one keyboard move at once; holding a direction while charging works"; touch in M3, remapping in M6 | 🟡 |
-| CTRL-02 | EN-02, EN-04 | 2a.4 | `sim/test/energy.test.ts`: "CTRL-02…" (+1 per 12 own tiles, carry-over, no banking, presets); forced motion in M2b | 🟡 |
-| CTRL-03 | EN-03, EN-04 | 2a.4 | `sim/test/energy.test.ts`: "CTRL-03…" (210 eligible ticks, input resets, charging, own shield, cap, pause); snare in M2b | 🟡 |
-| CTRL-04 | MV-01 to MV-09 | 2a.3 | `sim/test/movement.test.ts`: "CTRL-04 / MV-02…", "MV-03…", "MV-06…", "MV-07…", "MV-08…"; boosted carry in M2b | 🟡 |
+| CTRL-02 | EN-02, EN-04 | 2a.4 | `sim/test/energy.test.ts`: "CTRL-02…"; `sim/test/matrix.test.ts`: "§17 conveyor…", "§17 teleport…"; `sim/test/terrain.test.ts`: ice gives no Attack | ✅ |
+| CTRL-03 | EN-03, EN-04 | 2a.4 | `sim/test/energy.test.ts`: "CTRL-03…"; `sim/test/matrix.test.ts`: "§17 snare: counter resets and restarts after snare" | ✅ |
+| CTRL-04 | MV-01 to MV-09 | 2a.3 | `sim/test/movement.test.ts`: "CTRL-04 / MV-02…", "MV-03…", "MV-06…", "MV-07…", "MV-08…"; `sim/test/terrain.test.ts`: "MV-04: boosted steps keep their carry" | ✅ |
 | AB-01 | BM-01, CH-05 | 2a.5 | `sim/test/combat.test.ts`: "AB-01: a bomb costs 1 Attack; at 0 Attack it is rejected with no cost" | ✅ |
 | AB-02 | CH-01, CH-03, BM-06 | 2a.5 | `sim/test/combat.test.ts`: "CH-03 / AB-02…", "AB-02: the charge counts simulation ticks only" | ✅ |
-| AB-03 | SH-03, SH-04 | 2a.5 | `sim/test/combat.test.ts`: "AB-03: a shield costs 1 Defense, stands 90 ticks…"; trap removal in M2b | 🟡 |
+| AB-03 | SH-03, SH-04 | 2a.5 | `sim/test/combat.test.ts`: "AB-03…"; `sim/test/traps.test.ts`: "ENV-TR-06: shield on a trap destroys it and keeps 90 ticks" | ✅ |
 | AB-04 | SH-05, CH-03 | 2a.5 | `sim/test/combat.test.ts`: "AB-04: Super Shield only in the Escape Phase, 450 ticks, only a Super Bomb breaks it" | ✅ |
 | AB-05 | CH-01 to CH-06, BM-02 to BM-07, SH-01 to SH-08 | 2a.5 | `sim/test/combat.test.ts`: bombs and shields suites (BM-02 to BM-06, CH-03, CH-04, SH-01, SH-02, SH-06, EN-06 / CH-06) | ✅ |
 
@@ -113,8 +113,8 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21
 |---|---|---|---|---|
 | BOSS-01 | BS-02, BS-14 | 2a.6 | `sim/test/boss.test.ts`: "BOSS-01 / BS-02: cooldown → warning → attack (1 tick) → recovery (30) → cooldown" | ✅ |
 | BOSS-02 | BS-01, BS-02, BS-03 | 2a.6, 5.7 | `sim/test/boss.test.ts`: "BOSS-02 / BS-01…", "BOSS-02 / BS-03: Rage…"; balance report in M5 | 🟡 |
-| BOSS-03 | BS-13, FL-01 | 2b.8 | `sim/flip.test.ts`: "BOSS-03: no boss trap, wall, ball, ice or darkness left after defeat" | ⏳ |
-| BOSS-04 | BS-04 to BS-12 (D-14 signed) | 2a.6, 2b.8 | `sim/test/boss.test.ts`: patterns 1–3 ("BOSS-04 pattern 1/2/3…", "BS-08…", "BS-10…"), "BOSS-04: tier unlocks (M2a patterns)"; patterns 4–8 in M2b | 🟡 |
+| BOSS-03 | BS-13, FL-01 | 2b.8 | `sim/test/patterns.test.ts`: "BOSS-03: no boss trap, wall, ball, ice or darkness left after defeat"; `sim/test/matrix.test.ts`: "§17 flip: boss hazards cleared" | ✅ |
+| BOSS-04 | BS-04 to BS-12 (D-14 signed) | 2a.6, 2b.8 | `sim/test/boss.test.ts`: patterns 1–3, tier unlocks; `sim/test/patterns.test.ts`: "BOSS-04 pattern 4…" to "pattern 8…", "BS-14 / BS-04: a full Ultimate run uses all eight patterns and never repeats one" | ✅ |
 | BOSS-05 | D-15 | 2a.10, 5.5 | `ai/test/ai.test.ts`: "BOSS-05: the bot only returns a command; it never changes the state"; AI tiers in M5 | 🟡 |
 
 ## 7. Timers and pausing
@@ -235,26 +235,26 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21
 
 ## 17. Cross-element interaction matrix (GDD §17)
 
-One test per row in `sim/matrix.test.ts` (WP 2b.10, D-35). Answers are in [MECHANICS.md section 19](MECHANICS.md#19-cross-element-interaction-matrix-gdd-17).
+One test per row in `sim/test/matrix.test.ts` (WP 2b.10, D-35). Answers are in [MECHANICS.md section 19](MECHANICS.md#19-cross-element-interaction-matrix-gdd-17).
 
 | Row | Planned test | Status |
 |---|---|---|
-| Conveyor → Attack | "§17 conveyor: only own share counts for Attack" | ⏳ |
-| Teleport → Attack | "§17 teleport: no Attack; next-tick transport; cooldown" | ⏳ |
-| Snare → Defense | "§17 snare: counter resets and restarts after snare" | ⏳ |
-| Normal Shield → trap | "§17 shield: trap destroyed, shield keeps 90 ticks; multi-hit costs 1 Life" | ⏳ |
-| Super Bomb → destructible wall | "§17 super bomb: destructible walls in footprint removed" | ⏳ |
-| Super Bomb → boss wall | "§17 super bomb: boss wall removed" | ⏳ |
-| Super Bomb → timed gate | "§17 super bomb: gate unchanged" | ⏳ |
-| Super Bomb → Super Shield | "§17 super bomb: blockade removed on blast tick" | ⏳ |
-| Teleport → occupied exit | "§17 teleport: wait on pad until free" | ⏳ |
-| Player in closing gate | "§17 gate: pending close until clear" | ⏳ |
-| Fog/darkness → trap warning | "§17 visibility: warnings always shown" | ⏳ |
-| Boss defeated → trap cleanup | "§17 flip: boss hazards cleared" | ⏳ |
-| Boss defeated → shortcuts | "§17 flip: shortcuts open, routes valid without them" | ⏳ |
-| Two players → one pickup | "§17 pickup: same-tick entry grants nobody" | ⏳ |
-| Phase transition → tokens | "§17 flip: two tokens, once, same tick" | ⏳ |
-| Reconnect → environment state | "§17 reconnect: snapshot restores environment; nothing replayed" | ⏳ |
+| Conveyor → Attack | `sim/test/matrix.test.ts`: "§17 conveyor: only own share counts for Attack" | ✅ |
+| Teleport → Attack | `sim/test/matrix.test.ts`: "§17 teleport: no Attack; transport on the entry tick; cooldown" | ✅ |
+| Snare → Defense | `sim/test/matrix.test.ts`: "§17 snare: counter resets and restarts after snare" | ✅ |
+| Normal Shield → trap | `sim/test/matrix.test.ts`: "§17 shield: trap destroyed, shield keeps 90 ticks; multi-hit costs 1 Life" | ✅ |
+| Super Bomb → destructible wall | `sim/test/matrix.test.ts`: "§17 super bomb: destructible walls in footprint removed" | ✅ |
+| Super Bomb → boss wall | `sim/test/matrix.test.ts`: "§17 super bomb: boss wall removed" | ✅ |
+| Super Bomb → timed gate | `sim/test/matrix.test.ts`: "§17 super bomb: gate unchanged" | ✅ |
+| Super Bomb → Super Shield | `sim/test/matrix.test.ts`: "§17 super bomb: blockade removed on blast tick" | ✅ |
+| Teleport → occupied exit | `sim/test/matrix.test.ts`: "§17 teleport: wait on pad until free" | ✅ |
+| Player in closing gate | `sim/test/matrix.test.ts`: "§17 gate: pending close until clear" | ✅ |
+| Fog/darkness → trap warning | `sim/test/matrix.test.ts`: "§17 visibility: warnings always shown" | ✅ |
+| Boss defeated → trap cleanup | `sim/test/matrix.test.ts`: "§17 flip: boss hazards cleared" | ✅ |
+| Boss defeated → shortcuts | `sim/test/matrix.test.ts`: "§17 flip: shortcuts open, routes valid without them" | ✅ |
+| Two players → one pickup | `sim/test/matrix.test.ts`: "§17 pickup: same-tick entry grants nobody" | ✅ |
+| Phase transition → tokens | `sim/test/matrix.test.ts`: "§17 flip: two tokens, once, same tick" | ✅ |
+| Reconnect → environment state | `sim/test/matrix.test.ts`: "§17 reconnect: snapshot restores environment; nothing replayed" | ✅ |
 
 ## 18. Provisional values register (GDD §19)
 

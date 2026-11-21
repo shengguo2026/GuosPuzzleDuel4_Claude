@@ -16,6 +16,7 @@ import {
   bfs,
   chance,
   chebyshev,
+  envAt,
   isBlocker,
   nextInt,
   opposite,
@@ -40,7 +41,17 @@ export interface Bot {
   think(state: MatchState): PlayerInput;
 }
 
-type Mode = 'idle' | 'charge' | 'attack' | 'dodge' | 'token' | 'exit';
+type Mode = 'idle' | 'charge' | 'attack' | 'dodge' | 'token' | 'exit' | 'pickup';
+
+/**
+ * Tiles the bot plans around (M2b): traps, pads (they would carry it away),
+ * conveyors and boss walls. It still crosses them when no other way exists.
+ */
+function hazard(s: MatchState, i: number): boolean {
+  const x = i % s.maze.w;
+  const y = Math.floor(i / s.maze.w);
+  return !!envAt(s, x, y, 'spike', 'shock', 'snare', 'pad', 'conveyor', 'bossWall');
+}
 
 /**
  * Basic AI (D-15, the M2a opponent): walks to build Attack, bombs the boss
@@ -113,7 +124,12 @@ export class BasicBot implements Bot {
       return this.walk(s, false, danger);
     }
 
-    // 3. Boss Phase: bomb from an attack spot, or walk to charge Attack.
+    // 3. Boss Phase: grab a useful pickup nearby, bomb from an attack spot, or walk to charge Attack.
+    const pickup = this.nearbyPickup(s);
+    if (pickup >= 0) {
+      this.setGoals(s, 'pickup', [pickup]);
+      return this.walk(s, false, danger);
+    }
     if (p.attack >= 1) {
       const toCore = this.coreDirection(s, p.x, p.y);
       if (toCore !== -1) {
@@ -155,12 +171,45 @@ export class BasicBot implements Bot {
     this.goals = goals;
     this.planTick = s.tick;
     this.planRevision = s.revision;
+    const p = s.players[this.slot];
+    const here = p.y * s.maze.w + p.x;
+    const open = (i: number) => passable(s, i % s.maze.w, Math.floor(i / s.maze.w));
+    // Plan around hazards; fall back to any route when that finds none.
+    const goalSet = new Set(goals);
     this.dist = bfs(
       s.maze.w,
       s.maze.h,
-      (i) => passable(s, i % s.maze.w, Math.floor(i / s.maze.w)),
+      (i) => open(i) && (i === here || goalSet.has(i) || !hazard(s, i)),
       goals,
     );
+    if (this.dist[here]! < 0) this.dist = bfs(s.maze.w, s.maze.h, open, goals);
+  }
+
+  /** A reachable Attack/Defense Orb or Heart the bot can use, within 8 steps. */
+  private nearbyPickup(s: MatchState): number {
+    const p = s.players[this.slot];
+    const wants = (k: string) =>
+      (k === 'attackOrb' && p.attack < 3) ||
+      (k === 'defenseOrb' && p.defense < 3) ||
+      (k === 'heart' && p.life < 3);
+    const targets = s.env.filter((e) => wants(e.kind)).map((e) => e.y * s.maze.w + e.x);
+    if (targets.length === 0) return -1;
+    const from = bfs(
+      s.maze.w,
+      s.maze.h,
+      (i) => passable(s, i % s.maze.w, Math.floor(i / s.maze.w)) && !hazard(s, i),
+      [p.y * s.maze.w + p.x],
+    );
+    let best = -1;
+    let bestD = 9;
+    for (const t of targets) {
+      const d = from[t]!;
+      if (d > 0 && d < bestD) {
+        bestD = d;
+        best = t;
+      }
+    }
+    return best;
   }
 
   /** One step down the distance map; prefers tiles outside `avoid`. */
@@ -220,7 +269,20 @@ export class BasicBot implements Bot {
     if (b.state === 'warning' && b.age >= CFG.reactionTicks.value) {
       for (const l of b.lanes) lane(l.x, l.y, l.dir, 99);
       if (b.pattern === 2) this.addRadius(s, out, coreRadius + 4);
+      // Ball Rain zones (3×3) and the tiles where traps will appear.
+      if (b.pattern === 8)
+        for (const c of b.marks) {
+          const cx = c % w;
+          const cy = Math.floor(c / w);
+          for (let y = cy - 1; y <= cy + 1; y++)
+            for (let x = cx - 1; x <= cx + 1; x++)
+              if (x >= 0 && y >= 0 && x < w && y < s.maze.h) out.add(y * w + x);
+        }
+      if (b.pattern === 5) for (const m of b.marks) out.add(m);
     }
+    // Shock traps about to hurt or hurting.
+    for (const e of s.env)
+      if (e.kind === 'shock' && e.warn === 0 && e.cycle >= 55) out.add(e.y * w + e.x);
     for (const ball of s.balls) lane(ball.x, ball.y, ball.dir, 5);
     for (const wave of s.waves)
       if (wave.radius < wave.maxRadius) this.addRadius(s, out, wave.maxRadius);
@@ -238,7 +300,7 @@ export class BasicBot implements Bot {
     const out: number[] = [];
     for (let i = 0; i < s.tiles.length; i++) {
       const t = s.tiles[i];
-      if ((t === Tile.FLOOR || t === Tile.ENTRANCE) && !danger.has(i)) out.push(i);
+      if ((t === Tile.FLOOR || t === Tile.ENTRANCE) && !danger.has(i) && !hazard(s, i)) out.push(i);
     }
     return out;
   }
@@ -286,7 +348,8 @@ export class BasicBot implements Bot {
       [p.y * s.maze.w + p.x],
     );
     const options: number[] = [];
-    for (let i = 0; i < from.length; i++) if (from[i]! >= 6 && from[i]! <= 12) options.push(i);
+    for (let i = 0; i < from.length; i++)
+      if (from[i]! >= 6 && from[i]! <= 12 && !hazard(s, i)) options.push(i);
     if (options.length === 0) return p.y * s.maze.w + p.x;
     return options[nextInt(this.rng, options.length)]!;
   }

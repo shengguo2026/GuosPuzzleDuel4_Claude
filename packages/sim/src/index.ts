@@ -18,6 +18,11 @@ export function secondsToTicks(seconds: number): number {
 export * from './types.js';
 export * from './rng.js';
 export * from './maze.js';
+export * from './world.js';
+export * from './boss.js';
 export * from './match.js';
+export * from './environment.js';
+export * from './visibility.js';
+export * from './snapshot.js';
 export * from './hash.js';
 export * from './replay.js';

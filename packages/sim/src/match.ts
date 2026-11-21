@@ -1,47 +1,67 @@
 /**
- * The match simulation (WP 2a.1 to 2a.8): one call of `stepMatch` runs one
- * host tick through the fixed pipeline of MECHANICS.md section 17. Both
- * players are processed symmetrically (SIM-05): every step computes from the
- * state at its start and applies the results together.
+ * The match simulation (WP 2a.1 to 2a.8, 2b.1 to 2b.8): one call of
+ * `stepMatch` runs one host tick through the fixed pipeline of MECHANICS.md
+ * section 17. Both players are processed symmetrically (SIM-05): every step
+ * computes from the state at its start and applies the results together.
  *
- * M2a scope: movement, energy, bombs, shields, boss patterns 1–3, phase flip,
- * tokens, shortcuts, escape, timer and outcomes. Environment elements (traps,
- * teleporters, terrain, pickups, gates, fog) and patterns 4–8 follow in M2b.
+ * Environment (M2b): traps, teleporters, boost, ice, conveyors, pickups,
+ * timed gates, fog and darkness, boss walls and boss patterns 4–8.
  */
 import { balance } from '@gpd4/rules';
-import { chebyshev, generateMaze } from './maze.js';
-import { nextInt } from './rng.js';
+import { advanceBoss, inRainZone, waveFront as waveFrontOf, type BossSpawns } from './boss.js';
+import { generateMaze } from './maze.js';
 import {
   DX,
   DY,
   NORTH,
+  PICKUP_KINDS,
   SOUTH,
+  TRAP_KINDS,
   Tile,
   opposite,
-  type Ball,
   type Bomb,
   type BossState,
   type Dir,
-  type EventBody,
+  type EnvEntity,
   type GameEvent,
-  type Lane,
   type MatchConfig,
   type MatchState,
   type Maze,
   type Outcome,
-  type PatternId,
   type PlayerInput,
   type PlayerState,
   type Slot,
-  type Wave,
+  type Step,
+  type StepKind,
 } from './types.js';
+import {
+  emit,
+  envAt,
+  floorLike,
+  inBounds,
+  isBlocker,
+  isIce,
+  occupied,
+  passable,
+  removeEnv,
+  shieldAt,
+  shockDangerous,
+  tileIndex,
+  trapActive,
+  trapAt,
+} from './world.js';
 
 const B = balance;
 const UNITS = B.movement.unitsPerTile.value;
 const OWN_SPEED = B.movement.ownUnitsPerTick.value;
+const BOOST_SPEED = B.terrain.boostOwnUnitsPerTick.value;
+const ICE_SPEED = B.movement.iceUnitsPerTick.value;
+const PUSH_SPEED = B.movement.conveyorUnitsPerTick.value;
+const WITH_EXTRA = B.terrain.conveyorWithArrowUnitsPerTick.value - OWN_SPEED;
 const TURN_BUFFER = B.movement.keyboardTurnBufferTicks.value;
 const CAP_ATTACK = B.energy.attackCap.value;
 const CAP_DEFENSE = B.energy.defenseCap.value;
+const CAP_LIFE = B.life.cap.value;
 const INVULNERABLE = B.life.invulnerableTicks.value;
 const TAP_MAX = B.abilities.tapMaxTicks.value;
 const CHARGE = B.abilities.chargeTicks.value;
@@ -52,34 +72,7 @@ const SHIELD_TICKS = B.shields.normalTicks.value;
 const SUPER_SHIELD_TICKS = B.shields.superTicks.value;
 const BALL_TICKS_PER_TILE = B.boss.ballTicksPerTile.value;
 const WAVE_TICKS_PER_RING = B.boss.shockwaveTicksPerRing.value;
-const WAVE_RINGS = B.boss.shockwaveRings.value;
-const RECOVERY = B.boss.recoveryTicks.value;
-const MIN_WARNING = B.boss.minWarningTicks.value;
-
-/** Patterns implemented in M2a, with the tier they unlock at (BS-07). */
-const M2A_PATTERNS: PatternId[] = [1, 2, 3];
-const TIER_ORDER = ['easy', 'medium', 'hard', 'extreme', 'ultimate'] as const;
-
-export function unlockedPatterns(tier: MatchConfig['bossTier']): PatternId[] {
-  const rank = TIER_ORDER.indexOf(tier);
-  return M2A_PATTERNS.filter((p) => {
-    const key = ({ 1: 'orbShot', 2: 'shockwave', 3: 'twinOrbs' } as const)[p];
-    return TIER_ORDER.indexOf(B.boss.patterns[key].fromTier.value as typeof tier) <= rank;
-  });
-}
-
-function warningTicks(p: PatternId): number {
-  const key = ({ 1: 'orbShot', 2: 'shockwave', 3: 'twinOrbs' } as const)[p];
-  return Math.max(MIN_WARNING, B.boss.patterns[key].warningTicks.value);
-}
-
-export function cooldownTicks(state: Pick<MatchState, 'config' | 'boss'>): number {
-  const tier = B.boss.tiers[state.config.bossTier];
-  const base = tier.cooldownTicks.value;
-  const rage =
-    tier.rage.value && state.boss.hp * 100 < state.boss.maxHp * B.boss.rageHpFraction.value * 100;
-  return rage ? Math.floor(base * B.boss.rageCooldownFactor.value) : base;
-}
+const SHOCK_PERIOD = B.traps.shockSafeTicks.value + B.traps.shockDangerTicks.value;
 
 export function timerTicksFor(size: MatchConfig['size']): number {
   return B.match.timerTicks[size].value;
@@ -106,6 +99,13 @@ function newPlayer(slot: Slot, maze: Maze): PlayerState {
     bombHold: -1,
     shieldHold: -1,
     startedStep: false,
+    boost: 0,
+    immobile: 0,
+    tpCooldown: 0,
+    pending: -1,
+    slideDir: -1,
+    entered: false,
+    forced: false,
     hasToken: false,
     stats: {
       bossDamage: 0,
@@ -115,14 +115,17 @@ function newPlayer(slot: Slot, maze: Maze): PlayerState {
       superShields: 0,
       hitsTaken: 0,
       tilesWalked: 0,
+      pickups: 0,
+      trapsTriggered: 0,
+      teleports: 0,
     },
   };
 }
 
 /** Creates a match at GO (tick 0, Boss Phase; SIM-06). */
 export function createMatch(config: MatchConfig, maze?: Maze): MatchState {
-  const cfg: Required<MatchConfig> = { unlimitedTime: false, ...config };
-  const m = maze ?? generateMaze(cfg.seed, cfg.size);
+  const cfg: Required<MatchConfig> = { unlimitedTime: false, environment: true, ...config };
+  const m = maze ?? generateMaze(cfg.seed, cfg.size, { environment: cfg.environment });
   const hp = B.boss.tiers[cfg.bossTier].hp.value;
   const boss: BossState = {
     hp,
@@ -135,8 +138,11 @@ export function createMatch(config: MatchConfig, maze?: Maze): MatchState {
     target: -1,
     lastTie: -1,
     lanes: [],
+    marks: [],
+    markKinds: [],
     lastHitTick: -1000,
   };
+  const env = (m.env ?? []).map((e) => ({ ...e }));
   return {
     config: cfg,
     maze: m,
@@ -147,6 +153,8 @@ export function createMatch(config: MatchConfig, maze?: Maze): MatchState {
     players: [newPlayer(0, m), newPlayer(1, m)],
     bombs: [],
     shields: [],
+    env,
+    darkness: 0,
     balls: [],
     waves: [],
     boss,
@@ -154,58 +162,11 @@ export function createMatch(config: MatchConfig, maze?: Maze): MatchState {
     timer: cfg.unlimitedTime ? -1 : timerTicksFor(cfg.size),
     // The match stream is separate from the maze stream but from the same seed.
     rng: (cfg.seed ^ 0x5bd1e995) | 0,
-    nextId: 1,
+    nextId: env.reduce((n, e) => Math.max(n, e.id), 0) + 1,
     nextEventId: 1,
     outcome: null,
     events: [],
   };
-}
-
-// ---------------------------------------------------------------- helpers
-
-export function tileIndex(s: Pick<MatchState, 'maze'>, x: number, y: number): number {
-  return y * s.maze.w + x;
-}
-
-function inBounds(s: MatchState, x: number, y: number): boolean {
-  return x >= 0 && y >= 0 && x < s.maze.w && y < s.maze.h;
-}
-
-function shieldAt(s: MatchState, x: number, y: number) {
-  return s.shields.find((sh) => sh.x === x && sh.y === y);
-}
-
-/** Base class lets a player stand there (MV-08, without dynamic entities). */
-export function floorLike(s: MatchState, x: number, y: number): boolean {
-  if (!inBounds(s, x, y)) return false;
-  const t = s.tiles[tileIndex(s, x, y)];
-  return t === Tile.FLOOR || t === Tile.ENTRANCE;
-}
-
-/** MV-08 passable for a player step. */
-export function passable(s: MatchState, x: number, y: number): boolean {
-  return floorLike(s, x, y) && !shieldAt(s, x, y);
-}
-
-/** BM-03 / BS-10 blocker for bombs and balls. */
-export function isBlocker(s: MatchState, x: number, y: number): boolean {
-  if (!inBounds(s, x, y)) return true;
-  const t = s.tiles[tileIndex(s, x, y)];
-  if (t === Tile.WALL || t === Tile.DESTRUCTIBLE || t === Tile.SHORTCUT || t === Tile.CORE)
-    return true;
-  return !!shieldAt(s, x, y);
-}
-
-function occupied(s: MatchState, x: number, y: number): boolean {
-  return s.players.some((p) => {
-    if (p.x === x && p.y === y) return true;
-    if (p.step) return p.x + DX[p.step.dir]! === x && p.y + DY[p.step.dir]! === y;
-    return false;
-  });
-}
-
-function emit(s: MatchState, body: EventBody): void {
-  s.events.push({ ...body, id: s.nextEventId++, tick: s.tick } as GameEvent);
 }
 
 function attackTilesFor(s: MatchState): number {
@@ -221,6 +182,21 @@ function bossAlive(s: MatchState): boolean {
   return s.phase === 'boss' && s.boss.hp > 0;
 }
 
+/** MV-02: units per tick and the player's own share for a step this tick. */
+function stepSpeed(p: PlayerState, kind: StepKind): { total: number; own: number } {
+  const own = p.boost > 0 ? BOOST_SPEED : OWN_SPEED;
+  switch (kind) {
+    case 'own':
+      return { total: own, own };
+    case 'with':
+      return { total: own + WITH_EXTRA, own };
+    case 'ice':
+      return { total: ICE_SPEED, own: 0 };
+    case 'push':
+      return { total: PUSH_SPEED, own: 0 };
+  }
+}
+
 // ---------------------------------------------------------------- tick
 
 /**
@@ -231,8 +207,8 @@ function bossAlive(s: MatchState): boolean {
 export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerInput]): GameEvent[] {
   s.events = [];
   if (s.phase === 'over') return s.events;
-  const revisionBefore = s.revision;
-  let passChange = false;
+  /** Tiles whose passability changed this tick (MZ-08). */
+  const changed = new Set<number>();
 
   // ---- 1. Inputs
   type Release = { slot: Slot; ability: 'bomb' | 'shield'; held: number };
@@ -241,6 +217,8 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
     const inp = inputs[p.slot];
     p.held = inp.held;
     p.startedStep = false;
+    p.entered = false;
+    p.forced = false;
     if (inp.pressed !== -1) {
       p.facing = inp.pressed; // MV-07
       p.turnDir = inp.pressed;
@@ -299,8 +277,14 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
     });
     if (req.isSuper) p.stats.superShields++;
     else p.stats.shields++;
-    passChange = true;
+    changed.add(tileIndex(s, req.x, req.y));
     emit(s, { type: 'shield-placed', slot: req.slot, isSuper: req.isSuper, x: req.x, y: req.y });
+    // SH-04: a trap on the tile (maze or boss, any state) is destroyed.
+    const trap = trapAt(s, req.x, req.y);
+    if (trap) {
+      removeEnv(s, trap);
+      emit(s, { type: 'trap-destroyed', kind: trap.kind, x: req.x, y: req.y });
+    }
     // SH-02: a boss ball on the tile is destroyed.
     s.balls = s.balls.filter((b) => {
       if (b.x !== req.x || b.y !== req.y) return true;
@@ -336,31 +320,69 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
     emit(s, { type: 'bomb-thrown', slot: p.slot, isSuper: bomb.isSuper, bomb: bomb.id });
   }
 
-  // 1.3 Step decisions for players at rest (MV-05).
+  // 1.3 Step decisions for players at rest (MV-05): ice slide > conveyor > own input.
   for (const p of s.players) {
     if (p.step) continue;
-    let dir: Dir | -1 = -1;
-    if (p.turnDir !== -1 && passable(s, p.x + DX[p.turnDir]!, p.y + DY[p.turnDir]!))
-      dir = p.turnDir;
-    else if (p.held !== -1 && passable(s, p.x + DX[p.held]!, p.y + DY[p.held]!)) dir = p.held;
-    if (dir !== -1) {
-      p.step = { dir, progress: p.carry > 0 ? p.carry : 0 };
-      p.facing = dir; // D-05: facing is also the direction the player moves
-      p.startedStep = true;
-      if (dir === p.turnDir) p.turnDir = -1;
-    }
+    const carry = p.carry;
     p.carry = -1; // MV-04: carry only into the very next decision
+    if (p.immobile > 0) {
+      p.forced = true; // MV-09, TR-09
+      continue;
+    }
+    const start = (dir: Dir, kind: StepKind) => {
+      p.step = { dir, kind, progress: carry > 0 ? carry : 0 };
+      if (kind === 'own' || kind === 'with') {
+        p.facing = dir; // D-05: facing follows the player's own movement
+        p.startedStep = true;
+      } else p.forced = true;
+      if (dir === p.turnDir) p.turnDir = -1;
+      p.slideDir = -1;
+      p.pending = -1; // TP-03: leaving the pad cancels a pending teleport
+    };
+    const can = (d: Dir) => passable(s, p.x + DX[d]!, p.y + DY[d]!);
+    // TE-02: keep sliding on ice.
+    if (p.slideDir !== -1 && isIce(s, p.x, p.y)) {
+      if (can(p.slideDir)) {
+        start(p.slideDir, 'ice');
+        continue;
+      }
+    }
+    p.slideDir = -1;
+    let own: Dir | -1 = -1;
+    if (p.turnDir !== -1 && can(p.turnDir)) own = p.turnDir;
+    else if (p.held !== -1 && can(p.held)) own = p.held;
+    const conveyor = envAt(s, p.x, p.y, 'conveyor');
+    if (conveyor && conveyor.dir !== -1) {
+      // TE-05 decision table. Every row is ineligible for Defense.
+      const c = conveyor.dir;
+      const want: Dir | -1 = own !== -1 ? own : p.held;
+      p.forced = true;
+      if (want === c) {
+        if (can(c)) start(c, 'with');
+      } else if (want !== -1 && want === opposite(c)) {
+        // Against the arrow: push and input cancel; the player stays.
+      } else if (want !== -1 && own === want) {
+        start(want, 'own'); // sideways: stepping off is always possible
+      } else if (can(c)) {
+        start(c, 'push');
+      }
+      continue;
+    }
+    if (own !== -1) start(own, 'own');
   }
   for (const p of s.players) {
     if (p.turnDir !== -1 && --p.turnTicks <= 0) p.turnDir = -1;
   }
 
-  // ---- 2. Step progress (2.1); teleports (2.2) arrive in M2b.
+  // ---- 2. Forced movement and step progress
+  // 2.1 advance all steps; players reaching 300 enter their destination.
+  const boostedNow = [false, false];
   for (const p of s.players) {
     if (!p.step) continue;
-    p.step.progress += OWN_SPEED;
-    if (p.attack < CAP_ATTACK) {
-      p.voluntary += OWN_SPEED; // EN-02
+    const { total, own } = stepSpeed(p, p.step.kind);
+    p.step.progress += total;
+    if (own > 0 && p.attack < CAP_ATTACK) {
+      p.voluntary += own; // EN-02: only the player's own share
       const need = attackTilesFor(s) * UNITS;
       if (p.voluntary >= need) {
         p.voluntary -= need;
@@ -369,25 +391,49 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
       }
     }
     if (p.step.progress >= UNITS) {
-      p.x += DX[p.step.dir]!;
-      p.y += DY[p.step.dir]!;
-      p.carry = p.step.progress - UNITS;
+      const step: Step = p.step;
+      p.x += DX[step.dir]!;
+      p.y += DY[step.dir]!;
+      p.carry = step.progress - UNITS;
       p.step = null;
-      p.stats.tilesWalked++;
+      p.entered = true;
+      if (step.kind === 'own' || step.kind === 'with') p.stats.tilesWalked++;
+      else p.forced = true;
+      // TE-02: a step that ends on ice keeps sliding in its direction.
+      p.slideDir = isIce(s, p.x, p.y) ? step.dir : -1;
+      // TE-01: entering a boost refreshes it to 90 ticks.
+      if (envAt(s, p.x, p.y, 'boost')) {
+        if (p.boost === 0) emit(s, { type: 'boosted', slot: p.slot });
+        p.boost = B.terrain.boostTicks.value;
+        boostedNow[p.slot] = true;
+      }
+      // TP-02: entering a pad with no cooldown makes the player pending.
+      const pad = envAt(s, p.x, p.y, 'pad');
+      if (pad && p.tpCooldown === 0) p.pending = pad.id;
     }
   }
+  // 2.2 teleports (TP-02 to TP-05).
+  teleport(s);
 
   // ---- 3. Environment
   // 3.1 timers
   s.shields = s.shields.filter((sh) => {
     if (placedNow.has(sh.id)) return true; // the placement tick is the first of its 90
     if (--sh.ticksLeft > 0) return true;
-    passChange = true;
+    changed.add(tileIndex(s, sh.x, sh.y));
     emit(s, { type: 'shield-removed', x: sh.x, y: sh.y, broken: false });
     return false;
   });
-  for (const p of s.players) if (p.invulnerable > 0) p.invulnerable--;
-  // 3.2 pickups: M2b.
+  for (const p of s.players) {
+    if (p.invulnerable > 0) p.invulnerable--;
+    if (p.immobile > 0) p.immobile--;
+    if (p.tpCooldown > 0) p.tpCooldown--;
+    if (p.boost > 0 && !boostedNow[p.slot]) p.boost--;
+  }
+  if (s.darkness > 0) s.darkness--;
+  environmentTimers(s, changed);
+  // 3.2 pickups (PU-03, PU-04)
+  collectPickups(s);
   // 3.3 token pickup (FL-02)
   if (s.tokens) {
     for (const p of s.players) {
@@ -400,12 +446,12 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
     }
   }
   // 3.4 boss state machine; spawned attacks act from step 4 of the next tick.
-  const spawnedBalls: Ball[] = [];
-  const spawnedWaves: Wave[] = [];
-  if (bossAlive(s)) advanceBoss(s, spawnedBalls, spawnedWaves);
+  const spawns: BossSpawns = { balls: [], waves: [], rain: [] };
+  if (bossAlive(s)) advanceBoss(s, spawns, changed);
 
   // ---- 4. Hits
   const hits = [0, 0];
+  const immobilize = [0, 0];
   // 4.1 advance bombs and balls by their cadence
   const exploding: { bomb: Bomb; x: number; y: number; contact: number }[] = [];
   for (const b of s.bombs) {
@@ -491,13 +537,21 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
       for (const i of blast.tiles) {
         if (s.tiles[i] === Tile.DESTRUCTIBLE) {
           s.tiles[i] = Tile.FLOOR; // ENV-WA-02
-          passChange = true;
+          changed.add(i);
           emit(s, { type: 'wall-destroyed', x: i % s.maze.w, y: Math.floor(i / s.maze.w) });
         }
       }
+      // ENV-WA-03: a Super Bomb removes boss walls in its footprint.
+      for (const e of s.env.filter(
+        (e) => e.kind === 'bossWall' && set.has(tileIndex(s, e.x, e.y)),
+      )) {
+        removeEnv(s, e);
+        changed.add(tileIndex(s, e.x, e.y));
+        emit(s, { type: 'boss-wall', x: e.x, y: e.y, raised: false });
+      }
       s.shields = s.shields.filter((sh) => {
         if (!set.has(tileIndex(s, sh.x, sh.y))) return true;
-        passChange = true;
+        changed.add(tileIndex(s, sh.x, sh.y));
         emit(s, { type: 'shield-removed', x: sh.x, y: sh.y, broken: true });
         return false;
       });
@@ -531,16 +585,40 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
       if ((wave.age - 1) % WAVE_TICKS_PER_RING !== 0) return true;
       if (wave.radius >= wave.maxRadius) return false;
       wave.radius++;
-      wave.reached = waveFront(s, wave.reached, wave.radius);
+      wave.reached = waveFrontOf(s, wave.reached, wave.radius);
     }
     const set = new Set(wave.reached);
     for (const p of s.players)
       if (p.invulnerable === 0 && set.has(tileIndex(s, p.x, p.y))) hits[p.slot]!++;
     return true;
   });
-  // 4.5 traps: M2b.
+  // Ball Rain resolves on its attack tick; shields, walls and bombs do not stop it (BS-07).
+  for (const centre of spawns.rain)
+    for (const p of s.players)
+      if (p.invulnerable === 0 && inRainZone(s, centre, p.x, p.y)) hits[p.slot]!++;
+  // 4.5 traps (TR-02 to TR-06)
+  for (const trap of s.env.filter((e) => TRAP_KINDS.includes(e.kind) && trapActive(e))) {
+    let consumed = false;
+    for (const p of s.players) {
+      if (p.x !== trap.x || p.y !== trap.y || p.invulnerable > 0) continue; // TR-06
+      if (trap.kind === 'spike') {
+        hits[p.slot]!++;
+        immobilize[p.slot] = Math.max(immobilize[p.slot]!, B.traps.spikeImmobilizeTicks.value);
+        consumed = true;
+      } else if (trap.kind === 'snare') {
+        immobilize[p.slot] = Math.max(immobilize[p.slot]!, B.traps.snareImmobilizeTicks.value);
+        consumed = true;
+      } else if (shockDangerous(trap)) {
+        hits[p.slot]!++;
+      } else continue;
+      p.stats.trapsTriggered++;
+      emit(s, { type: 'trap-triggered', slot: p.slot, kind: trap.kind, x: trap.x, y: trap.y });
+    }
+    if (consumed) removeEnv(s, trap); // TR-03, TR-05, TR-08
+  }
   // 4.6 apply hits (EN-06): at most 1 Life per player per tick.
   for (const p of s.players) {
+    if (immobilize[p.slot]! > 0) p.immobile = Math.max(p.immobile, immobilize[p.slot]!);
     if (hits[p.slot]! > 0 && p.invulnerable === 0 && p.life > 0) {
       p.life = Math.max(0, p.life - B.life.maxLossPerTick.value);
       p.invulnerable = INVULNERABLE;
@@ -550,18 +628,15 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
       emit(s, { type: 'player-hit', slot: p.slot, life: p.life });
     }
   }
-  s.balls.push(...spawnedBalls);
-  s.waves.push(...spawnedWaves);
+  s.balls.push(...spawns.balls);
+  s.waves.push(...spawns.waves);
 
   // ---- 5. Knock-outs
   const ko = s.players.map((p) => p.life <= 0);
   for (const p of s.players) if (ko[p.slot]) emit(s, { type: 'knockout', slot: p.slot });
 
   // ---- 6. Boss defeat → flip (FL-01)
-  if (s.phase === 'boss' && s.boss.hp <= 0 && !ko[0] && !ko[1]) {
-    flip(s);
-    passChange = true;
-  }
+  if (s.phase === 'boss' && s.boss.hp <= 0 && !ko[0] && !ko[1]) flip(s, changed);
 
   // ---- 7. Escapes (FL-03)
   const escaped = s.players.map((p) => {
@@ -590,6 +665,8 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
       p.turnDir === -1 &&
       !p.step &&
       !p.startedStep &&
+      !p.forced &&
+      p.immobile === 0 &&
       p.bombHold < 0 &&
       p.shieldHold < 0 &&
       !s.shields.some((sh) => sh.owner === p.slot) &&
@@ -604,9 +681,134 @@ export function stepMatch(s: MatchState, inputs: readonly [PlayerInput, PlayerIn
       emit(s, { type: 'defense-gained', slot: p.slot, defense: p.defense });
     }
   }
-  if (passChange) s.revision = revisionBefore + 1; // MZ-08
+  if (changed.size > 0) {
+    s.revision++; // MZ-08: one increment and one event per tick with changes
+    emit(s, { type: 'revision', revision: s.revision, tiles: [...changed].sort((a, b) => a - b) });
+  }
   s.tick++;
   return s.events;
+}
+
+/** TP-02 to TP-05: transports for every pending player, computed together. */
+function teleport(s: MatchState): void {
+  const pendingPad = (slot: Slot): EnvEntity | undefined => {
+    const p = s.players[slot];
+    if (p.pending === -1 || p.step || p.immobile > 0) return undefined;
+    const pad = s.env.find((e) => e.id === p.pending);
+    if (!pad || pad.x !== p.x || pad.y !== p.y) {
+      p.pending = -1;
+      return undefined;
+    }
+    return pad;
+  };
+  const moves = new Map<Slot, EnvEntity>();
+  for (const slot of [0, 1] as Slot[]) {
+    const pad = pendingPad(slot);
+    const dest = pad && s.env.find((e) => e.id === pad.link);
+    if (dest) moves.set(slot, dest);
+  }
+  // Drop moves whose destination is not free; a player leaving frees its pad (swap, TP-04).
+  let dropped = true;
+  while (dropped) {
+    dropped = false;
+    for (const [slot, dest] of moves) {
+      const blockedByPlayer = s.players.some((q) => {
+        if (q.slot === slot || moves.has(q.slot)) return false;
+        if (q.x === dest.x && q.y === dest.y) return true;
+        return !!q.step && q.x + DX[q.step.dir]! === dest.x && q.y + DY[q.step.dir]! === dest.y;
+      });
+      const gate = envAt(s, dest.x, dest.y, 'gate');
+      const free =
+        !blockedByPlayer &&
+        !shieldAt(s, dest.x, dest.y) &&
+        !envAt(s, dest.x, dest.y, 'snare') &&
+        !(gate && !gate.open);
+      if (!free) {
+        moves.delete(slot);
+        dropped = true;
+      }
+    }
+  }
+  // Same-destination guard (malformed content only): nobody moves.
+  const dests = [...moves.values()];
+  if (dests.length === 2 && dests[0] === dests[1]) return;
+  for (const [slot, dest] of moves) {
+    const p = s.players[slot];
+    p.x = dest.x;
+    p.y = dest.y;
+    p.pending = -1; // TP-02: landing never makes the player pending again
+    p.tpCooldown = B.teleporters.cooldownTicks.value;
+    p.carry = -1;
+    p.slideDir = -1;
+    p.entered = true; // TP-07: landing counts as entering
+    p.forced = true; // TP-06
+    p.stats.teleports++;
+    emit(s, { type: 'teleported', slot, x: dest.x, y: dest.y });
+  }
+}
+
+/** Step 3.1 for environment entities: gates, shock cycles and expiring entities. */
+function environmentTimers(s: MatchState, changed: Set<number>): void {
+  const expired: EnvEntity[] = [];
+  for (const e of s.env) {
+    if (e.kind === 'gate') {
+      e.cycle++;
+      if (e.open) {
+        if (e.cycle >= e.openTicks || e.pending) {
+          if (occupied(s, e.x, e.y))
+            e.pending = true; // GA-03: never closes on a player
+          else {
+            e.open = false;
+            e.pending = false;
+            e.cycle = 0;
+            changed.add(tileIndex(s, e.x, e.y));
+            emit(s, { type: 'gate', x: e.x, y: e.y, open: false });
+          }
+        }
+      } else if (e.cycle >= e.closedTicks) {
+        e.open = true;
+        e.cycle = 0;
+        changed.add(tileIndex(s, e.x, e.y));
+        emit(s, { type: 'gate', x: e.x, y: e.y, open: true });
+      }
+      continue;
+    }
+    if (e.warn > 0) {
+      e.warn--; // TR-08: boss traps are harmless in their warning
+      continue;
+    }
+    if (e.kind === 'shock') e.cycle = (e.cycle + 1) % SHOCK_PERIOD;
+    if (e.life > 0 && --e.life === 0) expired.push(e);
+  }
+  for (const e of expired) {
+    removeEnv(s, e);
+    if (e.kind === 'bossWall') {
+      changed.add(tileIndex(s, e.x, e.y));
+      emit(s, { type: 'boss-wall', x: e.x, y: e.y, raised: false });
+    }
+  }
+}
+
+/** Step 3.2: PU-01 to PU-05. */
+function collectPickups(s: MatchState): void {
+  for (const e of s.env.filter((e) => PICKUP_KINDS.includes(e.kind))) {
+    const here = s.players.filter((p) => p.entered && p.x === e.x && p.y === e.y);
+    if (here.length !== 1) continue; // PU-04: same-tick entry grants nobody
+    const p = here[0]!;
+    if (e.kind === 'attackOrb') {
+      if (p.attack >= CAP_ATTACK) continue; // PU-02: stays at cap
+      p.attack++;
+    } else if (e.kind === 'defenseOrb') {
+      if (p.defense >= CAP_DEFENSE) continue;
+      p.defense++;
+    } else {
+      if (p.life >= CAP_LIFE) continue;
+      p.life++;
+    }
+    p.stats.pickups++;
+    removeEnv(s, e); // PU-05: no respawn
+    emit(s, { type: 'pickup', slot: p.slot, kind: e.kind, x: e.x, y: e.y });
+  }
 }
 
 /** CH-02 to CH-04: tap, Super or cancel at release. */
@@ -628,6 +830,7 @@ function hasSuperShield(s: MatchState, slot: Slot): boolean {
 export function shieldLegal(s: MatchState, x: number, y: number): boolean {
   if (!floorLike(s, x, y) || occupied(s, x, y) || shieldAt(s, x, y)) return false;
   if (s.tokens?.some((t) => !t.taken && t.x === x && t.y === y)) return false;
+  if (envAt(s, x, y, 'pad', 'bossWall', ...PICKUP_KINDS)) return false;
   return true;
 }
 
@@ -664,153 +867,14 @@ export function blastFootprint(
   return [...seen.keys()].sort((a, b) => a - b);
 }
 
-/** BS-12: tiles at `radius` reached from the previous front without crossing blockers. */
-function waveFront(s: MatchState, previous: readonly number[], radius: number): number[] {
-  const { w, cx, cy } = s.maze;
-  const reached = new Set<number>();
-  const queue: number[] = [];
-  const consider = (x: number, y: number) => {
-    if (!inBounds(s, x, y) || chebyshev(x, y, cx, cy) !== radius || isBlocker(s, x, y)) return;
-    const i = y * w + x;
-    if (reached.has(i)) return;
-    reached.add(i);
-    queue.push(i);
-  };
-  for (const i of previous) {
-    const x = i % w;
-    const y = (i - x) / w;
-    for (let k = 0; k < 4; k++) consider(x + DX[k]!, y + DY[k]!);
-  }
-  while (queue.length > 0) {
-    const i = queue.shift()!;
-    const x = i % w;
-    const y = (i - x) / w;
-    for (let k = 0; k < 4; k++) consider(x + DX[k]!, y + DY[k]!);
-  }
-  return [...reached].sort((a, b) => a - b);
-}
-
-/** First front of a shockwave: every non-blocked tile at coreRadius + 1. */
-function firstFront(s: MatchState): number[] {
-  const { w, cx, cy, coreRadius } = s.maze;
-  const r = coreRadius + 1;
-  const out: number[] = [];
-  for (let y = cy - r; y <= cy + r; y++)
-    for (let x = cx - r; x <= cx + r; x++)
-      if (chebyshev(x, y, cx, cy) === r && !isBlocker(s, x, y)) out.push(y * w + x);
-  return out;
-}
-
-/** BS-08: the Orb Shot lane toward a player. */
-export function laneToward(s: MatchState, slot: Slot): Lane {
-  const { cx, cy, coreRadius } = s.maze;
-  const p = s.players[slot];
-  const dx = p.x - cx;
-  const dy = p.y - cy;
-  const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
-  if (Math.abs(dy) >= Math.abs(dx)) {
-    const dir: Dir = dy < 0 ? 0 : 2;
-    const x = clamp(cx + dx, cx - coreRadius, cx + coreRadius);
-    return { x, y: cy + (dir === 0 ? -(coreRadius + 1) : coreRadius + 1), dir };
-  }
-  const dir: Dir = dx > 0 ? 1 : 3;
-  const y = clamp(cy + dy, cy - coreRadius, cy + coreRadius);
-  return { x: cx + (dir === 1 ? coreRadius + 1 : -(coreRadius + 1)), y, dir };
-}
-
-function mirrorLane(s: MatchState, lane: Lane): Lane {
-  return { x: s.maze.w - 1 - lane.x, y: s.maze.h - 1 - lane.y, dir: opposite(lane.dir) };
-}
-
-/** BS-05 target choice: nearest by Manhattan distance; ties alternate. */
-function chooseTarget(s: MatchState): Slot {
-  const { cx, cy } = s.maze;
-  const d = s.players.map((p) => Math.abs(p.x - cx) + Math.abs(p.y - cy));
-  if (d[0]! < d[1]!) return 0;
-  if (d[1]! < d[0]!) return 1;
-  const pick: Slot = s.boss.lastTie === -1 ? (nextInt(s, 2) as Slot) : s.boss.lastTie === 0 ? 1 : 0;
-  s.boss.lastTie = pick;
-  return pick;
-}
-
-function advanceBoss(s: MatchState, balls: Ball[], waves: Wave[]): void {
-  const boss = s.boss;
-  // A state entered on tick T with timer N lasts ticks T … T+N−1; the first
-  // cooldown is entered at tick 0 (BS-02).
-  if (boss.timer > 0) {
-    boss.age++;
-  } else {
-    boss.age = 0;
-    transitionBoss(s, balls, waves);
-  }
-  boss.timer--;
-}
-
-function transitionBoss(s: MatchState, balls: Ball[], waves: Wave[]): void {
-  const boss = s.boss;
-  switch (boss.state) {
-    case 'cooldown': {
-      // BS-04: uniform among unlocked patterns, no immediate repeat.
-      const pool = unlockedPatterns(s.config.bossTier).filter(
-        (p, _i, all) => all.length === 1 || p !== boss.lastPattern,
-      );
-      const pattern = pool[nextInt(s, pool.length)]!;
-      boss.pattern = pattern;
-      boss.target = chooseTarget(s);
-      boss.lanes = [];
-      if (pattern === 1 || pattern === 3) {
-        const lane = laneToward(s, boss.target);
-        boss.lanes.push(lane);
-        if (pattern === 3) boss.lanes.push(mirrorLane(s, lane));
-      }
-      boss.state = 'warning';
-      boss.timer = warningTicks(pattern);
-      emit(s, { type: 'boss-warning', pattern, target: boss.target });
-      return;
-    }
-    case 'warning': {
-      const pattern = boss.pattern as PatternId;
-      if (pattern === 2) {
-        waves.push({
-          id: s.nextId++,
-          radius: s.maze.coreRadius + 1,
-          maxRadius: s.maze.coreRadius + WAVE_RINGS,
-          age: 0,
-          reached: firstFront(s),
-        });
-      } else {
-        for (const lane of boss.lanes) {
-          if (isBlocker(s, lane.x, lane.y)) continue; // a shield on the spawn tile stops it
-          balls.push({ id: s.nextId++, x: lane.x, y: lane.y, dir: lane.dir, age: 0 });
-        }
-      }
-      boss.state = 'attack';
-      boss.timer = 1;
-      emit(s, { type: 'boss-attack', pattern });
-      return;
-    }
-    case 'attack':
-      boss.state = 'recovery';
-      boss.timer = RECOVERY;
-      return;
-    case 'recovery':
-      boss.lastPattern = boss.pattern;
-      boss.pattern = 0;
-      boss.lanes = [];
-      boss.target = -1;
-      boss.state = 'cooldown';
-      boss.timer = cooldownTicks(s);
-      return;
-    case 'defeated':
-      return;
-  }
-}
-
 /** FL-01: the phase flip, all on one tick. */
-function flip(s: MatchState): void {
+function flip(s: MatchState, changed: Set<number>): void {
   s.phase = 'escape';
   for (let i = 0; i < s.tiles.length; i++) {
-    if (s.tiles[i] === Tile.CORE || s.tiles[i] === Tile.SHORTCUT) s.tiles[i] = Tile.FLOOR;
+    if (s.tiles[i] === Tile.CORE || s.tiles[i] === Tile.SHORTCUT) {
+      s.tiles[i] = Tile.FLOOR;
+      changed.add(i);
+    }
   }
   const [t1, t2] = s.maze.tokenTiles;
   s.tokens = [
@@ -819,9 +883,17 @@ function flip(s: MatchState): void {
   ];
   s.balls = [];
   s.waves = [];
+  // BOSS-03: boss traps, walls and ice and the darkness are removed.
+  for (const e of s.env.filter((e) => e.boss)) {
+    removeEnv(s, e);
+    if (e.kind === 'bossWall') changed.add(tileIndex(s, e.x, e.y));
+  }
+  s.darkness = 0;
   s.boss.state = 'defeated';
   s.boss.pattern = 0;
   s.boss.lanes = [];
+  s.boss.marks = [];
+  s.boss.markKinds = [];
   s.boss.target = -1;
   emit(s, { type: 'phase-escape' });
   emit(s, { type: 'tokens-spawned' });

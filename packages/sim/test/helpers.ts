@@ -1,9 +1,12 @@
 import {
   NO_INPUT,
+  addEnv,
   Tile,
   createMatch,
   stepMatch,
   type Dir,
+  type EnvEntity,
+  type EnvKind,
   type GameEvent,
   type MatchConfig,
   type MatchState,
@@ -50,6 +53,7 @@ export function openMaze(): Maze {
     ],
     shortcuts: [],
     attempts: 1,
+    env: [],
   };
 }
 
@@ -111,3 +115,40 @@ export function tap(s: MatchState, slot: 0 | 1, ability: 'bomb' | 'shield'): Gam
 
 export const ofType = <T extends GameEvent['type']>(events: GameEvent[], type: T) =>
   events.filter((e): e is Extract<GameEvent, { type: T }> => e.type === type);
+
+/** Adds an environment entity on (x, y); a gate also turns the tile into Tile.GATE. */
+export function put(
+  s: MatchState,
+  kind: EnvKind,
+  x: number,
+  y: number,
+  over: Partial<EnvEntity> = {},
+): EnvEntity {
+  if (kind === 'gate') {
+    setTile(s, x, y, Tile.GATE);
+    return addEnv(s, kind, x, y, { open: true, openTicks: 120, closedTicks: 90, ...over });
+  }
+  return addEnv(s, kind, x, y, over);
+}
+
+/** Two pads linked to each other. */
+export function padPair(s: MatchState, a: [number, number], b: [number, number]) {
+  const pa = put(s, 'pad', a[0], a[1]);
+  const pb = put(s, 'pad', b[0], b[1]);
+  pa.link = pb.id;
+  pb.link = pa.id;
+  return [pa, pb] as const;
+}
+
+/** Runs ticks until `done()` or `max` ticks; returns the events. */
+export function runUntil(
+  s: MatchState,
+  done: () => boolean,
+  max = 1000,
+  f?: (t: number) => readonly [PlayerInput, PlayerInput],
+) {
+  const all: GameEvent[] = [];
+  for (let t = 0; t < max && !done(); t++)
+    all.push(...stepMatch(s, f ? f(t) : [NO_INPUT, NO_INPUT]));
+  return all;
+}

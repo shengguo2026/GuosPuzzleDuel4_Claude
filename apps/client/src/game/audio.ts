@@ -1,6 +1,7 @@
 /**
- * Match audio for M2a. Sound effects are synthesised with Web Audio (decided
- * 20 Nov: no SFX files). Music: the approved Enchanted Garden Boss and Escape
+ * Match audio (M2a, M2b). Sound effects are synthesised with Web Audio (decided
+ * 20 Nov: no SFX files); M2b adds traps, teleports, pickups, boost, gates and
+ * the boss patterns 4–8. Music: the approved Enchanted Garden Boss and Escape
  * cues play for every theme until M6 brings the full music engine with all
  * 14 cues and the stinger bridge. Audio never reads or writes simulation
  * state (INV-06).
@@ -33,7 +34,24 @@ type Sfx =
   | 'ballPop'
   | 'wallBreak'
   | 'win'
-  | 'draw';
+  | 'draw'
+  | 'spike'
+  | 'shock'
+  | 'snare'
+  | 'trapBreak'
+  | 'teleport'
+  | 'pickupAttack'
+  | 'pickupDefense'
+  | 'pickupHeart'
+  | 'boost'
+  | 'gateClose'
+  | 'gateOpen'
+  | 'freeze'
+  | 'trapSeed'
+  | 'wallRaise'
+  | 'wallFall'
+  | 'darkness'
+  | 'ballRain';
 
 let noiseBuffer: AudioBuffer | null = null;
 
@@ -157,6 +175,7 @@ export class MatchAudio {
 
   /** Plays the sounds for one tick's events. `humans` are the slots a person controls. */
   onEvents(events: readonly GameEvent[], humans: readonly Slot[]): void {
+    this.tickPlayed = new Set(); // one of each sound per tick (mirrored pairs fire together)
     for (const e of events) {
       switch (e.type) {
         case 'bomb-thrown':
@@ -183,8 +202,43 @@ export class MatchAudio {
         case 'boss-warning':
           this.play('warning');
           break;
-        case 'boss-attack':
-          this.play('bossAttack');
+        case 'boss-attack': {
+          const special: Partial<Record<number, Sfx>> = {
+            4: 'freeze',
+            5: 'trapSeed',
+            6: 'wallRaise',
+            7: 'darkness',
+            8: 'ballRain',
+          };
+          this.play(special[e.pattern] ?? 'bossAttack');
+          break;
+        }
+        case 'trap-triggered':
+          this.play(e.kind === 'spike' ? 'spike' : e.kind === 'shock' ? 'shock' : 'snare');
+          break;
+        case 'trap-destroyed':
+          this.play('trapBreak');
+          break;
+        case 'teleported':
+          this.play('teleport');
+          break;
+        case 'pickup':
+          this.play(
+            e.kind === 'attackOrb'
+              ? 'pickupAttack'
+              : e.kind === 'defenseOrb'
+                ? 'pickupDefense'
+                : 'pickupHeart',
+          );
+          break;
+        case 'boosted':
+          this.play('boost');
+          break;
+        case 'gate':
+          this.play(e.open ? 'gateOpen' : 'gateClose');
+          break;
+        case 'boss-wall':
+          if (!e.raised) this.play('wallFall');
           break;
         case 'ball-destroyed':
           this.play('ballPop');
@@ -221,12 +275,19 @@ export class MatchAudio {
           break;
       }
     }
+    this.tickPlayed = null;
   }
+
+  private tickPlayed: Set<Sfx> | null = null;
 
   play(name: Sfx): void {
     const ctx = this.ctx;
     const out = this.master;
     if (!ctx || !out || this.muted) return;
+    if (this.tickPlayed) {
+      if (this.tickPlayed.has(name)) return;
+      this.tickPlayed.add(name);
+    }
     const t = ctx.currentTime + 0.005;
     RECIPES[name](ctx, out, t);
   }
@@ -385,4 +446,85 @@ const RECIPES: Record<Sfx, Recipe> = {
   },
   win: (c, o, t) => notes(c, o, t, [523, 659, 784, 1047, 1319], 0.11, 0.14),
   draw: (c, o, t) => notes(c, o, t, [523, 494, 523], 0.16, 0.12),
+  spike: (c, o, t) => {
+    hiss(c, o, t, { filter: 'highpass', f0: 3000, decay: 0.06, gain: 0.2 });
+    tone(c, o, t, { type: 'square', f0: 900, f1: 300, decay: 0.12, gain: 0.08 });
+  },
+  shock: (c, o, t) => {
+    for (let k = 0; k < 5; k++)
+      tone(c, o, t, {
+        type: 'sawtooth',
+        f0: 1400 - k * 120,
+        decay: 0.03,
+        gain: 0.06,
+        start: k * 0.035,
+      });
+    hiss(c, o, t, { filter: 'bandpass', f0: 4000, q: 2, decay: 0.2, gain: 0.08 });
+  },
+  snare: (c, o, t) => {
+    tone(c, o, t, { type: 'triangle', f0: 220, f1: 120, decay: 0.12, gain: 0.16 });
+    tone(c, o, t, { type: 'triangle', f0: 330, f1: 160, decay: 0.12, gain: 0.08, start: 0.06 });
+  },
+  trapBreak: (c, o, t) => {
+    hiss(c, o, t, { filter: 'bandpass', f0: 2200, q: 5, decay: 0.12, gain: 0.12 });
+    tone(c, o, t, { type: 'triangle', f0: 700, f1: 1100, decay: 0.1, gain: 0.06 });
+  },
+  teleport: (c, o, t) => {
+    tone(c, o, t, { type: 'sine', f0: 300, f1: 1800, decay: 0.22, gain: 0.1 });
+    tone(c, o, t, { type: 'sine', f0: 1800, f1: 600, decay: 0.18, gain: 0.06, start: 0.18 });
+  },
+  pickupAttack: (c, o, t) => notes(c, o, t, [659, 880, 1175], 0.05, 0.1),
+  pickupDefense: (c, o, t) => notes(c, o, t, [523, 784, 1047], 0.05, 0.1),
+  pickupHeart: (c, o, t) => notes(c, o, t, [784, 988, 1319, 1568], 0.06, 0.1),
+  boost: (c, o, t) => {
+    hiss(c, o, t, { filter: 'bandpass', f0: 600, f1: 3200, q: 2, decay: 0.25, gain: 0.12 });
+    tone(c, o, t, { type: 'triangle', f0: 440, f1: 880, decay: 0.2, gain: 0.05 });
+  },
+  gateClose: (c, o, t) => {
+    tone(c, o, t, { type: 'square', f0: 140, f1: 90, decay: 0.12, gain: 0.04 });
+    hiss(c, o, t, { filter: 'lowpass', f0: 900, decay: 0.08, gain: 0.04 });
+  },
+  gateOpen: (c, o, t) =>
+    tone(c, o, t, { type: 'square', f0: 110, f1: 170, decay: 0.1, gain: 0.03 }),
+  freeze: (c, o, t) => {
+    for (let k = 0; k < 6; k++)
+      tone(c, o, t, { type: 'sine', f0: 1800 + k * 260, decay: 0.25, gain: 0.04, start: k * 0.04 });
+    hiss(c, o, t, { filter: 'highpass', f0: 5000, decay: 0.4, gain: 0.05 });
+  },
+  trapSeed: (c, o, t) => {
+    for (let k = 0; k < 4; k++)
+      tone(c, o, t, {
+        type: 'triangle',
+        f0: 900 - k * 140,
+        f1: 300,
+        decay: 0.1,
+        gain: 0.07,
+        start: k * 0.07,
+      });
+  },
+  wallRaise: (c, o, t) => {
+    tone(c, o, t, { f0: 60, f1: 120, decay: 0.45, gain: 0.3 });
+    hiss(c, o, t, { filter: 'lowpass', f0: 400, f1: 1200, decay: 0.45, gain: 0.18 });
+  },
+  wallFall: (c, o, t) => {
+    hiss(c, o, t, { filter: 'lowpass', f0: 1000, f1: 120, decay: 0.35, gain: 0.18 });
+    tone(c, o, t, { f0: 110, f1: 45, decay: 0.3, gain: 0.18 });
+  },
+  darkness: (c, o, t) => {
+    tone(c, o, t, { type: 'sawtooth', f0: 220, f1: 55, attack: 0.05, decay: 0.9, gain: 0.07 });
+    tone(c, o, t, { type: 'sine', f0: 110, f1: 40, attack: 0.05, decay: 1.0, gain: 0.12 });
+  },
+  ballRain: (c, o, t) => {
+    tone(c, o, t, { type: 'sine', f0: 1600, f1: 500, decay: 0.3, gain: 0.06 });
+    for (let k = 0; k < 4; k++) {
+      tone(c, o, t, { f0: 160, f1: 60, decay: 0.12, gain: 0.2, start: 0.28 + k * 0.05 });
+      hiss(c, o, t, {
+        filter: 'lowpass',
+        f0: 1500,
+        decay: 0.08,
+        gain: 0.1,
+        start: 0.28 + k * 0.05,
+      });
+    }
+  },
 };
