@@ -44,6 +44,7 @@
     "pickups": { "$ref": "#/$defs/group" },
     "gates": { "$ref": "#/$defs/group" },
     "visibility": { "$ref": "#/$defs/group" },
+    "ai": { "$ref": "#/$defs/group" },
     "boss": {
       "allOf": [
         { "$ref": "#/$defs/group" },

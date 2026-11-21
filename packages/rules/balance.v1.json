@@ -1,7 +1,7 @@
 {
   "$schema": "./balance.v1.schema.json",
   "schemaVersion": 1,
-  "balanceVersion": "1.0.0-m0",
+  "balanceVersion": "1.1.0-m2a",
   "notes": "Canonical tunable values for Guo's Puzzle Duel IV. Rules: docs/MECHANICS.md. LOCKED = fixed by the GDD (change needs a GDD revision); PROVISIONAL = starting value, tunable after play-tests and balance runs. 'M0' in ref = detail fixed in M0 and approved by Guo on 20 Nov 2026 (MECHANICS.md section 20). Durations are simulation ticks at sim.tickRateHz.",
   "sim": {
     "tickRateHz": {"value": 30, "status": "LOCKED", "unit": "Hz", "ref": ["NET-03", "D-01", "SIM-01"]},
@@ -26,6 +26,11 @@
       "small": {"value": 1, "status": "PROVISIONAL", "unit": "pairs", "ref": ["D-34", "MZ-06"]},
       "medium": {"value": 2, "status": "PROVISIONAL", "unit": "pairs", "ref": ["D-34", "MZ-06"]},
       "large": {"value": 2, "status": "PROVISIONAL", "unit": "pairs", "ref": ["D-34", "MZ-06"]}
+    },
+    "generator": {
+      "loopPercent": {"value": 12, "status": "PROVISIONAL", "unit": "percent of the remaining walls between two cells that are opened", "ref": ["D-11", "M-003", "M2a"]},
+      "destructiblePercent": {"value": 10, "status": "PROVISIONAL", "unit": "percent of inner walls made destructible", "ref": ["D-10", "WL-02", "M2a"]},
+      "maxAttempts": {"value": 50, "status": "PROVISIONAL", "unit": "re-rolls", "ref": ["MZ-07", "INV-07", "M2a"]}
     }
   },
   "movement": {
@@ -230,6 +235,14 @@
         "trapSeedCount": {"value": 4, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14"]},
         "wallRaiseCount": {"value": 2, "status": "PROVISIONAL", "unit": "count", "ref": ["D-14", "M0"]}
       }
+    }
+  },
+  "ai": {
+    "basic": {
+      "reactionTicks": {"value": 6, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-15", "BOSS-05", "M2a"]},
+      "replanTicks": {"value": 10, "status": "PROVISIONAL", "unit": "ticks", "ref": ["D-15", "M2a"]},
+      "dodgeChancePercent": {"value": 70, "status": "PROVISIONAL", "unit": "percent", "ref": ["D-15", "M2a"]},
+      "shieldChancePercent": {"value": 50, "status": "PROVISIONAL", "unit": "percent", "ref": ["D-15", "M2a"]}
     }
   },
   "network": {

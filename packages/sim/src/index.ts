@@ -1,5 +1,5 @@
 /**
- * Deterministic simulation (PLAN.md section 3; filled in from M2a, WP 2a.1).
+ * Deterministic simulation (PLAN.md section 3, WP 2a.1 to 2a.8).
  *
  * This package is pure: it imports no DOM, network, database or Node API, and
  * uses no wall-clock time or Math.random. ESLint enforces that
@@ -14,3 +14,10 @@ export const SIM_TICK_RATE_HZ: number = balance.sim.tickRateHz.value;
 export function secondsToTicks(seconds: number): number {
   return Math.round(seconds * SIM_TICK_RATE_HZ);
 }
+
+export * from './types.js';
+export * from './rng.js';
+export * from './maze.js';
+export * from './match.js';
+export * from './hash.js';
+export * from './replay.js';

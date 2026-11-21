@@ -10,6 +10,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@gpd4/rules": "workspace:*",
     "@gpd4/sim": "workspace:*"
   }
 }

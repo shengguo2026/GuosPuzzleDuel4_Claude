@@ -91,6 +91,9 @@ importers:
 
   packages/ai:
     dependencies:
+      '@gpd4/rules':
+        specifier: workspace:*
+        version: link:../rules
       '@gpd4/sim':
         specifier: workspace:*
         version: link:../sim
