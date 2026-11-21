@@ -1,6 +1,6 @@
 # Guo's Puzzle Duel IV: requirements traceability
 
-Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026. Every requirement ID of GDD v2.0 (sections 1 to 16, the §17 matrix and the §19 register) mapped to the rules in [`MECHANICS.md`](MECHANICS.md) or the decision in [`PLAN.md`](PLAN.md), the work package in [`implementation_plan.md`](implementation_plan.md) that delivers it, and the planned automated test (GDD Appendix B: "each module/PR must map requirements to tests").
+Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026; M2a rows updated 21 Nov 2026. Every requirement ID of GDD v2.0 (sections 1 to 16, the §17 matrix and the §19 register) mapped to the rules in [`MECHANICS.md`](MECHANICS.md) or the decision in [`PLAN.md`](PLAN.md), the work package in [`implementation_plan.md`](implementation_plan.md) that delivers it, and the planned automated test (GDD Appendix B: "each module/PR must map requirements to tests").
 
 **Conventions**
 
@@ -12,43 +12,43 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026. Every requirement I
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| V-001 | SIM-05, MZ-03, PU-04, BS-05 | 2a.2, 2a.8 | `sim/fairness.test.ts`: "V-001: swapped player IDs on a symmetric maze give the mirrored outcome" (property test over seeds and input logs) | ⏳ |
+| V-001 | SIM-05, MZ-03, PU-04, BS-05 | 2a.2, 2a.8 | `sim/test/determinism.test.ts`: "V-001 / SIM-05: swapped players with mirrored inputs give the mirrored match" (property test over seeds and input logs) | ✅ |
 | V-002 | PLAN §3 (no cloud) | 3.x, 7.2 | `e2e/offline.spec.ts`: "V-002: WiFi match completes with internet blocked"; Evidence: device report | ⏳ |
-| V-003 | MV-10, SIM-04 | 2a.11, 4.3 | `sim/cosmetics.test.ts`: "V-003: changing character and cosmetics leaves the state hash unchanged" | ⏳ |
+| V-003 | MV-10, SIM-04 | 2a.11, 4.3 | `sim/test/determinism.test.ts`: "M-005 / V-003 / INV-06: presentation choices are not part of the simulation"; characters and cosmetics arrive in M4 | 🟡 |
 | V-004 | PLAN §3 | 3.4 | `host/authority.test.ts`: "V-004: client cannot take authority when the host stops" | ⏳ |
-| INV-01 | SIM-02 | 2a.1 | `sim/phase.test.ts`: "INV-01: exactly one phase at a time; only Boss/Escape run ticks" | ⏳ |
-| INV-02 | SIM-04, OC-05 | 2a.1, 3.3 | `sim/events.test.ts`: "INV-02: event IDs unique; replayed events consumed once" | ⏳ |
-| INV-03 | FL-02 | 2a.7 | `sim/tokens.test.ts`: "INV-03: rival cannot pick up the other token" | ⏳ |
+| INV-01 | SIM-02 | 2a.1 | `sim/test/outcome.test.ts`: "INV-01 / SIM-02: no ticks run after the match is over"; `e2e/match.spec.ts`: "TIME-02 / OC-04: Esc pauses (no ticks run)…" | ✅ |
+| INV-02 | SIM-04, OC-05 | 2a.1, 3.3 | `sim/test/determinism.test.ts`: "INV-02: event IDs are unique and increasing", "WP 2a.1: a recorded replay plays back with identical hashes", "INV-02: a tampered replay is detected"; network replay of events in M3 | 🟡 |
+| INV-03 | FL-02 | 2a.7 | `sim/test/flip.test.ts`: "INV-03 / FL-02: the rival walking over a token has no effect" | ✅ |
 | INV-04 | OC-05 | 4.2 | `host/finalize.test.ts`: "INV-04: finalizing twice returns the first result" | ⏳ |
-| INV-05 | SIM-02 | 2a.1, 3.4 | `sim/pause.test.ts`: "INV-05: pause freezes sim timers"; `host/grace.test.ts`: "INV-05: grace deadline runs during pause" | ⏳ |
-| INV-06 | SIM-04, BS-14 | 2a.11, 6.4 | `client/presentation.test.ts`: "INV-06: audio/visual settings never change sim inputs or hash" | ⏳ |
-| INV-07 | MZ-07, BS-13 | 2a.2, 2b.9 | `sim/maze.property.test.ts`: "INV-07: every generated maze passes the route checker"; `content/levels.test.ts`: "INV-07: every authored level passes the route checker" | ⏳ |
+| INV-05 | SIM-02 | 2a.1, 3.4 | `e2e/match.spec.ts`: "TIME-02 / OC-04: Esc pauses (no ticks run)…"; grace deadline in M3 | 🟡 |
+| INV-06 | SIM-04, BS-14 | 2a.11, 6.4 | `sim/test/determinism.test.ts`: "M-005 / V-003 / INV-06…"; `e2e/match.spec.ts`: "M-005: changing the theme mid-match keeps the state hash"; audio settings in M6 | 🟡 |
+| INV-07 | MZ-07, BS-13 | 2a.2, 2b.9 | `sim/test/maze.test.ts`: "INV-07 / MZ-07 / MZ-03: thousands of seeds give symmetric mazes that pass the route check"; authored levels (M5) and environment (2b.9) open | 🟡 |
 
 ## 2. Match rules and outcomes
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| G-001 | PLAN D-15, D-02 | 2a.9, 2a.10, 3.2 | `e2e/modes.spec.ts`: "G-001: Solo vs AI, Local VS, WiFi host+1 and host-only+2 each finish a match" | ⏳ |
-| G-002 | MZ-04 | 2a.2 | `sim/entrances.test.ts`: "G-002: exit stays the original entrance after walls change" | ⏳ |
-| G-003 | EN-05 | 2a.8 | `sim/life.test.ts`: "G-003: start 3 Life; 0 Life loses; simultaneous 0 is a draw" | ⏳ |
+| G-001 | PLAN D-15, D-02 | 2a.9, 2a.10, 3.2 | `e2e/match.spec.ts`: "G-001 / UI-05: Local VS runs a full match…", "G-001: Solo vs AI runs a full match…"; `ai/test/ai.test.ts`: bot-vs-bot; WiFi modes in M3 | 🟡 |
+| G-002 | MZ-04 | 2a.2 | `sim/test/maze.test.ts`: "G-002 / MZ-04: P1 spawns North, P2 South…"; `sim/test/flip.test.ts`: "FL-03…" (exits are the entrances stored in the maze, never the live tiles) | ✅ |
+| G-003 | EN-05 | 2a.8 | `sim/test/outcome.test.ts`: "G-003 / G-011: both knocked out on one tick = draw…"; `sim/test/energy.test.ts`: "EN-01…" | ✅ |
 | G-004 | PLAN 2.7 (loadout) | 3.2 | `host/lobby.test.ts`: "G-004: accepted shared change resets both Ready; cosmetic change resets only owner" | ⏳ |
 | G-005 | SIM-06 | 3.2 | `host/countdown.test.ts`: "G-005: GO on one tick for both clients; cancel before GO records nothing" | ⏳ |
 | G-006 | — | 3.2 | `host/rematch.test.ts`: "G-006: rematch needs both Ready; new seed unless same seed chosen" | ⏳ |
-| G-007 | BS-01, BS-06 | 2a.6 | `sim/boss.test.ts`: "G-007: only legal bomb damage lowers boss HP" | ⏳ |
-| G-008 | FL-01, tick step 6 | 2a.7 | `sim/flip.test.ts`: "G-008: flip, token spawn and shortcut opening happen in the same tick exactly once" | ⏳ |
-| G-009 | FL-02, FL-03 | 2a.7, 2a.8 | `sim/escape.test.ts`: "G-009: wrong token, no token and blocked exit never win" | ⏳ |
-| G-010 | OC-01 | 2a.8 | `sim/outcome.test.ts`: "G-010: every outcome-matrix cell, with reversed input arrival order" | ⏳ |
-| G-011 | OC-01 to OC-04, section 17 | 2a.8 | `sim/outcome.test.ts`: "G-011: escape vs KO vs timer on one tick, all 9 cells + out-of-tick cases" | ⏳ |
+| G-007 | BS-01, BS-06 | 2a.6 | `sim/test/boss.test.ts`: "G-007: only bombs lower the boss HP; never below 0"; `sim/test/combat.test.ts`: "BM-06 / G-007…" | ✅ |
+| G-008 | FL-01, tick step 6 | 2a.7 | `sim/test/flip.test.ts`: "G-008 / FL-01: flip, token spawn and shortcut opening happen on one tick exactly once" | ✅ |
+| G-009 | FL-02, FL-03 | 2a.7, 2a.8 | `sim/test/flip.test.ts`: "G-009: no token, the wrong token or a blocked exit never wins" | ✅ |
+| G-010 | OC-01 | 2a.8 | `sim/test/outcome.test.ts`: "G-010 / OC-01: every cell of the in-tick matrix", "G-010: symmetric…" | ✅ |
+| G-011 | OC-01 to OC-04, section 17 | 2a.8 | `sim/test/outcome.test.ts`: "G-011: both escape on one tick = draw", "G-003 / G-011…", "OC-04: Leave…"; disconnect cases in M3 | 🟡 |
 
 ## 3. Maze and themes
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| M-001 | MZ-01, MZ-02 | 2a.2 | `sim/maze.test.ts`: "M-001: sizes 15/21/31, all tiles in bounds with one base class" | ⏳ |
-| M-002 | SIM-04, MZ-03 | 2a.2, 5.4 | `sim/maze.property.test.ts`: "M-002: same seed and settings reproduce geometry and entities" | ⏳ |
-| M-003 | MZ-07 | 2a.2, 2b.9 | `sim/maze.property.test.ts`: "M-003: unreachable mazes are rejected" (fuzzed broken mazes) | ⏳ |
+| M-001 | MZ-01, MZ-02 | 2a.2 | `sim/test/maze.test.ts`: "M-001: %s maze has the GDD size and one base class per tile" | ✅ |
+| M-002 | SIM-04, MZ-03 | 2a.2, 5.4 | `sim/test/maze.test.ts`: "M-002: the same seed and size reproduce the same maze"; Random codes in M5 | 🟡 |
+| M-003 | MZ-07 | 2a.2, 2b.9 | `sim/test/maze.test.ts`: "M-003: a maze whose routes are cut is rejected by the route checker" | ✅ |
 | M-004 | D-11 | 2a.2, 5.1 | `tools/fairness-report.test.ts`: "M-004: report lists path lengths, dead ends, hazards per seed"; Evidence: report for non-symmetric levels | ⏳ |
-| M-005 | SIM-04 | 2a.11 | `sim/theme.test.ts`: "M-005: same seed gives the same state hash in all five themes" | ⏳ |
+| M-005 | SIM-04 | 2a.11 | `sim/test/determinism.test.ts`: "M-005 / V-003 / INV-06…"; `e2e/match.spec.ts`: "M-005: changing the theme mid-match keeps the state hash" | ✅ |
 | M-006 | — | 3.2, 5.4 | `host/lobby.test.ts`: "M-006: host theme choice reaches both clients; Random theme reproducible from the code" | ⏳ |
 
 ## 4. Environment
@@ -71,7 +71,7 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026. Every requirement I
 | ENV-TE-01 | TE-01 | 2b.4 | `sim/terrain.test.ts`: "ENV-TE-01: boost 90 ticks at 78 units/tick; refresh, no stacking" | ⏳ |
 | ENV-TE-02 | TE-02, TE-03 | 2b.4 | `sim/terrain.test.ts`: "ENV-TE-02: ice slides to the first blocker or non-ice tile" | ⏳ |
 | ENV-TE-03 | TE-05, EN-02 | 2b.4 | `sim/energy.test.ts`: "ENV-TE-03: conveyor push never adds Attack" | ⏳ |
-| ENV-TE-04 | EN-03, TR-09 | 2a.4, 2b.2 | `sim/energy.test.ts`: "ENV-TE-04: snared, pushed, blocked ticks give no Defense" | ⏳ |
+| ENV-TE-04 | EN-03, TR-09 | 2a.4, 2b.2 | `sim/test/energy.test.ts`: "CTRL-03 / EN-03: charging an ability is not eligible for Defense"; snare and push cases in M2b | 🟡 |
 | ENV-TE-05 | TE-05, TE-06 | 2b.4, 2b.10 | `sim/matrix.test.ts`: "ENV-TE-05: ice/conveyor/boost/teleport priority table rows" | ⏳ |
 | ENV-PU-01 | PU-01, PU-02 | 2b.5 | `sim/pickups.test.ts`: "ENV-PU-01: Attack Orb +1, never above 3" | ⏳ |
 | ENV-PU-02 | PU-01, PU-02 | 2b.5 | `sim/pickups.test.ts`: "ENV-PU-02: Defense Orb +1, never above 3" | ⏳ |
@@ -86,46 +86,46 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026. Every requirement I
 | ENV-VI-02 | VI-03 | 2b.7 | `host/visibility.test.ts`: "ENV-VI-02: darkness 120 ticks, radius 3" | ⏳ |
 | ENV-VI-03 | VI-04 | 2b.7 | `client/visibility.test.ts`: "ENV-VI-03: warnings, markers, token, exit and HUD stay visible" | ⏳ |
 | ENV-VI-04 | VI-05 | 2b.7 | `client/visibility.test.ts`: "ENV-VI-04: shared screen shows the union; WiFi shows own view" | ⏳ |
-| ENV-WA-01 | WL-01, BM-06 | 2a.5 | `sim/walls.test.ts`: "ENV-WA-01: no bomb changes a solid wall" | ⏳ |
-| ENV-WA-02 | WL-02, BM-05, BM-06 | 2a.5 | `sim/walls.test.ts`: "ENV-WA-02: Super Bomb removes destructible wall for good; normal bomb does not" | ⏳ |
+| ENV-WA-01 | WL-01, BM-06 | 2a.5 | `sim/test/combat.test.ts`: "BM-06 / ENV-WA-01 / ENV-WA-02…" | ✅ |
+| ENV-WA-02 | WL-02, BM-05, BM-06 | 2a.5 | `sim/test/combat.test.ts`: "BM-06 / ENV-WA-01 / ENV-WA-02: destructible walls fall only to Super Bombs; solid walls never" | ✅ |
 | ENV-WA-03 | WL-03, BS-13 | 2b.8 | `sim/walls.test.ts`: "ENV-WA-03: boss wall expires at 240 ticks or breaks to a Super Bomb; revision increments" | ⏳ |
 | ENV-WA-04 | WL-04, BM-06 | 2b.6 | `sim/walls.test.ts`: "ENV-WA-04: Super Bomb on a timed gate has no effect" | ⏳ |
-| ENV-WA-05 | MZ-06, FL-01 | 2a.7 | `sim/flip.test.ts`: "ENV-WA-05: shortcuts open on the flip tick; exits reachable without them" | ⏳ |
+| ENV-WA-05 | MZ-06, FL-01 | 2a.7 | `sim/test/flip.test.ts`: "G-008 / FL-01…", "ENV-WA-05: both exits stay reachable without the shortcuts" | ✅ |
 | ENV-WA-06 | MZ-08 | 2b.1, 3.3 | `sim/revision.test.ts`: "ENV-WA-06: every passability change increments revision with one event"; `client/reconcile.test.ts`: "ENV-WA-06: prediction reconciles after geometry change" | ⏳ |
 
 ## 5. Movement, energy, abilities
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| CTRL-01 | MV-06, D-02 | 2a.9, 3.5 | `e2e/controls.spec.ts`: "CTRL-01: hold direction while charging on keyboard and touch; no P1/P2 key conflicts; remap rejects conflicts" | ⏳ |
-| CTRL-02 | EN-02, EN-04 | 2a.4 | `sim/energy.test.ts`: "CTRL-02: +1 Attack per 12 own tiles; forced motion never counts; carry-over; no banking at 3" | ⏳ |
-| CTRL-03 | EN-03, EN-04 | 2a.4 | `sim/energy.test.ts`: "CTRL-03: +1 Defense per 210 eligible ticks; pause and immobility do not count" | ⏳ |
-| CTRL-04 | MV-01 to MV-09 | 2a.3 | `sim/movement.test.ts`: "CTRL-04: 5 ticks per tile, carry, reservation, turn buffer, facing" (one test per grid transition) | ⏳ |
-| AB-01 | BM-01, CH-05 | 2a.5 | `sim/bombs.test.ts`: "AB-01: bomb costs 1 Attack; rejected at 0 with no cost" | ⏳ |
-| AB-02 | CH-01, CH-03, BM-06 | 2a.5 | `sim/abilities.test.ts`: "AB-02: Super Bomb needs 60 active ticks, not shortened by pause" | ⏳ |
-| AB-03 | SH-03, SH-04 | 2a.5 | `sim/shields.test.ts`: "AB-03: shield costs 1 Defense, lasts 90 ticks, removes trap" | ⏳ |
-| AB-04 | SH-05, CH-03 | 2a.5 | `sim/shields.test.ts`: "AB-04: Super Shield Escape-only, 60-tick charge, 450 ticks, only Super Bomb breaks it" | ⏳ |
-| AB-05 | CH-01 to CH-06, BM-02 to BM-07, SH-01 to SH-08 | 2a.5 | `sim/combat.test.ts`: "AB-05: combat truth table" (one test per row of BM-06 and each CH rule) | ⏳ |
+| CTRL-01 | MV-06, D-02 | 2a.9, 3.5 | `e2e/match.spec.ts`: "CTRL-01: two players on one keyboard move at once; holding a direction while charging works"; touch in M3, remapping in M6 | 🟡 |
+| CTRL-02 | EN-02, EN-04 | 2a.4 | `sim/test/energy.test.ts`: "CTRL-02…" (+1 per 12 own tiles, carry-over, no banking, presets); forced motion in M2b | 🟡 |
+| CTRL-03 | EN-03, EN-04 | 2a.4 | `sim/test/energy.test.ts`: "CTRL-03…" (210 eligible ticks, input resets, charging, own shield, cap, pause); snare in M2b | 🟡 |
+| CTRL-04 | MV-01 to MV-09 | 2a.3 | `sim/test/movement.test.ts`: "CTRL-04 / MV-02…", "MV-03…", "MV-06…", "MV-07…", "MV-08…"; boosted carry in M2b | 🟡 |
+| AB-01 | BM-01, CH-05 | 2a.5 | `sim/test/combat.test.ts`: "AB-01: a bomb costs 1 Attack; at 0 Attack it is rejected with no cost" | ✅ |
+| AB-02 | CH-01, CH-03, BM-06 | 2a.5 | `sim/test/combat.test.ts`: "CH-03 / AB-02…", "AB-02: the charge counts simulation ticks only" | ✅ |
+| AB-03 | SH-03, SH-04 | 2a.5 | `sim/test/combat.test.ts`: "AB-03: a shield costs 1 Defense, stands 90 ticks…"; trap removal in M2b | 🟡 |
+| AB-04 | SH-05, CH-03 | 2a.5 | `sim/test/combat.test.ts`: "AB-04: Super Shield only in the Escape Phase, 450 ticks, only a Super Bomb breaks it" | ✅ |
+| AB-05 | CH-01 to CH-06, BM-02 to BM-07, SH-01 to SH-08 | 2a.5 | `sim/test/combat.test.ts`: bombs and shields suites (BM-02 to BM-06, CH-03, CH-04, SH-01, SH-02, SH-06, EN-06 / CH-06) | ✅ |
 
 ## 6. Boss and AI
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| BOSS-01 | BS-02, BS-14 | 2a.6 | `sim/boss.test.ts`: "BOSS-01: warning → attack → recovery timing independent of rendering" | ⏳ |
-| BOSS-02 | BS-01, BS-02, BS-03 | 2a.6, 5.7 | `sim/boss.test.ts`: "BOSS-02: HP and cooldowns per tier from balance file; Rage at < 30 %"; Evidence: balance report | ⏳ |
+| BOSS-01 | BS-02, BS-14 | 2a.6 | `sim/test/boss.test.ts`: "BOSS-01 / BS-02: cooldown → warning → attack (1 tick) → recovery (30) → cooldown" | ✅ |
+| BOSS-02 | BS-01, BS-02, BS-03 | 2a.6, 5.7 | `sim/test/boss.test.ts`: "BOSS-02 / BS-01…", "BOSS-02 / BS-03: Rage…"; balance report in M5 | 🟡 |
 | BOSS-03 | BS-13, FL-01 | 2b.8 | `sim/flip.test.ts`: "BOSS-03: no boss trap, wall, ball, ice or darkness left after defeat" | ⏳ |
-| BOSS-04 | BS-04 to BS-12 (D-14 signed) | 2a.6, 2b.8 | `sim/patterns.test.ts`: "BOSS-04: pattern N telegraph, geometry, hits and cleanup" (8 tests); "BOSS-04: tier unlocks 2/5/6/7/8 patterns" | ⏳ |
-| BOSS-05 | D-15 | 2a.10, 5.5 | `ai/legal.test.ts`: "BOSS-05: bot emits only commands through the player command interface" | ⏳ |
+| BOSS-04 | BS-04 to BS-12 (D-14 signed) | 2a.6, 2b.8 | `sim/test/boss.test.ts`: patterns 1–3 ("BOSS-04 pattern 1/2/3…", "BS-08…", "BS-10…"), "BOSS-04: tier unlocks (M2a patterns)"; patterns 4–8 in M2b | 🟡 |
+| BOSS-05 | D-15 | 2a.10, 5.5 | `ai/test/ai.test.ts`: "BOSS-05: the bot only returns a command; it never changes the state"; AI tiers in M5 | 🟡 |
 
 ## 7. Timers and pausing
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| TIME-01 | FL-05 | 2a.8 | `sim/timer.test.ts`: "TIME-01: default timers per size; Unlimited only in VS; expiry draw" | ⏳ |
-| TIME-02 | SIM-02, PLAN 2.7 | 2a.9, 3.4 | `host/pause.test.ts`: "TIME-02: Solo immediate, Local either player, WiFi needs consent, 10 s request expiry, 5 min max" | ⏳ |
+| TIME-01 | FL-05 | 2a.8 | `sim/test/outcome.test.ts`: "TIME-01 / FL-05…", "TIME-01: Unlimited Time has no timer…" | ✅ |
+| TIME-02 | SIM-02, PLAN 2.7 | 2a.9, 3.4 | `e2e/match.spec.ts`: "TIME-02 / OC-04: Esc pauses…" (Solo and Local pause at once); WiFi consent in M3 | 🟡 |
 | TIME-03 | SIM-02 | 3.4 | `host/grace.test.ts`: "TIME-03: disconnect pauses; ability durations unchanged after a 30 s pause" | ⏳ |
 | TIME-04 | — | 3.4 | `e2e/reconnect.spec.ts`: "TIME-04: reconnect restores positions, energy, boss and maze, then 3-2-1-GO" | ⏳ |
-| TIME-05 | FL-05 | 2a.8, 6.5 | `sim/timer.test.ts`: "TIME-05: urgency events at 2 min/1 min/30 s/10 s, none in Unlimited, none duplicated after restore" | ⏳ |
+| TIME-05 | FL-05 | 2a.8, 6.5 | `sim/test/outcome.test.ts`: "TIME-05: urgency events at 2 min, 1 min, 30 s and 10 s remaining, once each"; restore in M3, sounds in M6 | 🟡 |
 
 ## 8. Modes and progression
 
@@ -174,11 +174,11 @@ Status: M0 draft (20 Nov 2026); M1 rows updated 20 Nov 2026. Every requirement I
 
 | ID | Rules / decision | WP | Planned test(s) | Status |
 |---|---|---|---|---|
-| UI-01 | FL-01 (markers), D-13 | 2a.11, 6.7 | `e2e/a11y.spec.ts`: "UI-01: P1/P2 distinguishable in monochrome and high contrast" | ⏳ |
+| UI-01 | FL-01 (markers), D-13 | 2a.11, 6.7 | Code: P1 blue disc "1", P2 red disc "2" with a square marker, exits blink with the owner colour (`client/src/game/renderer.ts`); high contrast in M6 | 🟡 |
 | UI-02 | — | 1.5 | `e2e/routes.spec.ts`: "UI-02: every dashboard route opens" | ✅ M1: `apps/client/e2e/routes.spec.ts` |
 | UI-03 | G-004 | 3.2 | `e2e/lobby.spec.ts`: "UI-03: proposals, Ready resets, countdown cancel" | ⏳ |
-| UI-04 | — | 2a.11 | `e2e/hud.spec.ts`: "UI-04: HUD shows Life, energy, timer, phase, boss HP / token, goal, blockade on phone and shared screen" | ⏳ |
-| UI-05 | OC-05 | 2a.9 | `e2e/results.spec.ts`: "UI-05: results read the committed outcome once" | ⏳ |
+| UI-04 | — | 2a.11 | `e2e/match.spec.ts`: "UI-04: the HUD shows Life, energy, timer, phase and boss HP"; phone layout in M3 | 🟡 |
+| UI-05 | OC-05 | 2a.9 | `e2e/match.spec.ts`: "G-001 / UI-05…" (results screen from the committed outcome); stored results in M4 | 🟡 |
 | UI-06 | D-02c | 1.5, 6.7 | `client/i18n.test.ts`: "UI-06: every string in EN/ZH/DE"; `e2e/a11y.spec.ts`: "UI-06: text scale, reduced motion, remap, touch target ≥ 64 px" | 🟡 M1: EN/ZH/DE scaffolding in `packages/content/test/i18n.test.ts`, `apps/client/e2e/routes.spec.ts`; a11y in 6.7 |
 | UI-07 | PLAN 2.7 | 6.5 | `e2e/language.spec.ts`: "UI-07: two devices in different languages show the same event" | ⏳ |
 

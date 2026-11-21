@@ -2,7 +2,7 @@
 
 A colourful top-down tile-maze arcade duel: two players fight a shared boss (Guo), then race to collect their own token and escape through the rival's original entrance. Solo vs AI, shared-keyboard Local VS and Local WiFi VS with an authoritative PC host and browser clients.
 
-Status: **implementation plan approved** (20 Nov 2026); M0 (rules and balance file) approved; M1 (foundation: start scripts, host, database, client shell, CI) in review. All required art and music is delivered in the Pictures repo; the optional theme tiles are in [tile_prompts.md](tile_prompts.md).
+Status: **implementation plan approved** (20 Nov 2026); M0 (rules and balance file) approved; M1 (foundation: start scripts, host, database, client shell, CI) merged; **M2a (core match: Solo vs AI and Local VS on one keyboard) in review**. All required art and music is delivered in the Pictures repo; the optional theme tiles are in [tile_prompts.md](tile_prompts.md).
 
 ## Documents
 
@@ -51,6 +51,22 @@ Options (after the script name, e.g. `.\start.bat --lan`):
 | `--data-dir <folder>` | Use another saved-data folder (default `%LOCALAPPDATA%\GuosPuzzleDuel4`) |
 
 Saved data lives outside the game folder: Windows `%LOCALAPPDATA%\GuosPuzzleDuel4\`, macOS `~/Library/Application Support/GuosPuzzleDuel4/`, Linux `~/.local/share/guos-puzzle-duel-4/`. Only one game host can use a data folder at a time; a second start says where the first one runs.
+
+## Play (M2a)
+
+- **Play** on the dashboard: Solo against the computer. **Local VS**: two players on one keyboard.
+- Pick maze size, boss difficulty (Easy · Coach Guo to Ultimate · Emperor Guo), theme and energy refill, then **Start match**.
+- Goal: hit Guo with bombs until he falls, pick up **your own** crystal where he stood (P1 blue, P2 red), then run out through your rival's entrance (it blinks in your colour). Guo throws sports balls and sends shockwaves; shields block them.
+
+| | Move | Bomb | Shield |
+|---|---|---|---|
+| Solo | W A S D or arrow keys | Q or Numpad 1 | E or Numpad 2 |
+| Local VS, Player 1 (blue) | W A S D | Q | E |
+| Local VS, Player 2 (red) | Arrow keys | Numpad 1 or `,` | Numpad 2 or `.` |
+
+Tap a button for a normal Bomb or Shield. Hold it 2 s with 3 energy for a Super Bomb (breaks cracked walls and shields) or a Super Shield (only after the boss falls). Esc or P pauses, M mutes. Walking builds Attack; standing still builds Defense.
+
+M2a has no traps, teleporters, ice, gates or fog yet, and the boss uses patterns 1 to 3 on every difficulty; those arrive in M2b. The Enchanted Garden boss and escape music plays in every theme until M6.
 
 ## Develop
 

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const ROUTES = [
-  ['play', 'Play'],
+  ['play', 'Solo vs AI'],
   ['campaign', 'Campaign'],
   ['challenges', 'Challenges'],
   ['local-vs', 'Local VS'],
