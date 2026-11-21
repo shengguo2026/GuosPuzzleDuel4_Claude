@@ -66,6 +66,7 @@ export class GameSession {
   private raf = 0;
   private listeners = new Set<(v: SessionView) => void>();
   private lastNotify = 0;
+  private lastRender = 0;
   private disposed = false;
 
   constructor(opts: SessionOptions) {
@@ -203,7 +204,13 @@ export class GameSession {
       if (n >= maxPerFrame) this.acc = 0;
     }
     const alpha = this.phase === 'playing' ? Math.min(1, this.acc / TICK_MS) : 0;
-    this.renderer.render(this.state, alpha, now);
+    // Fast-forward (autopilot tests and demos) draws about 15 frames a second, so a
+    // software-rendered browser spends its time on the simulation, not on drawing.
+    const fast = (this.opts.speed ?? 1) > 1 && this.phase === 'playing';
+    if (!fast || now - this.lastRender >= 66) {
+      this.lastRender = now;
+      this.renderer.render(this.state, alpha, now);
+    }
     this.notify(false);
     this.raf = requestAnimationFrame(this.frame);
   };
