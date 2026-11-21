@@ -44,8 +44,8 @@ function randomInputs(seed: number) {
     }) as [PlayerInput, PlayerInput];
 }
 
-/** State hashes after 1500 ticks of the golden input streams. */
-const GOLDEN: Record<number, number> = { 0: 3637714093, 1: 3617204489, 2: 1200712728 };
+/** State hashes after 1500 ticks of the golden input streams (re-recorded for the M2b environment layer). */
+const GOLDEN: Record<number, number> = { 0: 3413289774, 1: 3840452644, 2: 759934510 };
 
 const CONFIGS: MatchConfig[] = [
   { seed: 101, size: 'small', bossTier: 'easy', energy: 'normal' },
@@ -197,4 +197,14 @@ function expectMirrored(a: MatchState, b: MatchState) {
   expect(b.phase).toBe(a.phase);
   expect(b.bombs.length).toBe(a.bombs.length);
   expect(b.shields.length).toBe(a.shields.length);
+  // M2b: the environment and boss hazards are mirrored too.
+  const key = (s: MatchState, mirror: boolean) =>
+    s.env
+      .map(
+        (e) =>
+          `${e.kind}:${mirror ? w - 1 - e.x : e.x},${mirror ? h - 1 - e.y : e.y}:${e.warn}:${e.life}:${e.open}`,
+      )
+      .sort();
+  expect(key(b, true)).toEqual(key(a, false));
+  expect(b.darkness).toBe(a.darkness);
 }

@@ -110,3 +110,27 @@ test('M-005: changing the theme mid-match keeps the state hash', async ({ page }
     expect(await page.evaluate(() => window.__gpd4!.hash())).toBe(hash);
   }
 });
+
+test('M2b: the environment is on by default, Off gives the plain maze, and an Ultimate match with every pattern runs to the end', async ({
+  page,
+}) => {
+  await page.goto('/local-vs?seed=21&size=medium&tier=ultimate');
+  await expect(page.getByTestId('setup-environment')).toHaveValue('true');
+  await page.getByTestId('start-match').click();
+  await waitPlaying(page);
+  const kinds = await page.evaluate(() => [
+    ...new Set(window.__gpd4!.state().env.map((e) => e.kind)),
+  ]);
+  for (const k of ['spike', 'shock', 'snare', 'pad', 'boost', 'ice', 'conveyor', 'gate'])
+    expect(kinds).toContain(k);
+
+  await page.goto('/local-vs?seed=21&size=medium&env=0&start=1');
+  await waitPlaying(page);
+  // Only boss-made hazards may appear (the setup keeps the last tier, so the boss can attack early).
+  expect(await page.evaluate(() => window.__gpd4!.state().env.filter((e) => !e.boss).length)).toBe(
+    0,
+  );
+
+  await page.goto('/local-vs?autopilot=1&speed=8&seed=33&size=medium&tier=ultimate&start=1');
+  await expect(page.getByTestId('results')).toBeVisible({ timeout: 90_000 });
+});

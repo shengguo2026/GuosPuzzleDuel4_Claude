@@ -15,7 +15,7 @@ export const opposite = (d: Dir): Dir => ((d + 2) % 4) as Dir;
 /** The direction a point-symmetric partner uses (180° rotation, MZ-03). */
 export const mirrorDir = opposite;
 
-/** Base tile classes (MZ-02). Timed gates arrive in M2b. */
+/** Base tile classes (MZ-02). A timed gate's open/closed state lives in its entity. */
 export const Tile = {
   FLOOR: 0,
   WALL: 1,
@@ -23,6 +23,7 @@ export const Tile = {
   CORE: 3,
   SHORTCUT: 4,
   ENTRANCE: 5,
+  GATE: 6,
 } as const;
 export type TileClass = (typeof Tile)[keyof typeof Tile];
 
@@ -36,6 +37,76 @@ export const ENERGY_PRESETS: readonly EnergyPreset[] = ['tactical', 'normal', 'f
 export interface Point {
   x: number;
   y: number;
+}
+
+/**
+ * Environment entity kinds (MZ-02, Appendix A). Every environment element is
+ * an entity with a stable ID on one tile:
+ * - traps `spike`, `shock`, `snare` (section 9), from the maze or the boss;
+ * - teleporter `pad` (section 10), linked to its partner;
+ * - terrain `boost`, `ice`, `conveyor` (section 11); boss ice is temporary;
+ * - pickups `attackOrb`, `defenseOrb`, `heart` (section 12);
+ * - timed `gate` (section 13) on a Tile.GATE tile;
+ * - `fog` (section 14), one entity per fogged tile;
+ * - `bossWall` (WL-03), temporary.
+ */
+export type EnvKind =
+  | 'spike'
+  | 'shock'
+  | 'snare'
+  | 'pad'
+  | 'boost'
+  | 'ice'
+  | 'conveyor'
+  | 'attackOrb'
+  | 'defenseOrb'
+  | 'heart'
+  | 'gate'
+  | 'fog'
+  | 'bossWall';
+export const ENV_KINDS: readonly EnvKind[] = [
+  'spike',
+  'shock',
+  'snare',
+  'pad',
+  'boost',
+  'ice',
+  'conveyor',
+  'attackOrb',
+  'defenseOrb',
+  'heart',
+  'gate',
+  'fog',
+  'bossWall',
+];
+export const TRAP_KINDS: readonly EnvKind[] = ['spike', 'shock', 'snare'];
+export const PICKUP_KINDS: readonly EnvKind[] = ['attackOrb', 'defenseOrb', 'heart'];
+
+/** One environment entity (Appendix A: entityId, kind, tile, state). Plain integer data. */
+export interface EnvEntity {
+  id: number;
+  kind: EnvKind;
+  x: number;
+  y: number;
+  /** Spawned by a boss pattern: removed on the flip tick (FL-01). */
+  boss: boolean;
+  /** Ticks until the entity expires; -1 = permanent. */
+  life: number;
+  /** Boss trap: warning ticks left, harmless while > 0 (TR-08). */
+  warn: number;
+  /** Shock: position in its safe → dangerous cycle; gate: ticks spent in the current window. */
+  cycle: number;
+  /** Gate: open (GA-01). */
+  open: boolean;
+  /** Gate: should have closed but its tile is occupied (GA-03). */
+  pending: boolean;
+  /** Conveyor arrow, else -1. */
+  dir: Dir | -1;
+  /** Pad: the partner pad's entity ID, else -1. */
+  link: number;
+  /** Gate cycle (GA-01, GA-04); 0 for other kinds. */
+  openTicks: number;
+  closedTicks: number;
 }
 
 /** A generated maze (section 2). `tiles` is the immutable starting layout. */
@@ -57,6 +128,8 @@ export interface Maze {
   shortcuts: readonly number[];
   /** Attempts the generator needed (re-rolls after a failed route check). */
   attempts: number;
+  /** Environment entities at match start, IDs 1 … n (empty for a bare maze). */
+  env: EnvEntity[];
 }
 
 export interface MatchConfig {
@@ -66,6 +139,8 @@ export interface MatchConfig {
   energy: EnergyPreset;
   /** Unlimited Time is allowed only in Local VS and WiFi VS (FL-05). */
   unlimitedTime?: boolean;
+  /** Generated mazes carry the environment layer (default on; off = the bare M2a maze). */
+  environment?: boolean;
 }
 
 /** One player's command for one tick (MV-06, CH-01). */
@@ -89,8 +164,12 @@ export const NO_INPUT: PlayerInput = Object.freeze({
 
 export type Slot = 0 | 1;
 
+/** MV-01 step kinds: own, ice slide, conveyor push, own step along the conveyor arrow. */
+export type StepKind = 'own' | 'ice' | 'push' | 'with';
+
 export interface Step {
   dir: Dir;
+  kind: StepKind;
   /** Progress in units; one tile = 300 units (MV-01). */
   progress: number;
 }
@@ -103,6 +182,9 @@ export interface PlayerStats {
   superShields: number;
   hitsTaken: number;
   tilesWalked: number;
+  pickups: number;
+  trapsTriggered: number;
+  teleports: number;
 }
 
 export interface PlayerState {
@@ -128,6 +210,20 @@ export interface PlayerState {
   bombHold: number;
   shieldHold: number;
   startedStep: boolean;
+  /** Ticks left of the speed boost (TE-01). */
+  boost: number;
+  /** Ticks left immobilized by a spike or snare (MV-09). */
+  immobile: number;
+  /** Ticks left before the next teleport is possible (TP-05). */
+  tpCooldown: number;
+  /** Pad entity the player waits on to be transported (TP-02, TP-03), else -1. */
+  pending: number;
+  /** Direction to keep sliding in: set when a step ends on ice (TE-02, TE-03), else -1. */
+  slideDir: Dir | -1;
+  /** Entered a new tile this tick (by any step or a teleport landing). */
+  entered: boolean;
+  /** Moved or held by the environment this tick, or immobilized: never eligible for Defense (EN-03). */
+  forced: boolean;
   hasToken: boolean;
   stats: PlayerStats;
 }
@@ -171,11 +267,25 @@ export interface Wave {
   reached: number[];
 }
 
-export type PatternId = 1 | 2 | 3;
-export const PATTERN_KEYS: Record<PatternId, 'orbShot' | 'shockwave' | 'twinOrbs'> = {
+export type PatternId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+export type PatternKey =
+  | 'orbShot'
+  | 'shockwave'
+  | 'twinOrbs'
+  | 'freezeField'
+  | 'trapSeeding'
+  | 'wallRaise'
+  | 'darknessPulse'
+  | 'ballRain';
+export const PATTERN_KEYS: Record<PatternId, PatternKey> = {
   1: 'orbShot',
   2: 'shockwave',
   3: 'twinOrbs',
+  4: 'freezeField',
+  5: 'trapSeeding',
+  6: 'wallRaise',
+  7: 'darknessPulse',
+  8: 'ballRain',
 };
 
 export interface Lane {
@@ -200,6 +310,13 @@ export interface BossState {
   lastTie: Slot | -1;
   /** Ball lanes of the current warning (telegraph). */
   lanes: Lane[];
+  /**
+   * Tiles marked by the current warning (telegraph): frost tiles (4), trap
+   * tiles (5), wall tiles (6) or the impact-zone centres (8).
+   */
+  marks: number[];
+  /** Pattern 5: trap kind per mark (0 spike, 1 shock). */
+  markKinds: number[];
   /** Tick of the last damage, for the cosmetic hit pose. */
   lastHitTick: number;
 }
@@ -242,7 +359,7 @@ export type GameEvent =
   | { id: number; tick: number; type: 'wall-destroyed'; x: number; y: number }
   | { id: number; tick: number; type: 'boss-damaged'; slot: Slot; amount: number; hp: number }
   | { id: number; tick: number; type: 'boss-warning'; pattern: PatternId; target: Slot }
-  | { id: number; tick: number; type: 'boss-attack'; pattern: PatternId }
+  | { id: number; tick: number; type: 'boss-attack'; pattern: PatternId; tiles: number[] }
   | { id: number; tick: number; type: 'ball-destroyed'; x: number; y: number }
   | { id: number; tick: number; type: 'player-hit'; slot: Slot; life: number }
   | { id: number; tick: number; type: 'attack-gained'; slot: Slot; attack: number }
@@ -253,6 +370,22 @@ export type GameEvent =
   | { id: number; tick: number; type: 'token-picked'; slot: Slot }
   | { id: number; tick: number; type: 'escaped'; slot: Slot }
   | { id: number; tick: number; type: 'urgency'; ticksLeft: number }
+  | {
+      id: number;
+      tick: number;
+      type: 'trap-triggered';
+      slot: Slot;
+      kind: EnvKind;
+      x: number;
+      y: number;
+    }
+  | { id: number; tick: number; type: 'trap-destroyed'; kind: EnvKind; x: number; y: number }
+  | { id: number; tick: number; type: 'teleported'; slot: Slot; x: number; y: number }
+  | { id: number; tick: number; type: 'pickup'; slot: Slot; kind: EnvKind; x: number; y: number }
+  | { id: number; tick: number; type: 'boosted'; slot: Slot }
+  | { id: number; tick: number; type: 'gate'; x: number; y: number; open: boolean }
+  | { id: number; tick: number; type: 'boss-wall'; x: number; y: number; raised: boolean }
+  | { id: number; tick: number; type: 'revision'; revision: number; tiles: number[] }
   | { id: number; tick: number; type: 'match-over'; outcome: Outcome };
 
 /** Distributive Omit, so each event variant keeps its own fields. */
@@ -273,6 +406,10 @@ export interface MatchState {
   players: [PlayerState, PlayerState];
   bombs: Bomb[];
   shields: ShieldEntity[];
+  /** Environment entities (section 9 to 14, WL-03), in ID order. */
+  env: EnvEntity[];
+  /** Ticks left of a Darkness Pulse (VI-03). */
+  darkness: number;
   balls: Ball[];
   waves: Wave[];
   boss: BossState;

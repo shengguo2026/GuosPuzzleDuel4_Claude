@@ -1,7 +1,7 @@
 {
   "$schema": "./balance.v1.schema.json",
   "schemaVersion": 1,
-  "balanceVersion": "1.1.0-m2a",
+  "balanceVersion": "1.2.0-m2b",
   "notes": "Canonical tunable values for Guo's Puzzle Duel IV. Rules: docs/MECHANICS.md. LOCKED = fixed by the GDD (change needs a GDD revision); PROVISIONAL = starting value, tunable after play-tests and balance runs. 'M0' in ref = detail fixed in M0 and approved by Guo on 20 Nov 2026 (MECHANICS.md section 20). Durations are simulation ticks at sim.tickRateHz.",
   "sim": {
     "tickRateHz": {"value": 30, "status": "LOCKED", "unit": "Hz", "ref": ["NET-03", "D-01", "SIM-01"]},
@@ -30,7 +30,46 @@
     "generator": {
       "loopPercent": {"value": 12, "status": "PROVISIONAL", "unit": "percent of the remaining walls between two cells that are opened", "ref": ["D-11", "M-003", "M2a"]},
       "destructiblePercent": {"value": 10, "status": "PROVISIONAL", "unit": "percent of inner walls made destructible", "ref": ["D-10", "WL-02", "M2a"]},
-      "maxAttempts": {"value": 50, "status": "PROVISIONAL", "unit": "re-rolls", "ref": ["MZ-07", "INV-07", "M2a"]}
+      "maxAttempts": {"value": 50, "status": "PROVISIONAL", "unit": "re-rolls", "ref": ["MZ-07", "INV-07", "M2a"]},
+      "envAttempts": {"value": 40, "status": "PROVISIONAL", "unit": "re-rolls of the environment layer", "ref": ["MZ-07", "INV-07", "M2b"]},
+      "stripLength": {"value": [2, 3], "status": "PROVISIONAL", "unit": "tiles per ice or conveyor strip", "ref": ["D-30", "M2b"]},
+      "fogRadius": {"value": 2, "status": "PROVISIONAL", "unit": "tiles (Chebyshev) per seeded fog region", "ref": ["D-33", "M2b"]},
+      "entranceClearance": {"value": 3, "status": "PROVISIONAL", "unit": "tiles (Manhattan) kept free of environment around each entrance", "ref": ["G-002", "M2b"]},
+      "environment": {
+        "small": {
+          "spikes": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-01", "M2b"]},
+          "shocks": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-02", "M2b"]},
+          "snares": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-03", "M2b"]},
+          "padPairs": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-29", "ENV-TP-01", "M2b"]},
+          "boosts": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-01", "M2b"]},
+          "iceStrips": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-02", "M2b"]},
+          "conveyorStrips": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-03", "M2b"]},
+          "gates": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-32", "ENV-GA-01", "M2b"]},
+          "fogRegions": {"value": 0, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-33", "ENV-VI-01", "M2b"]}
+        },
+        "medium": {
+          "spikes": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-01", "M2b"]},
+          "shocks": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-02", "M2b"]},
+          "snares": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-03", "M2b"]},
+          "padPairs": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-29", "ENV-TP-01", "M2b"]},
+          "boosts": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-01", "M2b"]},
+          "iceStrips": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-02", "M2b"]},
+          "conveyorStrips": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-03", "M2b"]},
+          "gates": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-32", "ENV-GA-01", "M2b"]},
+          "fogRegions": {"value": 1, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-33", "ENV-VI-01", "M2b"]}
+        },
+        "large": {
+          "spikes": {"value": 3, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-01", "M2b"]},
+          "shocks": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-02", "M2b"]},
+          "snares": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-28", "ENV-TR-03", "M2b"]},
+          "padPairs": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-29", "ENV-TP-01", "M2b"]},
+          "boosts": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-01", "M2b"]},
+          "iceStrips": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-02", "M2b"]},
+          "conveyorStrips": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-30", "ENV-TE-03", "M2b"]},
+          "gates": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-32", "ENV-GA-01", "M2b"]},
+          "fogRegions": {"value": 2, "status": "PROVISIONAL", "unit": "point-symmetric pairs", "ref": ["D-33", "ENV-VI-01", "M2b"]}
+        }
+      }
     }
   },
   "movement": {

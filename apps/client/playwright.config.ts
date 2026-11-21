@@ -12,6 +12,9 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
+  // The Windows runner draws WebGL in software on few cores; two game pages at once
+  // starve each other (pages stuck loading), so it runs the tests one at a time.
+  workers: process.env.CI && process.platform === 'win32' ? 1 : undefined,
   reporter: process.env.CI
     ? [
         ['list'],

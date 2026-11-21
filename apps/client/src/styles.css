@@ -454,6 +454,21 @@ footer {
   font-weight: 700;
   color: var(--accent);
 }
+.hud-status {
+  margin-left: 6px;
+  font-size: 0.85rem;
+}
+.hud-status.boost {
+  color: #ffb21f;
+}
+.hud-status.stuck {
+  color: #d9b48a;
+}
+.hud-dark {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #b04dff;
+}
 .hud-phase {
   font-weight: 800;
   text-transform: uppercase;

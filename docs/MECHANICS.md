@@ -339,3 +339,17 @@ These are the 🟡 points: details PLAN.md does not state exactly, which I fixed
 | 22 | BS-07 | Wall Raise: 1 wall (Hard, Extreme), 2 walls (Ultimate), 2–5 tiles from the target. | D-14 gives "1–2 corridors". |
 | 23 | BS-07 | Ball Rain: one 3×3 zone per player, both players at once. | Fair to both players. |
 | 24 | BS-13 | Boss traps and walls never on a tile that would cut a player off from their objective. | Temporary hazards slow, never seal (INV-07). |
+
+## 21. M2b details (for your OK at the play-test)
+
+Points the M2b code had to fix that sections 1 to 20 do not state exactly. All numbers are PROVISIONAL in `balance.v1.json`.
+
+| # | Rule | What I fixed | Why |
+|---|---|---|---|
+| 1 | MZ-03, PU-06 | Generator counts per size (pairs): Small 1 spike, 1 shock, 1 snare, 1 pad pair, 1 boost, 1 ice strip, 1 conveyor strip, 1 gate, no fog; Medium 2, 1, 1, 1, 2, 1, 1, 1, 1 fog region; Large 3, 2, 2, 2, 2, 2, 2, 2, 2 fog regions. Strips are 2–3 tiles; fog regions radius 2. | The GDD names the elements, not how many. |
+| 2 | MZ-07 | Nothing is placed in the boss arena or within 3 steps of an entrance; if no valid layer is found the layout is re-rolled. | Spawns stay calm and the route check always holds. |
+| 3 | BS-07 | Telegraph tiles (frost, trap seeds, walls, rain zones) are chosen when the warning starts, so the warning shows exactly where the attack lands. | Readable warnings (D-14). |
+| 4 | TR-03, TR-05 | Immobilization does not stop a step already in progress; it starts when the player reaches the next tile. | Keeps steps whole (rule 20.2). |
+| 5 | TE-05 | On a conveyor, a sideways input into a wall falls back to the push. | Otherwise the player would stand still on a moving belt. |
+| 6 | — | The environment is on by default; the setup screen has "Maze environment: Off (plain maze)". | Lets beginners and tests use the M2a maze. |
+| 7 | VI-04 | The boss, its telegraphs, trap warnings, tokens and exits are drawn above fog and darkness. | Warnings always shown (§17). |

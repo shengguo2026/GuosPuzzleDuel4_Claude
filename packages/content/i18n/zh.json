@@ -102,5 +102,15 @@
   "match.stats.hitsTaken": "被击中",
   "match.stats.tilesWalked": "行走格数",
   "match.result.rematch": "再来一局",
-  "match.result.settings": "更改设置"
+  "match.result.settings": "更改设置",
+  "match.setup.environment": "迷宫环境",
+  "match.environment.on": "完整（陷阱、传送门、冰面、闸门……）",
+  "match.environment.off": "关闭（普通迷宫）",
+  "match.legend": "场上元素：尖刺会伤人并定身，电击板闪电时会伤人，绳套会困住你；传送垫会传送；⚡ 地块加速；冰面会滑行；传送带会推动；能量球和心会补充；闸门会开合；迷雾会限制视野。护盾可摧毁陷阱。",
+  "match.hud.boost": "加速",
+  "match.hud.stuck": "被困",
+  "match.hud.dark": "黑暗！",
+  "match.stats.pickups": "拾取",
+  "match.stats.traps": "触发陷阱",
+  "match.stats.teleports": "传送次数"
 }

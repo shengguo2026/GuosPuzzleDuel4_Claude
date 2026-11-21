@@ -24,6 +24,7 @@ interface Settings {
   energy: EnergyPreset;
   theme: ThemeId;
   unlimitedTime: boolean;
+  environment: boolean;
 }
 
 const SETTINGS_KEY = (mode: Mode) => `gpd4.match.${mode}`;
@@ -35,6 +36,7 @@ function loadSettings(mode: Mode): Settings {
     energy: 'normal',
     theme: 'garden',
     unlimitedTime: false,
+    environment: true,
   };
   try {
     const saved = JSON.parse(
@@ -45,6 +47,7 @@ function loadSettings(mode: Mode): Settings {
     if (!BOSS_TIERS.includes(merged.bossTier)) merged.bossTier = base.bossTier;
     if (!ENERGY_PRESETS.includes(merged.energy)) merged.energy = base.energy;
     if (!THEMES.includes(merged.theme)) merged.theme = base.theme;
+    if (typeof merged.environment !== 'boolean') merged.environment = base.environment;
     if (mode === 'solo') merged.unlimitedTime = false; // FL-05: Unlimited only in VS
     return merged;
   } catch {
@@ -60,7 +63,7 @@ function saveSettings(mode: Mode, s: Settings): void {
   }
 }
 
-/** URL options for tests and demos: ?autopilot=1&speed=8&seed=5&size=small&tier=easy&start=1 */
+/** URL options for tests and demos: ?autopilot=1&speed=8&seed=5&size=small&tier=easy&env=0&start=1 */
 function urlOptions() {
   const q = new URLSearchParams(window.location.search);
   const num = (k: string) => (q.has(k) ? Number(q.get(k)) : undefined);
@@ -70,6 +73,7 @@ function urlOptions() {
     seed: num('seed'),
     size: q.get('size') as MazeSize | null,
     tier: q.get('tier') as BossTier | null,
+    env: q.has('env') ? q.get('env') !== '0' : null,
     start: q.get('start') === '1',
   };
 }
@@ -87,6 +91,7 @@ export function MatchScreen({ mode, onBack }: { mode: Mode; onBack: () => void }
     const s = loadSettings(mode);
     if (url.size && MAZE_SIZES.includes(url.size)) s.size = url.size;
     if (url.tier && BOSS_TIERS.includes(url.tier)) s.bossTier = url.tier;
+    if (url.env !== null) s.environment = url.env;
     return s;
   });
   const [run, setRun] = useState<{ key: number; config: MatchConfig } | null>(null);
@@ -101,6 +106,7 @@ export function MatchScreen({ mode, onBack }: { mode: Mode; onBack: () => void }
         bossTier: settings.bossTier,
         energy: settings.energy,
         unlimitedTime: mode === 'local' && settings.unlimitedTime,
+        environment: settings.environment,
       },
     }));
   };
@@ -169,6 +175,9 @@ export function MatchScreen({ mode, onBack }: { mode: Mode; onBack: () => void }
         {select('energy', ENERGY_PRESETS, 'match.setup.energy', (v) =>
           t(`match.energy.${v}` as MessageKey),
         )}
+        {select('environment', [true, false], 'match.setup.environment', (v) =>
+          t(v ? 'match.environment.on' : 'match.environment.off'),
+        )}
         {mode === 'local' &&
           select('unlimitedTime', [false, true], 'match.setup.time', (v) =>
             v
@@ -189,6 +198,7 @@ export function MatchScreen({ mode, onBack }: { mode: Mode; onBack: () => void }
           </>
         )}
         <p className="muted">{t('match.controls.hold')}</p>
+        {settings.environment && <p className="muted">{t('match.legend')}</p>}
       </div>
       <div className="setup-actions">
         <button className="button primary" data-testid="start-match" onClick={() => start()}>
@@ -428,7 +438,14 @@ function Hud({ state: s, names }: { state: MatchState; names: string[] }) {
               <span className="hud-label">{t('match.hud.defense')}</span>
               <Segments value={p.defense} max={3} kind="defense" />
             </div>
-            <div className="hud-goal">{goal || '\u00a0'}</div>
+            <div className="hud-goal">
+              {goal}
+              {p.boost > 0 && <span className="hud-status boost"> ⚡ {t('match.hud.boost')}</span>}
+              {p.immobile > 0 && (
+                <span className="hud-status stuck"> ⛓ {t('match.hud.stuck')}</span>
+              )}
+              {!goal && p.boost === 0 && p.immobile === 0 && '\u00a0'}
+            </div>
           </div>
         );
       })}
@@ -439,6 +456,7 @@ function Hud({ state: s, names }: { state: MatchState; names: string[] }) {
         <div className={`hud-timer ${urgent ? 'urgent' : ''}`} data-testid="hud-timer">
           {time}
         </div>
+        {s.darkness > 0 && <div className="hud-dark">🌑 {t('match.hud.dark')}</div>}
         {s.phase === 'boss' && (
           <div className="boss-bar" data-testid="boss-hp" data-value={s.boss.hp}>
             <span className="boss-name">{t('match.hud.boss')}</span>
@@ -483,6 +501,9 @@ function Results(props: {
     ['match.stats.shields', 'shields'],
     ['match.stats.hitsTaken', 'hitsTaken'],
     ['match.stats.tilesWalked', 'tilesWalked'],
+    ['match.stats.pickups', 'pickups'],
+    ['match.stats.traps', 'trapsTriggered'],
+    ['match.stats.teleports', 'teleports'],
   ];
   return (
     <div className="overlay">

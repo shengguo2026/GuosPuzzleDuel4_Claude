@@ -4,7 +4,7 @@
  * (theme, characters, cosmetics, audio) is not part of the state, so it can
  * never change the hash (M-005, V-003, INV-06).
  */
-import type { MatchState } from './types.js';
+import { ENV_KINDS, type MatchState } from './types.js';
 
 const OFFSET = 0x811c9dc5;
 const PRIME = 0x01000193;
@@ -51,9 +51,35 @@ export function hashState(s: MatchState): number {
     h.int(p.invulnerable);
     h.int(p.bombHold);
     h.int(p.shieldHold);
+    h.int(p.step ? ['own', 'ice', 'push', 'with'].indexOf(p.step.kind) : -1);
+    h.int(p.boost);
+    h.int(p.immobile);
+    h.int(p.tpCooldown);
+    h.int(p.pending);
+    h.int(p.slideDir);
+    h.bool(p.entered);
+    h.bool(p.forced);
     h.bool(p.hasToken);
     h.int(p.stats.bossDamage);
   }
+  for (const e of s.env) {
+    h.int(e.id);
+    h.int(ENV_KINDS.indexOf(e.kind));
+    h.int(e.x);
+    h.int(e.y);
+    h.bool(e.boss);
+    h.int(e.life);
+    h.int(e.warn);
+    h.int(e.cycle);
+    h.bool(e.open);
+    h.bool(e.pending);
+    h.int(e.dir);
+    h.int(e.link);
+    h.int(e.openTicks);
+    h.int(e.closedTicks);
+  }
+  h.int(-1);
+  h.int(s.darkness);
   for (const b of s.bombs) {
     h.int(b.id);
     h.int(b.owner);
@@ -97,6 +123,10 @@ export function hashState(s: MatchState): number {
   h.int(b.lastPattern);
   h.int(b.target);
   h.int(b.lastTie);
+  for (const i of b.marks) h.int(i);
+  h.int(-1);
+  for (const k of b.markKinds) h.int(k);
+  h.int(-1);
   if (s.tokens) for (const t of s.tokens) h.bool(t.taken);
   if (s.outcome) {
     h.int(s.outcome.winner);

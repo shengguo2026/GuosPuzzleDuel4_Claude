@@ -102,5 +102,15 @@
   "match.stats.hitsTaken": "Treffer kassiert",
   "match.stats.tilesWalked": "Gelaufene Felder",
   "match.result.rematch": "Revanche",
-  "match.result.settings": "Einstellungen ändern"
+  "match.result.settings": "Einstellungen ändern",
+  "match.setup.environment": "Labyrinth-Umgebung",
+  "match.environment.on": "Vollständig (Fallen, Teleporter, Eis, Tore …)",
+  "match.environment.off": "Aus (einfaches Labyrinth)",
+  "match.legend": "Auf dem Feld: Stacheln verletzen und halten fest, Schockplatten verletzen, solange sie funken, Schlingen halten dich; Pads teleportieren; ⚡-Felder beschleunigen; Eis rutscht; Bänder schieben; Kugeln und Herzen füllen auf; Tore öffnen und schließen; Nebel begrenzt die Sicht. Schilde zerstören Fallen.",
+  "match.hud.boost": "Tempo",
+  "match.hud.stuck": "Fest",
+  "match.hud.dark": "Dunkelheit!",
+  "match.stats.pickups": "Eingesammelt",
+  "match.stats.traps": "Ausgelöste Fallen",
+  "match.stats.teleports": "Teleports"
 }

@@ -68,10 +68,12 @@ describe('boss (WP 2a.6, BOSS-01, BOSS-02, BOSS-04, BS-01 to BS-14)', () => {
     expect(cooldownTicks(easy)).toBe(120); // no Rage on Easy
   });
 
-  it('BOSS-04: tier unlocks (M2a patterns): Easy 1–2, Medium and up 1–3', () => {
+  it('BOSS-04: tier unlocks: Easy 1–2, Medium 1–5, Hard 1–6, Extreme 1–7, Ultimate 1–8', () => {
     expect(unlockedPatterns('easy')).toEqual([1, 2]);
-    for (const t of ['medium', 'hard', 'extreme', 'ultimate'] as const)
-      expect(unlockedPatterns(t)).toEqual([1, 2, 3]);
+    expect(unlockedPatterns('medium')).toEqual([1, 2, 3, 4, 5]);
+    expect(unlockedPatterns('hard')).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(unlockedPatterns('extreme')).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(unlockedPatterns('ultimate')).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
   });
 
   it('BS-04: never the same pattern twice in a row', () => {
@@ -83,7 +85,7 @@ describe('boss (WP 2a.6, BOSS-01, BOSS-02, BOSS-04, BS-01 to BS-14)', () => {
     const patterns = ofType(run(s, 6000), 'boss-warning').map((w) => w.pattern);
     expect(patterns.length).toBeGreaterThan(20);
     for (let i = 1; i < patterns.length; i++) expect(patterns[i]).not.toBe(patterns[i - 1]);
-    expect(new Set(patterns)).toEqual(new Set([1, 2, 3]));
+    expect(new Set(patterns)).toEqual(new Set([1, 2, 3, 4, 5]));
   });
 
   it('BS-05: targets the player nearer to the centre; ties alternate', () => {

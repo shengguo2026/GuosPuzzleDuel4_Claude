@@ -102,5 +102,15 @@
   "match.stats.hitsTaken": "Hits taken",
   "match.stats.tilesWalked": "Tiles walked",
   "match.result.rematch": "Rematch",
-  "match.result.settings": "Change settings"
+  "match.result.settings": "Change settings",
+  "match.setup.environment": "Maze environment",
+  "match.environment.on": "Full (traps, teleporters, ice, gates …)",
+  "match.environment.off": "Off (plain maze)",
+  "match.legend": "On the field: spikes hurt and pin you, shock plates hurt while they spark, snares hold you; pads teleport; ⚡ tiles speed you up; ice slides; belts push; orbs and hearts refill; gates open and close; fog limits your view. Shields destroy traps.",
+  "match.hud.boost": "Boost",
+  "match.hud.stuck": "Held",
+  "match.hud.dark": "Darkness!",
+  "match.stats.pickups": "Pickups",
+  "match.stats.traps": "Traps triggered",
+  "match.stats.teleports": "Teleports"
 }

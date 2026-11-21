@@ -6,7 +6,9 @@
  */
 import { balance } from '@gpd4/rules';
 import { nextInt, chance, shuffle, type RngState } from './rng.js';
-import { DX, DY, Tile, type Maze, type MazeSize, type Point } from './types.js';
+import { placeEnvironment } from './environment.js';
+import { DX, DY, Tile, type EnvEntity, type Maze, type MazeSize, type Point } from './types.js';
+import { routeHazards, routeLegs } from './world.js';
 
 export function mazeDimension(size: MazeSize): number {
   return balance.maze.sizes[size].value;
@@ -76,27 +78,26 @@ export interface RouteReport {
 
 /**
  * MZ-07 route guarantee: with all shortcuts sealed and destructible walls
- * intact, each player reaches the arena ring from their spawn, the token
- * tiles from the ring (core cleared), and their exit from their token.
+ * intact, gates passable when open, and traps, pads and conveyors avoided,
+ * each player reaches the arena ring from their spawn, the token tiles from
+ * the ring (core cleared), and their exit from their token.
  */
-export function checkRoutes(maze: Maze, tiles: Uint8Array = maze.tiles): RouteReport {
-  const { w, h } = maze;
+export function checkRoutes(
+  maze: Maze,
+  tiles: Uint8Array = maze.tiles,
+  env: readonly EnvEntity[] = maze.env ?? [],
+): RouteReport {
+  const { w } = maze;
   const problems: string[] = [];
-  const idx = (p: Point) => p.y * w + p.x;
-  const preFlip = (i: number) => tiles[i] === Tile.FLOOR || tiles[i] === Tile.ENTRANCE;
-  const postFlip = (i: number) => preFlip(i) || tiles[i] === Tile.CORE;
-  const ring = ringTiles(maze);
-  for (let slot = 0; slot < 2; slot++) {
-    const spawn = idx(maze.entrances[slot]!);
-    const exit = idx(maze.entrances[1 - slot]!);
-    const token = idx(maze.tokenTiles[slot]!);
-    const fromSpawn = bfs(w, h, preFlip, [spawn]);
-    if (!ring.some((r) => fromSpawn[r]! >= 0)) problems.push(`P${slot + 1}: spawn → arena ring`);
-    const fromRing = bfs(w, h, postFlip, ring);
-    if (fromRing[token]! < 0) problems.push(`P${slot + 1}: arena ring → token`);
-    const fromToken = bfs(w, h, postFlip, [token]);
-    if (fromToken[exit]! < 0) problems.push(`P${slot + 1}: token → exit`);
-  }
+  const spawns: [number, number] = [
+    maze.entrances[0].y * w + maze.entrances[0].x,
+    maze.entrances[1].y * w + maze.entrances[1].x,
+  ];
+  const legs = routeLegs(maze, tiles, routeHazards(env, w), spawns);
+  const names = ['spawn → arena ring', 'arena ring → token', 'token → exit'];
+  legs.forEach((ok, k) => {
+    if (!ok) problems.push(`P${Math.floor(k / 3) + 1}: ${names[k % 3]}`);
+  });
   for (const s of maze.shortcuts) if (tiles[s] !== Tile.SHORTCUT) problems.push('shortcut tile');
   return { ok: problems.length === 0, problems };
 }
@@ -258,6 +259,7 @@ function attempt(rng: RngState, size: MazeSize): Maze | null {
     ],
     shortcuts,
     attempts: 0,
+    env: [],
   };
 }
 
@@ -266,15 +268,30 @@ function attempt(rng: RngState, size: MazeSize): Maze | null {
  * give the same maze (M-002). A maze that fails the route check is re-rolled
  * from the same PRNG stream (MZ-07).
  */
-export function generateMaze(seed: number, size: MazeSize): Maze {
+export function generateMaze(
+  seed: number,
+  size: MazeSize,
+  opts: { environment?: boolean } = {},
+): Maze {
   const rng: RngState = { rng: seed | 0 };
   const max = balance.maze.generator.maxAttempts.value;
+  let bare: Maze | null = null;
   for (let a = 1; a <= max; a++) {
     const maze = attempt(rng, size);
     if (!maze) continue;
     maze.seed = seed | 0;
     maze.attempts = a;
-    if (checkRoutes(maze).ok && isPointSymmetric(maze)) return maze;
+    if (!checkRoutes(maze).ok || !isPointSymmetric(maze)) continue;
+    bare ??= maze;
+    // WP 2b.9: the environment layer on top of the validated layout.
+    if (opts.environment !== false) {
+      const layer = placeEnvironment(maze, seed + a);
+      if (!layer) continue; // re-roll the layout too
+      maze.tiles = layer.tiles;
+      maze.env = layer.env;
+    }
+    return maze;
   }
+  if (bare) return bare; // no environment layer fitted: the validated bare maze
   throw new Error(`No valid ${size} maze for seed ${seed} after ${max} attempts`);
 }
