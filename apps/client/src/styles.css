@@ -161,6 +161,9 @@ main {
 .button {
   display: inline-block;
   margin-top: 16px;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
   padding: 12px 20px;
   min-height: 44px;
   background: var(--brand);
@@ -212,5 +215,287 @@ footer {
   }
   .card:hover {
     transform: none;
+  }
+}
+
+/* ---------- Match setup (M2a) ---------- */
+.app.wide {
+  max-width: 1500px;
+}
+.setup {
+  max-width: 760px;
+  margin: 8px auto 0;
+}
+.setup h2 {
+  font-size: 1.8rem;
+  margin: 8px 0;
+}
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--muted);
+  text-align: left;
+}
+.field select {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid #3a4480;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 1rem;
+  min-height: 44px;
+}
+.controls-help {
+  background: var(--bg-2);
+  border-radius: 12px;
+  padding: 4px 16px;
+}
+.controls-help h3 {
+  margin: 12px 0 4px;
+}
+.setup-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.button.primary {
+  background: #ff7a3d;
+  font-size: 1.1rem;
+}
+.button.primary:hover,
+.button.primary:focus-visible {
+  background: #ff8f5a;
+}
+.button.danger {
+  background: var(--bad);
+}
+
+/* ---------- Match view ---------- */
+.match {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.match-stage {
+  position: relative;
+  height: min(76vh, calc(100vw - 32px));
+  min-height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0e1e;
+}
+.match-canvas {
+  position: absolute;
+  inset: 0;
+}
+.match-canvas canvas {
+  display: block;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(8 10 24 / 55%);
+  font-size: 1.3rem;
+  z-index: 2;
+  overflow: auto;
+}
+.overlay.countdown {
+  background: transparent;
+  font-size: clamp(4rem, 14vw, 9rem);
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    0 4px 0 #000,
+    0 0 24px #ff7a3d;
+  pointer-events: none;
+}
+.panel {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: min(360px, 90%);
+  max-width: 92%;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 50%);
+  text-align: center;
+}
+.panel h2 {
+  margin: 0 0 4px;
+}
+.panel .button {
+  margin-top: 8px;
+  font-size: 1rem;
+}
+.results-boss {
+  width: 120px;
+  height: 120px;
+  align-self: center;
+}
+.stats {
+  border-collapse: collapse;
+  margin: 8px auto;
+  font-size: 1rem;
+}
+.stats td,
+.stats th {
+  padding: 4px 12px;
+  border-bottom: 1px solid #3a4480;
+}
+.stats td:first-child {
+  text-align: left;
+  color: var(--muted);
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: stretch;
+}
+.hud-player {
+  background: var(--bg-2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+}
+.hud-player.p1 {
+  order: 0;
+  border-left: 5px solid #2f7bff;
+}
+.hud-player.p2 {
+  order: 2;
+  border-right: 5px solid #e8413c;
+  text-align: right;
+}
+.hud-player.p2 .hud-row {
+  flex-direction: row-reverse;
+}
+.hud-center {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 180px;
+}
+.hud-name {
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hud-player.p2 .hud-name {
+  flex-direction: row-reverse;
+}
+.badge {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.85rem;
+}
+.hud-player.p2 .badge {
+  border-radius: 4px;
+}
+.hud-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+}
+.hud-label {
+  color: var(--muted);
+  min-width: 64px;
+}
+.hearts {
+  color: #ff4d6d;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+}
+.hearts .lost {
+  color: #4a5078;
+}
+.segments {
+  display: inline-flex;
+  gap: 3px;
+}
+.segments span {
+  width: 22px;
+  height: 10px;
+  border-radius: 3px;
+  background: #3a4170;
+}
+.segments.attack span.on {
+  background: #ff7a1a;
+}
+.segments.defense span.on {
+  background: #36c7ff;
+}
+.hud-goal {
+  margin-top: 4px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.hud-phase {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.hud-phase.escape {
+  color: var(--accent);
+}
+.hud-timer {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.hud-timer.urgent {
+  color: var(--bad);
+}
+.boss-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+.boss-bar .bar {
+  width: 110px;
+  height: 10px;
+  background: #3a4170;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.boss-bar .bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #ff4d6d, #ffb020);
+}
+@media (max-width: 720px) {
+  .hud {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hud-center {
+    grid-column: 1 / -1;
+    order: -1;
   }
 }

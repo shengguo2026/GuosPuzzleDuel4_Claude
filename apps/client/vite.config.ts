@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react';
 // the API and WebSocket are proxied to a host started separately on port 3000.
 export default defineConfig({
   plugins: [react()],
-  build: { outDir: 'dist', emptyOutDir: true, sourcemap: true },
+  // One bundle: Pixi's renderer modules misbehave when split across lazy chunks.
+  build: { outDir: 'dist', emptyOutDir: true, sourcemap: true, chunkSizeWarningLimit: 1500 },
   server: {
     proxy: {
       '/api': 'http://127.0.0.1:3000',

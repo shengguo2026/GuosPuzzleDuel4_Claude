@@ -10,8 +10,12 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@gpd4/ai": "workspace:*",
     "@gpd4/content": "workspace:*",
     "@gpd4/protocol": "workspace:*",
+    "@gpd4/rules": "workspace:*",
+    "@gpd4/sim": "workspace:*",
+    "pixi.js": "8.22.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

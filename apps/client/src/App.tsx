@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { LOCALES, LOCALE_NAMES, translate, type Locale } from '@gpd4/content';
 import { HostStatus } from './HostStatus';
+import { MatchScreen } from './game/MatchScreen';
 import { LocaleContext, initialLocale, saveLocale, useT, type T } from './i18n';
 import { ROUTES, findRoute, type RouteDef } from './routes';
 import { navigate, usePath } from './router';
@@ -80,7 +81,10 @@ export function App() {
 
   return (
     <LocaleContext.Provider value={ctx}>
-      <div className="app" lang={locale === 'zh' ? 'zh-Hans' : locale}>
+      <div
+        className={`app${route?.id === 'play' || route?.id === 'local-vs' ? ' wide' : ''}`}
+        lang={locale === 'zh' ? 'zh-Hans' : locale}
+      >
         <header className="top">
           <Link to="/" className="brand" testId="home">
             <h1>{ctx.t('app.title')}</h1>
@@ -104,7 +108,21 @@ export function App() {
             </select>
           </label>
         </header>
-        <main>{route ? <Placeholder route={route} /> : <Dashboard />}</main>
+        <main>
+          {route?.id === 'play' || route?.id === 'local-vs' ? (
+            <div data-testid={`page-${route.id}`}>
+              <MatchScreen
+                key={route.id}
+                mode={route.id === 'play' ? 'solo' : 'local'}
+                onBack={() => navigate('/')}
+              />
+            </div>
+          ) : route ? (
+            <Placeholder route={route} />
+          ) : (
+            <Dashboard />
+          )}
+        </main>
         <footer>
           <HostStatus />
         </footer>
