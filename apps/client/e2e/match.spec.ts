@@ -126,7 +126,10 @@ test('M2b: the environment is on by default, Off gives the plain maze, and an Ul
 
   await page.goto('/local-vs?seed=21&size=medium&env=0&start=1');
   await waitPlaying(page);
-  expect(await page.evaluate(() => window.__gpd4!.state().env.length)).toBe(0);
+  // Only boss-made hazards may appear (the setup keeps the last tier, so the boss can attack early).
+  expect(await page.evaluate(() => window.__gpd4!.state().env.filter((e) => !e.boss).length)).toBe(
+    0,
+  );
 
   await page.goto('/local-vs?autopilot=1&speed=8&seed=33&size=medium&tier=ultimate&start=1');
   await expect(page.getByTestId('results')).toBeVisible({ timeout: 90_000 });

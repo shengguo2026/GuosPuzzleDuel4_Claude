@@ -97,6 +97,8 @@ export class MatchRenderer {
   private drawnRevision = -1;
   private drawnTheme: ThemeId | null = null;
   private drawnSize = '';
+  private envKey = '';
+  private fogKey = '';
   private tile = 24;
   private blasts: BlastFx[] = [];
   private pops: PopFx[] = [];
@@ -465,7 +467,22 @@ export class MatchRenderer {
 
   // ------------------------------------------------------------ environment
 
+  /**
+   * Environment layer. Rebuilding Graphics geometry is the costly part on slow
+   * GPUs, so the layer is redrawn only when something visible changed, and its
+   * animations (conveyor arrows, blinking warnings) run at 10 frames a second.
+   */
   private drawEnv(s: MatchState, now: number): void {
+    let sig = 0;
+    for (const e of s.env) {
+      if (e.kind === 'fog') continue;
+      sig = (Math.imul(sig, 31) + e.id * 8 + (e.open ? 1 : 0) + (e.warn > 0 ? 2 : 0)) | 0;
+      if (shockDangerous(e) || gateWarning(e)) sig = (sig + 4 * e.id + 3) | 0;
+      if (e.life > 0) sig = (sig + (e.life >> 3)) | 0;
+    }
+    const key = `${this.tile}|${this.theme}|${s.env.length}|${sig}|${Math.floor(now / 100)}`;
+    if (key === this.envKey) return;
+    this.envKey = key;
     const g = this.envG;
     const T = this.tile;
     g.clear();
@@ -681,6 +698,12 @@ export class MatchRenderer {
 
   /** VI-02, VI-03, VI-05: hides tiles outside the shared view; tints fog regions. */
   private drawFog(s: MatchState, now: number): void {
+    const b0 = s.boss;
+    const dim = b0.state === 'warning' && b0.pattern === 7 ? b0.age : -1;
+    const at = s.players.map((p) => `${p.x},${p.y}`).join(';');
+    const key = `${this.tile}|${this.viewers.join()}|${s.env.length}|${s.darkness > 0}|${dim}|${at}|${Math.floor(now / 150)}`;
+    if (key === this.fogKey) return;
+    this.fogKey = key;
     const g = this.fogG;
     const T = this.tile;
     const { w, h } = s.maze;
